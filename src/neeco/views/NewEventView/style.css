@@ -1,0 +1,67 @@
+.NewEventView {
+    padding: 16px;
+    font-size: 13px;
+}
+
+.NewEventView form {
+    display         : flex;
+    flex-direction  : column;
+    align-content   : stretch;
+    margin          : 0 8px;
+    margin-top      : 16px;
+    padding         : 8px;
+    padding-top     : 0;
+    background-color: #fff;
+}
+
+.NewEventView form label {
+    display       : flex;
+    flex-direction: row;
+    padding       : 8px;
+    border-bottom : 1px solid #eee;
+}
+
+.NewEventView form label div {
+    min-width: 200px;
+    margin-bottom: 8px;
+}
+
+.NewEventView form input,
+.NewEventView form select,
+.NewEventView form textarea {
+    flex-grow       : 1;
+    min-height      : 22px;
+    padding         : 4px 8px;
+    border          : 1px solid #ccc;
+    border-radius   : 2px;
+    background-color: #fff;
+    color           : #797979;
+}
+
+.NewEventView form select {
+    min-height: 32px;
+}
+
+.NewEventView form input[type="date"],
+.NewEventView form select {
+    flex-grow: 0;
+    margin-right: 8px;
+}
+
+.NewEventView form button {
+    padding         : 8px;
+    border          : 1px solid #357ebd;
+    background-color: #428bca;
+    color           : #fff;
+}
+
+@media all and (max-width: 640px) {
+    .NewEventView form label {
+        flex-direction: column;
+    }
+
+    .NewEventView form label div {
+        min-width: auto;
+        margin-bottom: 8px;
+    }
+}

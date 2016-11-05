@@ -1,0 +1,13 @@
+.SubItem {
+}
+
+.Text {
+    display: block;
+    padding: 8px;
+    color: #AEB2B7;
+    text-decoration: none;
+}
+
+.Text:hover {
+    color: #FFF;
+}

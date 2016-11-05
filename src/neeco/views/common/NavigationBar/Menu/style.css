@@ -1,0 +1,8 @@
+.Menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    -webkit-padding-start: 0;
+    list-style: none;
+}

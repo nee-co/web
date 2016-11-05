@@ -1,0 +1,16 @@
+.Item {
+    margin-bottom: 8px;
+}
+
+.Text {
+    display: block;
+    padding: 14px 8px;
+    color  : #AEB2B7;
+    text-decoration: none;
+    cursor : pointer;
+}
+
+.Text:hover {
+    background-color: #68dff0;
+    color           : #FFF;
+}

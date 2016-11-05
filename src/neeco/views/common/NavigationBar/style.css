@@ -1,0 +1,100 @@
+.NavigationBar {
+    background-color: #424A5D;
+    color           : #FFF;
+    font-size       : 12px;
+}
+
+.NavigationBar > * {
+    padding: 8px;
+}
+
+.Profile {
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+    font-size     : 14px;
+    font-weight   : 700;
+    text-align    : center;
+}
+
+.Profile > img {
+    display: block;
+    width  : 64px;
+    height : 64px;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.Icon::before {
+    display     : inline-block;
+    width       : 15px;
+    height      : 15px;
+    margin-right: 8px;
+    font-family : "FontAwesome";
+    font-size   : 15px;
+    content     : "";
+}
+
+.ArchiveIcon {
+    composes: Icon;
+}
+
+.ArchiveIcon::before {
+    content: "\F187";
+}
+
+.CalendarIcon {
+    composes: Icon;
+}
+
+.CalendarIcon::before {
+    content: "\F073";
+}
+
+.DashboardIcon {
+    composes: Icon;
+}
+
+.DashboardIcon::before {
+    content: "\F0E4";
+}
+
+.EnvelopeIcon {
+    composes: Icon;
+}
+
+.EnvelopeIcon::before {
+    content: "\F0E0";
+}
+
+.FileIcon {
+    composes: Icon;
+}
+
+.FileIcon::before {
+    content: "\F15B";
+}
+
+.LinkIcon {
+    composes: Icon;
+}
+
+.LinkIcon::before {
+    content: "\F0C1";
+}
+
+.QuestionIcon {
+    composes: Icon;
+}
+
+.QuestionIcon::before {
+    content: "\F128";
+}
+
+.TasksIcon {
+    composes: Icon;
+}
+
+.TasksIcon::before {
+    content: "\F0AE";
+}
