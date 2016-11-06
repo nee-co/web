@@ -4,22 +4,29 @@ import React         from "react"
 
 var TimeSelect = (props) =>
     <select {...props}>
-    {
-        Array.from(Array(24).keys())
-            .map(x => ("0" + x).slice(-2))
-            .map(x => [
+      {
+          Array.from(Array(24).keys())
+              .map(x => ("0" + x).slice(-2))
+              .map(x => [
                 <option key={x}      value={x + ":00:00"}>{x + ":00"}</option>,
                 <option key={x + 24} value={x + ":30:00"}>{x + ":30"}</option>
-            ])
-            .reduce((x, y) => x.concat(y))
-    }
+              ])
+              .reduce((x, y) => x.concat(y))
+      }
     </select>
 
 export default (props) =>
     <MainContainer {...props}>
       <section className={style.NewEventView}>
         <h2>イベント新規作成</h2>
-        <form>
+        <form
+          onSubmit={(e) => {
+              e.preventDefault();
+
+              var form = e.target
+              // API 呼び出し
+          }}
+          >
           <label>
             <div>タイトル</div>
             <input name="title" type="text" required placeholder="例) Rubyもくもく会#1"/>
@@ -52,16 +59,7 @@ export default (props) =>
             <div>イベント内容</div>
             <textarea name="description" placeholder="例) Ruby初心者歓迎!!" rows="8" />
           </label>
-          <button type="submit" onClick={(e) => {
-              var form = e.target.form
-              var nodeList = form.querySelectorAll("input, textarea, select")
-
-              if (Array.from(nodeList).every(n => n.validity.valid)) {
-                  e.preventDefault();
-
-                  
-              }
-          }}>作成</button>
+          <button type="submit">作成</button>
         </form>
       </section>
     </MainContainer>
