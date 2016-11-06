@@ -15,10 +15,8 @@ var TimeSelect = (props) =>
     }
     </select>
 
-export default ({
-    onSubmit
-}) =>
-    <MainContainer>
+export default (props) =>
+    <MainContainer {...props}>
       <section className={style.NewEventView}>
         <h2>イベント新規作成</h2>
         <form>
@@ -60,7 +58,8 @@ export default ({
 
               if (Array.from(nodeList).every(n => n.validity.valid)) {
                   e.preventDefault();
-                  onSubmit(e)
+
+                  
               }
           }}>作成</button>
         </form>

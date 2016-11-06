@@ -4,7 +4,7 @@
     font-size       : 12px;
 }
 
-.NavigationBar > * {
+.NavigationBar > * > * {
     padding: 8px;
 }
 
@@ -12,17 +12,23 @@
     display       : flex;
     flex-direction: column;
     align-items   : center;
+    padding       : 8px;
     font-size     : 14px;
     font-weight   : 700;
     text-align    : center;
 }
 
-.Profile > img {
-    display: block;
-    width  : 64px;
-    height : 64px;
-    padding: 8px;
-    border-radius: 50%;
+.Profile .UserIcon {
+    display        : block;
+    width          : 64px;
+    height         : 64px;
+    margin-bottom  : 8px;
+    border-radius  : 50%;
+    background-size: 100% auto;
+}
+
+.Profile .UserNumber {
+    white-space: nowrap;
 }
 
 .Icon::before {

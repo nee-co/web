@@ -1,17 +1,18 @@
-import React from 'react';
+import style from "neeco/views/common/ScrollArea/style"
+import React from "react"
 
-class ScrollArea extends React.Component {
-    constructor() {
-        super();
+export default class extends React.Component {
+    constructor(props) {
+        super(props)
 
         this.state = {
             ready: false,
             top : 0,
             left: 0,
+            childrenWrapperHeight: null,
+            childrenWrapperWidth: null,
             scrollAreaHeight: null,
             scrollAreaWidth: null,
-            scrollWrapperHeight: null,
-            scrollWrapperWidth: null,
             vMovement: 0,
             hMovement: 0,
             dragging: false,
@@ -22,39 +23,38 @@ class ScrollArea extends React.Component {
     componentDidMount() {
         this.calculateSize()
 
-        window.addEventListener('resize', this.calculateSize.bind(this))
+        window.addEventListener("resize", this.calculateSize.bind(this))
     }
 
     componentWillUnmount(){
-        window.removeEventListener('resize', this.calculateSize.bind(this))
+        window.removeEventListener("resize", this.calculateSize.bind(this))
     }
 
     render() {
         return (
           <div
-            className={"react-scrollbar__wrapper" + " " + this.props.className}
-            onClick={this.calculateSize.bind(this) }
-            ref="scrollWrapper"
-            style={this.props.style}>
-
+            className={style.ScrollArea + " " + this.props.className}
+            ref="scrollArea"
+            style={this.props.style}
+          >
             <div
-              className={"react-scrollbar__area" + ( this.state.dragging ? ' ' : 'react-scrollbar-transition') }
-              ref="scrollArea"
+              className={style.ChildrenWrapper}
+              ref="childrenWrapper"
               onWheel={(e) => {
                 e.preventDefault()
 
                 this.calculateSize(() => {
-                    let num = this.props.speed
+                    let num = 53
 
                     let shifted = e.shiftKey
 
                     let scroll = [
-                        e.deltaX > 0 ? num : -(num),
-                        e.deltaY > 0 ? num : -(num)
+                        e.deltaX > 0 ? num : -num,
+                        e.deltaY > 0 ? num : -num
                     ]
 
                     if (shifted && e.deltaX == 0)
-                        scroll[0] = e.deltaY > 0 ? num : -(num)
+                        scroll[0] = e.deltaY > 0 ? num : -num
 
                     let next_position = [
                         this.state.left + scroll[0],
@@ -62,8 +62,8 @@ class ScrollArea extends React.Component {
                     ]
 
                     let scrollable = [
-                        this.state.scrollAreaWidth  > this.state.scrollWrapperWidth,
-                        this.state.scrollAreaHeight > this.state.scrollWrapperHeight
+                        this.state.childrenWrapperWidth  > this.state.scrollAreaWidth,
+                        this.state.childrenWrapperHeight > this.state.scrollAreaHeight
                     ]
 
                     if (shifted && scrollable[0])
@@ -75,7 +75,6 @@ class ScrollArea extends React.Component {
               }}
               onTouchStart={(e) => {
                   e.preventDefault()
-                  e.stopPropagation()
 
                   e = e.changedTouches ? e.changedTouches[0] : e
 
@@ -116,30 +115,6 @@ class ScrollArea extends React.Component {
               }}
             >
               {this.props.children}
-              {this.state.ready 
-                  ? <VerticalScrollbar
-                    area={{height: this.state.scrollAreaHeight}}
-                    wrapper={{height: this.state.scrollWrapperHeight}}
-                    scrolling={this.state.vMovement}
-                    draggingFromParent={this.state.dragging}
-                    onChangePosition={this.handleChangePosition.bind(this)}
-                    onDragging={this.handleScrollbarDragging.bind(this)}
-                    onStopDrag={this.handleScrollbarStopDrag.bind(this)}
-                  />
-                  : null
-              }
-              {this.state.ready
-                  ? <HorizontalScrollbar
-                    area={{width: this.state.scrollAreaWidth}}
-                    wrapper={{width: this.state.scrollWrapperWidth}}
-                    scrolling={this.state.hMovement}
-                    draggingFromParent={this.state.dragging}
-                    onChangePosition={this.handleChangePosition.bind(this)}
-                    onDragging={this.handleScrollbarDragging.bind(this)}
-                    onStopDrag={this.handleScrollbarStopDrag.bind(this)}
-                  />
-                  : null
-              }
             </div>
           </div>
         )
@@ -153,26 +128,25 @@ class ScrollArea extends React.Component {
         this.normalizeVertical(x)
     }
 
-    normalizeVertical(next){
+    normalizeVertical(next) {
         let elementSize = this.getSize()
 
-        let lowerEnd = elementSize.scrollAreaHeight - elementSize.scrollWrapperHeight
+        let lowerEnd = elementSize.childrenWrapperHeight - elementSize.scrollAreaHeight
 
         if (next > lowerEnd)
             next = lowerEnd
         else if (next < 0)
             next = 0
 
-        // Update the Vertical Value
         this.setState({
             top: next,
-            vMovement: next / elementSize.scrollAreaHeight * 100
+            vMovement: next / elementSize.childrenWrapperHeight * 100
         })
     }
 
-    normalizeHorizontal(next){
+    normalizeHorizontal(next) {
         let elementSize = this.getSize()
-        let rightEnd = elementSize.scrollAreaWidth - this.state.scrollWrapperWidth
+        let rightEnd = elementSize.childrenWrapperWidth - this.state.scrollAreaWidth
 
         if (next > rightEnd)
             next = rightEnd;
@@ -181,38 +155,27 @@ class ScrollArea extends React.Component {
 
         this.setState({
             left: next,
-            hMovement: next / elementSize.scrollAreaWidth * 100
-        })
-    }
-
-    handleChangePosition(movement, orientation){
-        this.calculateSize(() => {
-            let next = movement / 100
-
-            if (orientation == 'vertical')
-                this.normalizeVertical(next * this.state.scrollAreaHeight)
-            if (orientation == 'horizontal')
-                this.normalizeHorizontal(next * this.state.scrollAreaWidth)
+            hMovement: next / elementSize.childrenWrapperWidth * 100
         })
     }
 
     handleScrollbarDragging() {
-        this.setState({ dragging: true })
+        this.setState({dragging: true})
     }
 
     handleScrollbarStopDrag() {
-        this.setState({ dragging: false })
+        this.setState({dragging: false})
     }
 
     getSize(){
+        let childrenWrapper = this.refs.childrenWrapper
         let scrollArea = this.refs.scrollArea
-        let scrollWrapper = this.refs.scrollWrapper
 
         return {
-            scrollAreaHeight   : scrollArea.children[0].clientHeight,
-            scrollAreaWidth    : scrollArea.children[0].clientWidth,
-            scrollWrapperHeight: scrollWrapper.clientHeight,
-            scrollWrapperWidth : scrollWrapper.clientWidth,
+            childrenWrapperWidth : childrenWrapper.children[0].clientWidth,
+            childrenWrapperHeight: childrenWrapper.children[0].clientHeight,
+            scrollAreaWidth      : scrollArea.clientWidth,
+            scrollAreaHeight     : scrollArea.clientHeight
         }
     }
 
@@ -220,37 +183,19 @@ class ScrollArea extends React.Component {
         if (typeof cb !== 'function')
             cb = null;
 
-        let elementSize = this.getSize()
+        let {
+            scrollAreaWidth,
+            scrollAreaHeight,
+            childrenWrapperWidth,
+            childrenWrapperHeight
+        } = this.getSize()
 
-        if (elementSize.scrollWrapperHeight != this.state.scrollWrapperHeight
-         || elementSize.scrollWrapperWidth != this.state.scrollWrapperWidth
-         || elementSize.scrollAreaHeight != this.state.scrollAreaHeight
-         || elementSize.scrollAreaWidth != this.state.scrollAreaWidth
-        ) {
-            return this.setState(
-                {
-                    scrollAreaHeight: elementSize.scrollAreaHeight,
-                    scrollAreaWidth: elementSize.scrollAreaWidth,
-                    scrollWrapperHeight: elementSize.scrollWrapperHeight,
-                    scrollWrapperWidth: elementSize.scrollWrapperWidth,
-                    ready: true
-                },
-                () => cb ? cb() : false
-            )
-        } else {
-            return cb ? cb() : false
-        }
+        return this.setState({
+            childrenWrapperWidth : childrenWrapperWidth,
+            childrenWrapperHeight: childrenWrapperHeight,
+            scrollAreaWidth      : scrollAreaWidth,
+            scrollAreaHeight     : scrollAreaHeight,
+            ready: true
+        })
     }
-}
-
-ScrollWrapper.propTypes = {
-  speed: React.PropTypes.number,
-  className: React.PropTypes.string,
-  style: React.PropTypes.object
-}
-
-ScrollWrapper.defaultProps = {
-  speed: 53,
-  className: "",
-  style: {  }
 }

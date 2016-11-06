@@ -1,16 +1,16 @@
 import "whatwg-fetch"
 
-var uri = "/login/auth";
+var uri = "https://api.neec.ooo" + "/auth/login";
 
-export default (number, password) => {
-    d = new FormData()
-    d.append("number", number)
-    d.append("password", password)
-
-    return fetch(uri, {
-        method: 'POST',
-        body: d
-    }).then(response => {
-        return response.json()
+export default (id, password) =>
+    fetch(uri, {
+        method: "POST",
+        headers: new Headers({
+            "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({
+            number  : id,
+            password: password
+        })
     })
-}
+    .then(response => response.json())
