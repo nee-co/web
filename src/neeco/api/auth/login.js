@@ -1,13 +1,14 @@
+import environment from "neeco/environment"
 import "whatwg-fetch"
 
-var uri = "https://api.neec.ooo" + "/auth/login";
+var uri = environment.api.host + "/auth/login"
 
 export default (id, password) =>
     fetch(uri, {
         method: "POST",
-        headers: new Headers({
+        headers: {
             "Content-Type": "application/json"
-        }),
+        },
         body: JSON.stringify({
             number  : id,
             password: password

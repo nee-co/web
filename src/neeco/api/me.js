@@ -1,13 +1,14 @@
+import environment from "neeco/environment"
 import "whatwg-fetch"
 
-var uri = "https://api.neec.ooo" + "/users";
+var uri = environment.api.host + "/users"
 
 export default (token) =>
     fetch(uri, {
         method : "GET",
-        headers: new Headers({
+        headers: {
             authorization: "Bearer " + token
-        })
+        }
     })
     .then(response => response.json())
     .then(user => Promise.resolve({
