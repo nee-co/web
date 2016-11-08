@@ -16,7 +16,7 @@ export default ({
     <ScrollArea className={className + " " + style.NavigationBar}>
       <nav>
         <div className={style.Profile}>
-          <div className={style.UserIcon} style={{backgroundImage: user ? "url(" + user.image + ")" : undefined}} />
+          <div className={style.UserImage} style={{backgroundImage: user ? "url(" + user.image + ")" : undefined}} />
           &nbsp;{user ? user.number : ""}&nbsp;
         </div>
         <Menu>
@@ -34,7 +34,7 @@ export default ({
               <SubItem text="作る" path="/new_wiki" className={style.Icon} />
             </Menu>
           </Item>
-          <Item text="プロフィール" path="/profile" className={style.TasksIcon} />
+          <Item text="プロフィール" path="/profile" className={style.UserIcon} />
         </Menu>
       </nav>
     </ScrollArea>

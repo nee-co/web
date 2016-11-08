@@ -28,11 +28,15 @@ export default class extends React.Component {
             user
         } = this.state
 
+        var {
+            onSignOut
+        } = this.props
+
         return (
             <div className={style.MainContainer}>
               <Header
                 notifications={notifications}
-                onSignOut={this.props.onSignOut}
+                onSignOut={onSignOut}
                 onToggle={() => this.setState({navigationBarIsVisible: !navigationBarIsVisible})}
               />
               <div className={style.Content}>

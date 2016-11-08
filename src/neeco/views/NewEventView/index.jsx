@@ -21,12 +21,12 @@ export default (props) =>
         <h2>イベント新規作成</h2>
         <form
           onSubmit={(e) => {
-              e.preventDefault();
+              e.preventDefault()
 
               var form = e.target
               // API 呼び出し
           }}
-          >
+        >
           <label>
             <div>タイトル</div>
             <input name="title" type="text" required placeholder="例) Rubyもくもく会#1"/>

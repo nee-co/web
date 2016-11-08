@@ -13,8 +13,9 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        var onResize = () => {
+        var onResize = (e) => {
             this.setState({
+                childrenWrapperPosition: this.normalize(this.state.childrenWrapperPosition),
                 childrenWrapperSize: [
                     this.refs.childrenWrapper.clientWidth,
                     this.refs.childrenWrapper.clientHeight
