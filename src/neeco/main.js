@@ -5,7 +5,7 @@ import Authentication                  from "neeco/views/Authentication"
 import EventsView                      from "neeco/views/EventsView"
 import FilesView                       from "neeco/views/FilesView"
 import NewEventView                    from "neeco/views/NewEventView"
-import ProfileView                     from "neeco/views/ProfileView"
+import SettingsView                    from "neeco/views/SettingsView"
 import TopView                         from "neeco/views/TopView"
 
 render(
@@ -15,7 +15,7 @@ render(
         <Route path="/events"    component={EventsView} />
         <Route path="/files"     component={FilesView} />
         <Route path="/new_event" component={NewEventView} />
-        <Route path="/profile"   component={ProfileView} />
+        <Route path="/settings"  component={SettingsView} />
       </Route>
     </Router>,
     document.querySelector(".root")

@@ -57,6 +57,14 @@
     content: "\F073";
 }
 
+.CogIcon {
+    composes: Icon;
+}
+
+.CogIcon::before {
+    content: "\F013";
+}
+
 .DashboardIcon {
     composes: Icon;
 }

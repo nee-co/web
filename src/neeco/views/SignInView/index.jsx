@@ -8,7 +8,7 @@ export default ({
       <h2>サインイン</h2>
       <form
         onSubmit={(e) => {
-          e.preventDefault()
+            e.preventDefault()
 
             var form = e.target
 

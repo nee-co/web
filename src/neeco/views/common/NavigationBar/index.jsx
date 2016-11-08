@@ -34,7 +34,7 @@ export default ({
               <SubItem text="作る" path="/new_wiki" className={style.Icon} />
             </Menu>
           </Item>
-          <Item text="プロフィール" path="/profile" className={style.UserIcon} />
+          <Item text="設定" path="/settings" className={style.CogIcon} />
         </Menu>
       </nav>
     </ScrollArea>

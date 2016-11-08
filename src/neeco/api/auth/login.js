@@ -10,8 +10,8 @@ export default ({id, password}) =>
             "Content-Type": "application/json"
         },
         body   : JSON.stringify({
-            number  : id,
-            password: password
+            "number"  : id,
+            "password": password
         })
     })
     .then(response => response.json())

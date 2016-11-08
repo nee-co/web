@@ -1,0 +1,25 @@
+.SettingsView {
+    display       : flex;
+    flex-direction: column;
+    padding       : 16px;
+}
+
+.SettingsView form {
+    display         : flex;
+    flex-direction  : column;
+    margin-top      : 16px;
+    padding         : 8px;
+    background-color: #fff;
+    color           : #797979;
+}
+
+.SettingsView label {
+    margin-bottom: 8px;
+}
+
+.SettingsView input {
+    border          : 1px solid #ccc;
+    border-radius   : 2px;    
+    background-color: #fff;
+    color           : #797979;
+}
