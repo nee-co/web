@@ -10,6 +10,7 @@
     cursor : pointer;
 }
 
+.SelecedText,
 .Text:hover {
     background-color: #68dff0;
     color           : #FFF;

@@ -5,20 +5,29 @@ export default ({
     onSubmit
 }) =>
     <div className={style.SignInView}>
+      <h1>サインイン</h1>
       <form
         onSubmit={(e) => {
             e.preventDefault()
 
-            onSubmit(e.target.id.value, e.target.password.value)
+            var form = e.target
+
+            onSubmit(
+                form.id.value,
+                form.password.value,
+                form.stay_signed_in.checked
+            )
         }}
       >
         <label>
-          学籍番号
-          <input name="id" type="text" />
+          <input name="id" type="text" placeholder="学籍番号" />
         </label>
         <label>
-          パスワード
-          <input name="password" type="password" />
+          <input name="password" type="password" placeholder="パスワード" />
+        </label>
+        <label>
+          <input name="stay_signed_in" type="checkbox" value="dummy" />
+          Stay signed in
         </label>
         <button className={style.button}>
           送信

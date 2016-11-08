@@ -6,13 +6,11 @@ import EventsView                      from "neeco/views/EventsView"
 import FilesView                       from "neeco/views/FilesView"
 import NewEventView                    from "neeco/views/NewEventView"
 import ProfileView                     from "neeco/views/ProfileView"
-import SignInView                      from "neeco/views/SignInView"
 import TopView                         from "neeco/views/TopView"
 
 render(
     <Router history={browserHistory}>
-      <Route path="/sign_in" component={SignInView} />
-      <Route                 component={Authentication}>
+      <Route component={Authentication}>
         <Route path="/"          component={TopView} />
         <Route path="/events"    component={EventsView} />
         <Route path="/files"     component={FilesView} />

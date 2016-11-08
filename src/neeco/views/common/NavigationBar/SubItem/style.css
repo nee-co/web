@@ -8,6 +8,7 @@
     text-decoration: none;
 }
 
+.SelecedText,
 .Text:hover {
     color: #FFF;
 }

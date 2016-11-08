@@ -33,15 +33,16 @@ export default class extends React.Component {
             <div className={style.MainContainer}>
               <Header
                 notifications={notifications}
+                onSignOut={this.props.onSignOut}
                 onToggle={() => this.setState({navigationBarIsVisible: !navigationBarIsVisible})}
               />
               <div className={style.Content}>
                 <NavigationBar
-                    className={
-                        navigationBarIsVisible ? style.ShowNavigationBar
-                                               : style.HideNavigationBar
-                    }
-                    user={user}
+                  className={
+                      navigationBarIsVisible ? style.ShowNavigationBar
+                                             : style.HideNavigationBar
+                  }
+                  user={user}
                 />
                 <main className={style.Main}>
                   {this.props.children}
