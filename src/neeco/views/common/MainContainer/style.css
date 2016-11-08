@@ -19,12 +19,16 @@
     height        : 100%;
 }
 
-.MainContainer .HideNavigationBar {
-    min-width  : 200px;
+.HideNavigationBar,
+.ShowNavigationBar {
+    min-width : 200px;
+    transition: all 0.3s ease-out;
+}
+
+.HideNavigationBar {
     margin-left: -200px;
 }
 
-.MainContainer .ShowNavigationBar {
-    min-width  : 200px;
+.ShowNavigationBar {
     margin-left: 0;
 }

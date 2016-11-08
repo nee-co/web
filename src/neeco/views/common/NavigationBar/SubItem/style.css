@@ -2,10 +2,11 @@
 }
 
 .Text {
-    display: block;
-    padding: 8px;
-    color: #AEB2B7;
+    display        : block;
+    padding        : 8px;
+    color          : #AEB2B7;
     text-decoration: none;
+    transition     : all 0.3s ease-out;
 }
 
 .SelecedText,
