@@ -12,11 +12,11 @@ export default ({
 
             var form = e.target
 
-            onSubmit(
-                form.id.value,
-                form.password.value,
-                form.stay_signed_in.checked
-            )
+            onSubmit({
+                id            : form.id.value,
+                password      : form.password.value,
+                stay_signed_in: form.stay_signed_in.checked
+            })
         }}
       >
         <label>

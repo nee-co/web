@@ -5,6 +5,12 @@ import React        from "react"
 export default class extends React.Component {
     componentWillMount() {
         this.setState({
+            token: null
+        })
+    }
+
+    componentDidMount() {
+        this.setState({
             token: sessionStorage.getItem("token")
                 || localStorage.getItem("token")
         })
@@ -18,18 +24,21 @@ export default class extends React.Component {
                 token: token,
                 onSignOut: () => {
                     sessionStorage.removeItem("token")
-                    localStorage.removeItem("token", token)
+                    localStorage.removeItem("token")
 
                     this.setState({token: null})
                 }
             })
         else
-            return <SignInView onSubmit={(id, password, stay_sign_in) => 
-                login(id, password)
+            return <SignInView onSubmit={({id, password, stay_signed_in}) => 
+                login({
+                    id      : id,
+                    password: password
+                })
                     .then(({token}) => {
                         sessionStorage.setItem("token", token)
 
-                        if (stay_sign_in)
+                        if (stay_signed_in)
                             localStorage.setItem("token", token)
 
                         this.setState({token: token})

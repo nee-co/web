@@ -6,17 +6,16 @@ import NavigationBar from "neeco/views/common/NavigationBar"
 import React         from "react"
 
 export default class extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
+    componentWillMount() {
+        this.setState({
             navigationBarIsVisible: true,
-            notifications: []
-        }
+            notifications         : [],
+            user                  : null
+        })
     }
 
-    componentWillMount() {
-        me(this.props.token)
+    componentDidMount() {
+        me({token: this.props.token})
             .then((user) => this.setState({user: user}))
             .catch((e) => {
             })

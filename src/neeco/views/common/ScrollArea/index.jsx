@@ -2,18 +2,16 @@ import style from "neeco/views/common/ScrollArea/style"
 import React from "react"
 
 export default class extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
+    componentWillMount() {
+        this.setState({
             childrenWrapperPosition: [0, 0],
             childrenWrapperSize    : [0, 0],
             scrollAreaSize         : [0, 0],
             dragging               : false,
             start                  : [0, 0]
-        }
+        })
     }
-    
+
     componentDidMount() {
         var onResize = () => {
             this.setState({

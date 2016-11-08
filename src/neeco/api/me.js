@@ -3,7 +3,7 @@ import "whatwg-fetch"
 
 var uri = environment.api.host + "/users"
 
-export default (token) =>
+export default ({token}) =>
     fetch(uri, {
         method : "GET",
         headers: {
