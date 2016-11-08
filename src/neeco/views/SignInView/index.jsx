@@ -5,17 +5,17 @@ export default ({
     onSubmit
 }) =>
     <div className={style.SignInView}>
-      <h1>サインイン</h1>
+      <h2>サインイン</h2>
       <form
         onSubmit={(e) => {
-            e.preventDefault()
+          e.preventDefault()
 
             var form = e.target
 
             onSubmit({
-                id            : form.id.value,
-                password      : form.password.value,
-                stay_signed_in: form.stay_signed_in.checked
+                id          : form.id.value,
+                password    : form.password.value,
+                staySignedIn: form.staySignedIn.checked
             })
         }}
       >
@@ -26,7 +26,7 @@ export default ({
           <input name="password" type="password" placeholder="パスワード" />
         </label>
         <label>
-          <input name="stay_signed_in" type="checkbox" value="dummy" />
+          <input name="staySignedIn" type="checkbox" value="dummy" />
           Stay signed in
         </label>
         <button className={style.button}>

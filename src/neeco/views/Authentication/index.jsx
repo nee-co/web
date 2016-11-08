@@ -30,7 +30,7 @@ export default class extends React.Component {
                 }
             })
         else
-            return <SignInView onSubmit={({id, password, stay_signed_in}) => 
+            return <SignInView onSubmit={({id, password, staySignedIn}) => 
                 login({
                     id      : id,
                     password: password
@@ -38,7 +38,7 @@ export default class extends React.Component {
                     .then(({token}) => {
                         sessionStorage.setItem("token", token)
 
-                        if (stay_signed_in)
+                        if (staySignedIn)
                             localStorage.setItem("token", token)
 
                         this.setState({token: token})
