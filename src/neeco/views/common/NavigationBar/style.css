@@ -18,7 +18,7 @@
     text-align    : center;
 }
 
-.Profile .UserIcon {
+.Profile .UserImage {
     display        : block;
     width          : 64px;
     height         : 64px;
@@ -103,4 +103,12 @@
 
 .TasksIcon::before {
     content: "\F0AE";
+}
+
+.UserIcon {
+    composes: Icon;
+}
+
+.UserIcon::before {
+    content: "\F007";
 }
