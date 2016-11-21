@@ -1,6 +1,7 @@
 import Menu       from "neeco/views/parts/Menu"
 import MenuItem   from "neeco/views/parts/MenuItem"
 import classNames from "neeco/views/parts/NavigationBar/classNames"
+import PopupMenu  from "neeco/views/parts/PopupMenu"
 import React      from "react"
 import {Link}     from "react-router"
 
@@ -34,8 +35,7 @@ export default class extends React.Component {
                   }}
                 />
                 {user ? user.number : ""}&nbsp;<br />
-                {user ? user.name   : ""}&nbsp;<br />
-                <div 
+                <div
                   className={classNames.PopupBackground}
                   onClick={() => this.setState({
                       profileIsSelected: !this.state.profileIsSelected
@@ -44,28 +44,37 @@ export default class extends React.Component {
                       display : this.state.profileIsSelected ? "block" : "none"
                   }}
                 />
-                <Menu
-                  className={classNames.Popup}
+                <PopupMenu
                   style={{
                       display: this.state.profileIsSelected ? "block" : "none"
                   }}
                 >
-                  <MenuItemB to="/settings">
+                  <PopupMenuItemA
+                    className={classNames.UserIcon}
+                    to="/settings"
+                  >
                     プロフィールと設定
-                  </MenuItemB>
-                  <MenuItemB to={"/"}>
+                  </PopupMenuItemA>
+                  <PopupMenuItemA
+                    className={classNames.QuestionIcon}
+                    to={"/"}
+                  >
                     ヘルプ
-                  </MenuItemB>
-                  <MenuItemB to={"/"}>
+                  </PopupMenuItemA>
+                  <PopupMenuItemA
+                    className={classNames.FeedbackIcon}
+                    to={"/"}
+                  >
                     フィードバック
-                  </MenuItemB>
-                  <MenuItemB
+                  </PopupMenuItemA>
+                  <PopupMenuItemA
+                    className={classNames.SignOutIcon}
                     onClick={onSignOut}
                     to={"/"}
                   >
                     サインアウト
-                  </MenuItemB>
-                </Menu>
+                  </PopupMenuItemA>
+                </PopupMenu>
               </div>
               <Menu>
                 <MenuItemA
@@ -81,6 +90,13 @@ export default class extends React.Component {
                   to="/events"
                 >
                   イベント
+                </MenuItemA>
+                <MenuItemA
+                  className={classNames.UsersIcon}
+                  location={location}
+                  to="/groups"
+                >
+                  グループ
                 </MenuItemA>
                 <MenuItemA
                   className={classNames.ArchiveIcon}
@@ -115,9 +131,9 @@ var MenuItemA = ({
       </Link>
     </MenuItem>
 
-var MenuItemB = (props) =>
+var PopupMenuItemA = (props) =>
     <MenuItem>
       <Link {... props}
-        className={props.className + " " + classNames.MenuItemB}
+        className={props.className + " " + classNames.PopupMenuItemA}
       />
     </MenuItem>

@@ -1,3 +1,4 @@
 .EventsView {
-    padding: 16px;
+    min-width: max-content;
+    padding  : 16px;
 }

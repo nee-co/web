@@ -1,0 +1,8 @@
+.PopupMenu {
+    position        : absolute;
+    min-width       : 16em;
+    border-radius   : 4px;
+    background-color: #FFF;
+    color           : #222;
+    box-shadow      : 0 0 20px 0 rgba(0,0,0,.2);
+}

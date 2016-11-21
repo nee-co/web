@@ -1,5 +1,6 @@
 import updatePassword from "neeco/api/user/updatePassword"
 import classNames     from "neeco/views/pages/PasswordSettingsView/classNames"
+import FormButton     from "neeco/views/parts/FormButton"
 import MainContainer  from "neeco/views/parts/MainContainer"
 import React          from "react"
 import {Link}         from "react-router"
@@ -45,7 +46,7 @@ export default class extends React.Component {
                     <input type="password" required name="newPasswordConfirmation"/>
                   </label>
                   <div>
-                    <button>変更</button>
+                    <FormButton>変更</FormButton>
                     <Link
                       className={classNames.CancelButton}
                       to="/settings"

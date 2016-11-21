@@ -1,12 +1,13 @@
 .FormButton {
     display         : inline-block;
-    width           : 128px;
+    width           : 8em;
     margin          : 8px;
-    padding         : 2px 8px;
+    padding         : 4px;
     border-width    : 0px;
     border-radius   : 2px;
     background-color: #58F;
     color           : #FFF;
+    font-size       : 14px;
     text-align      : center;
 }
 

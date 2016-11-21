@@ -10,10 +10,10 @@
     flex-direction: row;
     align-items   : center;
     margin-bottom : 16px;
-    padding       : 16px;
+    padding       : 16px 8px;
     font-size     : 14px;
-    font-weight   : 700;
     cursor        : pointer;
+    transition    : all 0.3s ease-out;
 }
 
 .Profile:hover {
@@ -24,7 +24,7 @@
     display            : block;
     min-width          : 32px;
     min-height         : 32px;
-    margin-right       : 16px;
+    margin-right       : 8px;
     border-radius      : 50%;
     background-position: center;
     background-size    : 100% auto;
@@ -33,17 +33,6 @@
 
 .Profile .UserNumber {
     white-space: nowrap;
-}
-
-.Popup {
-    position        : absolute;
-    left            : 8px;
-    min-width       : 200px;
-    padding         : 8px 16px;
-    border          : 1px solid #CCC;
-    border-radius   : 4px;
-    background-color: #FFF;
-    color           : #777;
 }
 
 .PopupBackground {
@@ -62,7 +51,7 @@
 .MenuItemA,
 .SelectedMenuItemA {
     display        : block;
-    padding        : 14px 8px;
+    padding        : 16px 8px;
     color          : #ABB;
     border-radius  : 0 6px 6px 0; 
     text-decoration: none;
@@ -79,18 +68,17 @@
     color           : #FFF;
 }
 
-.MenuItemB {
+.PopupMenuItemA {
     display        : block;
     padding        : 8px;
-    border-radius  : 2px;
-    color          : #777;
+    color          : inherit;
     font-size      : 12px;
     text-decoration: none;
     cursor         : pointer;
     transition     : all 0.3s ease-out;
 }
 
-.MenuItemB:hover {
+.PopupMenuItemA:hover {
     background-color: #CCC;
 }
 
@@ -105,11 +93,12 @@
 
 .Icon::before {
     display     : inline-block;
-    width       : 15px;
-    height      : 15px;
+    width       : 1.2em;
+    height      : 1.2em;
     margin-right: 8px;
     font-family : "FontAwesome";
-    font-size   : 15px;
+    font-size   : 1.2em;
+    text-align  : center;
     content     : "";
 }
 
@@ -153,6 +142,14 @@
     content: "\F0E0";
 }
 
+.FeedbackIcon {
+    composes: Icon;
+}
+
+.FeedbackIcon::before {
+    content: "\F27B";
+}
+
 .FileIcon {
     composes: Icon;
 }
@@ -177,6 +174,14 @@
     content: "\F128";
 }
 
+.SignOutIcon {
+    composes: Icon;
+}
+
+.SignOutIcon::before {
+    content: "\F08B";
+}
+
 .TasksIcon {
     composes: Icon;
 }
@@ -191,4 +196,12 @@
 
 .UserIcon::before {
     content: "\F007";
+}
+
+.UsersIcon {
+    composes: Icon;
+}
+
+.UsersIcon::before {
+    content: "\F0C0";
 }
