@@ -1,0 +1,15 @@
+.LinkButton {
+    display         : inline-block;
+    width           : 128px;
+    margin          : 8px;
+    padding         : 2px 8px;
+    border-radius   : 2px;
+    background-color: #58F;
+    color           : #FFF;
+    text-align      : center;
+    text-decoration : none;
+}
+
+.LinkButton:hover {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+}

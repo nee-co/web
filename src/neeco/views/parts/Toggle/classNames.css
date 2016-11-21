@@ -1,0 +1,18 @@
+.Toggle {
+    display     : inline-block;
+    margin-right: 16px;
+    color       : #777;
+    font-family : "FontAwesome";
+    font-size   : 20px;
+    text-align  : center;
+    content     : "\F0C9";
+    cursor      : pointer;
+}
+
+.Toggle:hover {
+    color: #555;
+}
+
+.Toggle::before {
+    content: "\F0C9";
+}

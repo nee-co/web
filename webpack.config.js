@@ -1,8 +1,10 @@
 var HtmlWebpackPlugin = require("html-webpack-plugin")
-var webpack = require("webpack")
+var {DefinePlugin}    = require("webpack")
 
 module.exports = {
-    entry: {"js/main.js": "neeco/main"},
+    entry: {
+        "js/main.js": "main"
+    },
     module: {
         loaders: [
             {
@@ -12,15 +14,26 @@ module.exports = {
             {
                 exclude: /node_modules/,
                 loader: "babel",
-                query: {presets: ["es2015", "react"]},
+                query: {
+                    presets: ["es2015", "react"]
+                },
                 test: /\.jsx?$/
             }
         ]
     },
-    output: {filename: "[name]", path: "build"},
+    output: {
+        filename: "[name]",
+        path: "build",
+        publicPath: "/"
+    },
     plugins: [
-        new HtmlWebpackPlugin({template: "src/neeco/index.html"}),
-        new webpack.DefinePlugin({"process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)})
+        new DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+        }),
+        new HtmlWebpackPlugin({
+            template: "src/neeco/index.html"
+        })
+
     ],
     resolve: {
         extensions: ["", ".css", ".js", ".jsx"],

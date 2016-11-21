@@ -1,0 +1,35 @@
+.SettingsView {
+    display       : flex;
+    flex-direction: column;
+    padding       : 16px;
+}
+
+.SettingsView form {
+    display         : flex;
+    flex-direction  : column;
+    margin-top      : 16px;
+    padding         : 8px;
+    background-color: #fff;
+    color           : #777;
+}
+
+.SettingsView label {
+    margin-bottom: 8px;
+}
+
+.SettingsView input {
+    border          : 1px solid #ccc;
+    border-radius   : 2px;    
+    background-color: #fff;
+    color           : #777;
+}
+
+.UserImage {
+    display            : block;
+    width              : 128px;
+    height             : 128px;
+    border-radius      : 50%;
+    background-position: center;
+    background-size    : 100% auto;
+    background-repeat  : no-repeat;
+}

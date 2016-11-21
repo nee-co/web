@@ -1,27 +1,36 @@
-import login        from "neeco/api/auth/login"
-import SignInView   from "neeco/views/SignInView"
-import React        from "react"
+import createToken    from "neeco/api/auth/createToken"
+import getCurrentUser from "neeco/api/user/getCurrentUser"
+import SignInView     from "neeco/views/pages/SignInView"
+import React          from "react"
 
 export default class extends React.Component {
     componentWillMount() {
         this.setState({
-            token: null
+            token: null,
+            user : null
         })
     }
 
     componentDidMount() {
-        this.setState({
-            token: sessionStorage.getItem("token")
-                || localStorage.getItem("token")
-        })
+        var token = sessionStorage.getItem("token")
+                 || localStorage.getItem("token")
+
+        if (token) {
+            this.setState({token: token})
+
+            getCurrentUser({token: token})
+                .then((user) => this.setState({user: user}))
+        }
     }
 
     render() {
-        var {token} = this.state
+        var props = this.props
+        var state = this.state
 
-        if (token)
-            return React.cloneElement(this.props.children, {
-                token: token,
+        if (state.token)
+            return React.cloneElement(props.children, {
+                token    : state.token,
+                user     : state.user,
                 onSignOut: () => {
                     sessionStorage.removeItem("token")
                     localStorage.removeItem("token")
@@ -30,12 +39,12 @@ export default class extends React.Component {
                 }
             })
         else
-            return <SignInView onSubmit={({id, password, staySignedIn}) => 
-                login({
-                    id      : id,
+            return <SignInView onSubmit={({userName, password, staySignedIn}) => 
+                createToken({
+                    userName: userName,
                     password: password
                 })
-                    .then(({token}) => {
+                    .then((token) => {
                         sessionStorage.setItem("token", token)
 
                         if (staySignedIn)

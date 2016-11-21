@@ -1,0 +1,68 @@
+.NewEventView {
+    min-width: max-content;
+    padding  : 16px;
+    font-size: 14px;
+}
+
+.NewEventView form {
+    display         : flex;
+    flex-direction  : column;
+    align-content   : stretch;
+    margin-top      : 16px;
+    background-color: #fff;
+}
+
+.NewEventView label {
+    display       : flex;
+    flex-direction: row;
+    flex-flow     : nowrap;
+    padding       : 8px;
+    border-bottom : 1px solid #ccc;
+}
+
+.NewEventView label:invalid {
+    background-color: black;
+    content: "必須";
+}
+
+.NewEventView label div:first-child {
+    min-width    : 160px;
+    margin-bottom: 8px;
+}
+
+.NewEventView input,
+.NewEventView select,
+.NewEventView textarea {
+    flex-grow       : 1;
+    min-height      : 22px;
+    padding         : 4px 8px;
+    border          : 1px solid #ccc;
+    border-radius   : 2px;
+    background-color: #fff;
+    color           : #777;
+}
+
+.NewEventView select {
+    min-height: 32px;
+}
+
+.NewEventView input[type="date"],
+.NewEventView select {
+    flex-grow   : 0;
+    margin-right: 8px;
+}
+
+@media all and (max-width: 640px) {
+    .NewEventView {
+        padding  : 8px;
+        font-size: 12px;
+    }
+
+    .NewEventView label {
+        flex-direction: column;
+    }
+
+    .NewEventView label div:first-child {
+        margin-bottom: 8px;
+    }
+}

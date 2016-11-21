@@ -1,0 +1,23 @@
+.FilesView {
+    min-width: max-content;
+    padding  : 16px;
+}
+
+.FilesView table {
+    width          : auto;
+    border-collapse: collapse;
+}
+
+.FilesView tr {
+    border-bottom : 1px solid #ccc;
+}
+
+.FilesView thead tr {
+    background-color: #eee;
+}
+
+.FilesView th,
+.FilesView td {
+    padding  : 8px 16px;
+    font-size: 12px;
+}

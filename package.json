@@ -2,9 +2,9 @@
   "name": "neeco",
   "version": "1.0.0",
   "scripts": {
-    "build": "npm run build:development",
-    "build:development": "webpack -d",
-    "build:production": "NODE_ENV=production webpack -p",
+    "postinstall": "npm run postinstall:production",
+    "postinstall:development": "webpack -d",
+    "postinstall:production": "webpack -p",
     "start": "browser-sync start --config bs-config.js"
   },
   "license": "ISC",
@@ -17,13 +17,11 @@
     "connect-history-api-fallback": "^1.2.0",
     "css-loader": "^0.23.1",
     "html-webpack-plugin": "^2.19.0",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-router": "^2.5.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "whatwg-fetch": "^1.0.0"
-  },
-  "dependencies": {
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0",
-    "react-router": "^2.5.1"
   }
 }
