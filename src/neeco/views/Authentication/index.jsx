@@ -1,9 +1,9 @@
-import createToken    from "neeco/api/auth/createToken"
-import getCurrentUser from "neeco/api/user/getCurrentUser"
-import SignInView     from "neeco/views/pages/SignInView"
-import React          from "react"
+var createToken    = require("neeco/api/auth/createToken")
+var getCurrentUser = require("neeco/api/user/getCurrentUser")
+var SignInView     = require("neeco/views/pages/SignInView")
+var React          = require("react")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             token: null,
@@ -24,13 +24,14 @@ export default class extends React.Component {
     }
 
     render() {
-        var props = this.props
-        var state = this.state
+        var {
+            children
+        } = this.props
 
-        if (state.token)
-            return React.cloneElement(props.children, {
-                token    : state.token,
-                user     : state.user,
+        if (this.state.token)
+            return React.cloneElement(children, {
+                token    : this.state.token,
+                user     : this.state.user,
                 onSignOut: () => {
                     sessionStorage.removeItem("token")
                     localStorage.removeItem("token")

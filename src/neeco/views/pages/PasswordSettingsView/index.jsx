@@ -1,11 +1,11 @@
-import updatePassword from "neeco/api/user/updatePassword"
-import classNames     from "neeco/views/pages/PasswordSettingsView/classNames"
-import FormButton     from "neeco/views/parts/FormButton"
-import MainContainer  from "neeco/views/parts/MainContainer"
-import React          from "react"
-import {Link}         from "react-router"
+var updatePassword = require("neeco/api/user/updatePassword")
+var classNames     = require("neeco/views/pages/PasswordSettingsView/classNames")
+var FormButton     = require("neeco/views/parts/FormButton")
+var MainContainer  = require("neeco/views/parts/MainContainer")
+var React          = require("react")
+var {Link}         = require("react-router")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             error: null

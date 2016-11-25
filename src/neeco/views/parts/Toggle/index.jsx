@@ -1,7 +1,7 @@
-import classNames from "neeco/views/parts/Toggle/classNames"
-import React      from "react"
+var classNames = require("neeco/views/parts/Toggle/classNames")
+var React      = require("react")
 
-export default ({
+module.exports = ({
     onClick
 }) =>
     <div

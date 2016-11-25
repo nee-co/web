@@ -1,4 +1,4 @@
-export default (a) => {
+module.exports = (a) => {
     var b = ""
 
     for (var i in a)

@@ -52,6 +52,13 @@
     margin-right: 8px;
 }
 
+.Editor {
+    display   : block;
+    min-width : 200px;
+    min-height: 200px;
+    border    : 1px solid #ccc;
+}
+
 @media all and (max-width: 640px) {
     .NewEventView {
         padding  : 8px;

@@ -1,10 +1,10 @@
-import toFormData  from "neeco/core/toFormData"
-import environment from "neeco/environment"
-import "whatwg-fetch"
+var toFormData  = require("neeco/core/toFormData")
+var environment = require("neeco/environment")
+require("whatwg-fetch")
 
 var uri = environment.api.host + "/user/image"
 
-export default ({token, image}) =>
+module.exports = ({token, image}) =>
     fetch(uri, {
         method : "PATCH",
         headers: {

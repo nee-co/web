@@ -1,10 +1,10 @@
-import toFormData  from "neeco/core/toFormData"
-import environment from "neeco/environment"
-import "whatwg-fetch"
+var toFormData  = require("neeco/core/toFormData")
+var environment = require("neeco/environment")
+require("whatwg-fetch")
 
 var uri = environment.api.host + "/events"
 
-export default ({
+module.exports = ({
     token,
     title,
     start_time,

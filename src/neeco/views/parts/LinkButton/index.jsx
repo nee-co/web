@@ -1,6 +1,6 @@
-import classNames from "neeco/views/parts/LinkButton/classNames"
-import React      from "react"
-import {Link}     from "react-router"
+var classNames = require("neeco/views/parts/LinkButton/classNames")
+var React      = require("react")
+var {Link}     = require("react-router")
 
-export default (props) =>
+module.exports = (props) =>
     <Link {... props} className={classNames.LinkButton + " " + props.className} />

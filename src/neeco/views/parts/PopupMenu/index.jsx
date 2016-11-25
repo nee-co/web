@@ -1,6 +1,6 @@
-import Menu       from "neeco/views/parts/Menu"
-import classNames from "neeco/views/parts/PopupMenu/classNames"
-import React      from "react"
+var Menu       = require("neeco/views/parts/Menu")
+var classNames = require("neeco/views/parts/PopupMenu/classNames")
+var React      = require("react")
 
-export default (props) =>
+module.exports = (props) =>
     <Menu {...props} className={classNames.PopupMenu + " " + props.className} />

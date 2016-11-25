@@ -1,9 +1,9 @@
-import environment from "neeco/environment"
-import "whatwg-fetch"
+var environment = require("neeco/environment")
+require("whatwg-fetch")
 
 var uri = environment.api.host + "/user"
 
-export default ({token}) =>
+module.exports = ({token}) =>
     fetch(uri, {
         method : "GET",
         headers: {

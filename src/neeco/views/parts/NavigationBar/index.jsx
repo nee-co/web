@@ -1,11 +1,11 @@
-import Menu       from "neeco/views/parts/Menu"
-import MenuItem   from "neeco/views/parts/MenuItem"
-import classNames from "neeco/views/parts/NavigationBar/classNames"
-import PopupMenu  from "neeco/views/parts/PopupMenu"
-import React      from "react"
-import {Link}     from "react-router"
+var Menu       = require("neeco/views/parts/Menu")
+var MenuItem   = require("neeco/views/parts/MenuItem")
+var classNames = require("neeco/views/parts/NavigationBar/classNames")
+var PopupMenu  = require("neeco/views/parts/PopupMenu")
+var React      = require("react")
+var {Link}     = require("react-router")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             profileIsSelected: false

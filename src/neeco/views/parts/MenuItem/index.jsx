@@ -1,5 +1,5 @@
-import classNames from "neeco/views/parts/MenuItem/classNames"
-import React      from "react"
+var classNames = require("neeco/views/parts/MenuItem/classNames")
+var React      = require("react")
 
-export default (props) =>
+module.exports = (props) =>
     <li {... props} />

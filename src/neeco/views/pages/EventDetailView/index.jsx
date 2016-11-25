@@ -1,8 +1,8 @@
-import classNames    from "neeco/views/pages/EventsView/classNames"
-import MainContainer from "neeco/views/parts/MainContainer"
-import React         from "react"
+var classNames    = require("neeco/views/pages/EventsView/classNames")
+var MainContainer = require("neeco/views/parts/MainContainer")
+var React         = require("react")
 
-export default (props) =>
+module.exports = (props) =>
     <MainContainer {...props}>
       <section className={classNames.EventView}>
         <h2>イベント詳細</h2>

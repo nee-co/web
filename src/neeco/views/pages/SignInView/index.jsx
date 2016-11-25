@@ -1,7 +1,7 @@
-import classNames from "neeco/views/pages/SignInView/classNames"
-import React      from "react"
+var classNames = require("neeco/views/pages/SignInView/classNames")
+var React      = require("react")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             error: null

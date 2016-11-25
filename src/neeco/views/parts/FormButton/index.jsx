@@ -1,5 +1,5 @@
-import classNames from "neeco/views/parts/FormButton/classNames"
-import React      from "react"
+var classNames = require("neeco/views/parts/FormButton/classNames")
+var React      = require("react")
 
-export default (props) =>
+module.exports = (props) =>
     <button {... props} className={classNames.FormButton + " " + props.className} />

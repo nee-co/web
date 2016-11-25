@@ -1,10 +1,10 @@
-import Footer         from "neeco/views/parts/Footer"
-import Header         from "neeco/views/parts/Header"
-import classNames     from "neeco/views/parts/MainContainer/classNames"
-import NavigationBar  from "neeco/views/parts/NavigationBar"
-import React          from "react"
+var Footer        = require("neeco/views/parts/Footer")
+var Header        = require("neeco/views/parts/Header")
+var classNames    = require("neeco/views/parts/MainContainer/classNames")
+var NavigationBar = require("neeco/views/parts/NavigationBar")
+var React         = require("react")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             navigationBarIsVisible: true,

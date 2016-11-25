@@ -1,8 +1,8 @@
-import classNames from "neeco/views/parts/Header/classNames"
-import Toggle     from "neeco/views/parts/Toggle"
-import React      from "react"
+var classNames = require("neeco/views/parts/Header/classNames")
+var Toggle     = require("neeco/views/parts/Toggle")
+var React      = require("react")
 
-export default ({
+module.exports = ({
     onToggle,
     user
 }) =>

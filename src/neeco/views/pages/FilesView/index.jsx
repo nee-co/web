@@ -1,13 +1,13 @@
-import getFolders    from "neeco/api/file/getFolders"
-import classNames    from "neeco/views/pages/FilesView/classNames"
-import LinkButton    from "neeco/views/parts/LinkButton"
-import MainContainer from "neeco/views/parts/MainContainer"
-import MenuItem      from "neeco/views/parts/MenuItem"
-import PopupMenu     from "neeco/views/parts/PopupMenu"
-import React         from "react"
-import {Link}        from "react-router"
+var getFolders    = require("neeco/api/file/getFolders")
+var classNames    = require("neeco/views/pages/FilesView/classNames")
+var LinkButton    = require("neeco/views/parts/LinkButton")
+var MainContainer = require("neeco/views/parts/MainContainer")
+var MenuItem      = require("neeco/views/parts/MenuItem")
+var PopupMenu     = require("neeco/views/parts/PopupMenu")
+var React         = require("react")
+var {Link}        = require("react-router")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             error: null,

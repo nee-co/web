@@ -1,7 +1,7 @@
-import style from "neeco/views/parts/Footer/classNames"
-import React from "react"
+var style = require("neeco/views/parts/Footer/classNames")
+var React = require("react")
 
-export default ({
+module.exports = ({
 }) =>
     <footer>
     </footer>

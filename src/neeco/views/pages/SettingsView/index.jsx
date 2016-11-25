@@ -1,9 +1,9 @@
-import classNames     from "neeco/views/pages/SettingsView/classNames"
-import MainContainer  from "neeco/views/parts/MainContainer"
-import React          from "react"
-import {Link}         from "react-router"
+var classNames     = require("neeco/views/pages/SettingsView/classNames")
+var MainContainer  = require("neeco/views/parts/MainContainer")
+var React          = require("react")
+var {Link}         = require("react-router")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             error: null

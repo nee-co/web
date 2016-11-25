@@ -1,6 +1,6 @@
-import classNames from "neeco/views/parts/Timeline/classNames"
-import React      from "react"
+var classNames = require("neeco/views/parts/Timeline/classNames")
+var React      = require("react")
 
-export default (props) =>
+module.exports = (props) =>
     <div className={classNames.Timeline}>
     </div>

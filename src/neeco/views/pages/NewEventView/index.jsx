@@ -1,13 +1,14 @@
-import postEvent     from "neeco/api/event/postEvent"
-import classNames    from "neeco/views/pages/NewEventView/classNames"
-import FormButton    from "neeco/views/parts/FormButton"
-import MainContainer from "neeco/views/parts/MainContainer"
-import React         from "react"
+var postEvent     = require("neeco/api/event/postEvent")
+var classNames    = require("neeco/views/pages/NewEventView/classNames")
+var FormButton    = require("neeco/views/parts/FormButton")
+var MainContainer = require("neeco/views/parts/MainContainer")
+var React         = require("react")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            error: null
+            error: null,
+            description: ""
         })
     }
 
@@ -75,19 +76,23 @@ export default class extends React.Component {
                     />
                   </label>
                   <label>
-                    <div>説明</div>
-                    <textarea
-                      name="description"
-                      placeholder="例) Ruby初心者歓迎!!"
-                      rows="8"
-                    />
-                  </label>
-                  <label>
                     <div>画像</div>
                     <input
                       name="image"
                       type="file"
                     />
+                  </label>
+                  <label>
+                    <div>説明</div>
+                    <Editor
+                      onKeyDown={(e) => {
+                          this.setState({
+                              description: this.state.description + "a"
+                          })
+                      }}
+                    >
+                      {this.state.description}
+                    </Editor>
                   </label>
                   <FormButton type="submit">
                     作成
@@ -111,3 +116,43 @@ var TimeSelect = (props) =>
               .reduce((x, y) => x.concat(y))
       }
     </select>
+
+var Editor = class extends React.Component {
+    componentWillMount() {
+        this.setState({
+            focused  : false,
+            onKeyDown: (e) => {
+                if (this.state.focused)
+                    this.props.onKeyDown(e)
+            }
+        })
+    }
+
+    componentDidMount() {
+        window.addEventListener("keydown", this.state.onKeyDown)
+    }
+  
+    componentWillUnmount() {
+        window.removeEventListener("keydown", this.state.onKeyDown)
+    }
+
+    render() {
+        var {
+            children
+        } = this.props
+
+        return (
+            <div
+              className={classNames.Editor}
+              onMouseDown={() => {
+                  this.setState({
+                      focused: true
+                  })
+              }}
+            >
+              {children}
+            </div>
+        )
+    }
+}
+

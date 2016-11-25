@@ -1,20 +1,27 @@
-import getEvents      from "neeco/api/event/getEvents"
-import classNames     from "neeco/views/pages/EventsView/classNames"
-import LinkButton     from "neeco/views/parts/LinkButton"
-import MainContainer  from "neeco/views/parts/MainContainer"
-import React          from "react"
-import {Link}         from "react-router"
+var getEvents      = require("neeco/api/event/getEvents")
+var getOwnedEvents = require("neeco/api/event/getOwnedEvents")
+var classNames     = require("neeco/views/pages/EventsView/classNames")
+var LinkButton     = require("neeco/views/parts/LinkButton")
+var MainContainer  = require("neeco/views/parts/MainContainer")
+var React          = require("react")
+var {Link}         = require("react-router")
 
-export default class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            events: []
+            events: [],
+            ownedEvents: []
         })
     }
 
     componentDidMount() {
         getEvents({token: this.props.token, limit: 10})
             .then((events) => this.setState({events: events}))
+            .catch((e) => {
+            })
+
+        getOwnedEvents({token: this.props.token, limit: 10})
+            .then((events) => this.setState({ownedEvents: events}))
             .catch((e) => {
             })
     }
@@ -26,21 +33,33 @@ export default class extends React.Component {
             <MainContainer {... this.props}>
               <section className={classNames.EventsView}>
                 <h2>イベント</h2>
-                <LinkButton to="/new_event">
-                  新規
-                </LinkButton>
-                <ul>
-                  {
-                      this.state.events.map(({id, title, description}) =>
-                          <li key={id}>
-                            <h4>{title}</h4>
-                            {description}
-                          </li> 
-                      )
-                  }
-                </ul>
+                <div>
+                  <section>
+                    <h3>新着イベント</h3>
+                    <EventList events={this.state.events} />
+                  </section>
+                  <section>
+                    <h3>管理イベント</h3>
+                    <LinkButton to="/new_event">
+                    新規
+                    </LinkButton>
+                    <EventList events={this.state.ownedEvents} />
+                  </section>
+                </div>
               </section>
             </MainContainer>
         )
     }
 }
+
+var EventList = ({events}) =>  
+    <ul className={classNames.EventListView}>
+      {
+          events.map(({id, title, description}) =>
+              <li key={id}>
+                <h4>{title}</h4>
+                {description}
+              </li>
+          )
+      }
+    </ul>
