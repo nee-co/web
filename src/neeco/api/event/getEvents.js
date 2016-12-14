@@ -1,10 +1,12 @@
-var toURIQuery  = require("neeco/core/toURIQuery")
-var environment = require("neeco/environment")
+var toURIQuery = require("neeco/encoding/toURIQuery")
 
-var uri = environment.api.host + "/events"
-
-module.exports = ({token, offset, limit}) =>
-    fetch(uri + "?" + toURIQuery({
+module.exports = ({
+    apiHost,
+    token,
+    offset,
+    limit
+}) =>
+    fetch(apiHost + "/events?" + toURIQuery({
         page   : "1",
         per    : limit,
     }), {

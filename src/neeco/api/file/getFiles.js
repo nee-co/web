@@ -1,9 +1,10 @@
-var environment = require("neeco/environment")
-
-var uri = environment.api.host + "/folders/"
-
-module.exports = ({token, id, limit}) =>
-    fetch(uri + id, {
+module.exports = ({
+    apiHost,
+    token,
+    id,
+    limit
+}) =>
+    fetch(apiHost + "/folders/" + id, {
         method : "GET",
         headers: {
             authorization: "Bearer " + token

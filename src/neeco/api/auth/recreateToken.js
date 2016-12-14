@@ -1,9 +1,8 @@
-var environment = require("neeco/environment")
-
-var uri = environment.api.host + "/token/refresh"
-
-module.exports = ({token}) =>
-    fetch(uri, {
+module.exports = ({
+    apiHost,
+    token
+}) =>
+    fetch(apiHost + "/token/refresh", {
         method : "GET",
         headers: {
             authorization: "Bearer " + token

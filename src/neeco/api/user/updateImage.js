@@ -1,10 +1,11 @@
-var toFormData  = require("neeco/core/toFormData")
-var environment = require("neeco/environment")
+var toFormData  = require("neeco/encoding/toFormData")
 
-var uri = environment.api.host + "/user/image"
-
-module.exports = ({token, image}) =>
-    fetch(uri, {
+module.exports = ({
+    apiHost,
+    token,
+    image
+}) =>
+    fetch(apiHost + "/user/image", {
         method : "PATCH",
         headers: {
             authorization: "Bearer " + token

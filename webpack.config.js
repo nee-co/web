@@ -38,7 +38,12 @@ module.exports = {
     },
     plugins: [
         new DefinePlugin({
-            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+            process: {
+                env: {
+                    NODE_ENV      : JSON.stringify(process.env.NODE_ENV),
+                    NEECO_API_HOST: JSON.stringify(process.env.NEECO_API_HOST || "https://api.neec.ooo")
+                }
+            }
         }),
         new HtmlWebpackPlugin({
             template: "src/neeco/index.html"

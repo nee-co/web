@@ -1,0 +1,21 @@
+.FormInput {
+    display         : inline-block;
+    margin          : 8px;
+    padding         : 4px 8px;
+    border          : 1px solid #ddd;
+    border-radius   : 2px;
+    outline         : 0;
+    background-color: transparent;
+    font-family     : inherit;
+    font-size       : inherit;
+    transition      : all 0.3s ease-out;
+}
+
+.FormInput:hover,
+.FormInput:focus {
+    border-color: #09F;
+}
+
+.FormInput:focus {
+    box-shadow: 0 0 1px 1px rgba(0, 144, 255, 0.3);
+}

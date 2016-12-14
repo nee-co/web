@@ -1,0 +1,41 @@
+.SignInPage {
+    display            : flex;
+    flex-direction     : column;
+    align-items        : center;
+    justify-content    : center;
+    position           : absolute;
+    min-width          : 100%;
+    min-height         : 100%;
+    background-image   : url("/images/sign_in/bg.jpg");
+    background-position: center;
+    background-size    : cover;
+    color              : white;
+}
+
+.SignInPage h2 {
+    margin-bottom: 16px;
+    font-size : 32px;
+    text-align: center;
+}
+
+.SignInPage form {
+    display       : flex;
+    flex-direction: column;
+}
+
+.SignInPage form label {
+    display      : block;
+    margin-bottom: 8px;
+}
+
+.SignInPage form label input {
+    padding: 8px;
+}
+
+.SignInPage form label input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.SignInPage form button {
+    align-self: center;    
+}

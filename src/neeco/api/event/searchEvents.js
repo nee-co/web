@@ -1,17 +1,18 @@
-var toURIQuery  = require("neeco/core/toURIQuery")
-var environment = require("neeco/environment")
+var toURIQuery   = require("neeco/encoding/toURIQuery")
 
-var uris = {
-    searchEvents       : environment.api.host + "/events/search",
-    searchEntriedEvents: environment.api.host + "/events/entries",
-    searchOwnedEvents  : environment.api.host + "/events/own"
-}
-
-module.exports = ({token, query, entried, owned, offset, limit}) =>
+module.exports = ({
+    apiHost,
+    token,
+    query,
+    entried,
+    owned,
+    offset,
+    limit
+}) =>
     fetch((
-        entried ? uris.searchEntriedEvents
-      : owned   ? uris.searchOwnedEvents
-      :           uris.searchEvents
+        entried ? (apiHost + "/events/entries")
+      : owned   ? (apiHost + "/events/own")
+      :           (apiHost + "/events/search")
     ) + "?" + toURIQuery({
         keyword: query,
         page   : "1",

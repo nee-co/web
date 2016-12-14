@@ -1,16 +1,14 @@
-var toFormData  = require("neeco/core/toFormData")
-var environment = require("neeco/environment")
-
-var uri = environment.api.host + "/events"
+var toFormData   = require("neeco/encoding/toFormData")
 
 module.exports = ({
+    apiHost,
     token,
     title,
     startDate,
     description,
     image
 }) =>
-    fetch(uri, {
+    fetch(apiHost + "/events", {
         method : "POST",
         headers: {
             authorization: "Bearer " + token

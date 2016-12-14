@@ -1,10 +1,11 @@
-var toFormData  = require("neeco/core/toFormData")
-var environment = require("neeco/environment")
+var toFormData = require("neeco/encoding/toFormData")
 
-var uri = environment.api.host + "/token"
-
-module.exports = ({userName, password}) =>
-    fetch(uri, {
+module.exports = ({
+    apiHost,
+    userName,
+    password
+}) =>
+    fetch(apiHost + "/token", {
         method: "POST",
         body  : toFormData({
             number  : userName,
