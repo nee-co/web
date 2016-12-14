@@ -1,5 +1,4 @@
 var environment = require("neeco/environment")
-require("whatwg-fetch")
 
 var uri = environment.api.host + "/token/refresh"
 

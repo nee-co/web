@@ -3,7 +3,11 @@ var {DefinePlugin}    = require("webpack")
 
 module.exports = {
     entry: {
-        "js/main.js": "main"
+        "js/main.js": [
+            "babel-polyfill",
+            "whatwg-fetch",
+            "main"
+        ]
     },
     module: {
         loaders: [
@@ -15,7 +19,13 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel",
                 query: {
-                    presets: ["es2015", "react"]
+                    plugins: [
+                        "transform-async-to-generator"
+                    ],
+                    presets: [
+                        "es2015",
+                        "react"
+                    ]
                 },
                 test: /\.jsx?$/
             }
@@ -33,7 +43,6 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "src/neeco/index.html"
         })
-
     ],
     resolve: {
         extensions: ["", ".css", ".js", ".jsx"],

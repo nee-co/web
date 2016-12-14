@@ -1,6 +1,5 @@
 var toURIQuery  = require("neeco/core/toURIQuery")
 var environment = require("neeco/environment")
-require("whatwg-fetch")
 
 var uri = environment.api.host + "/events"
 
@@ -20,10 +19,7 @@ module.exports = ({token, offset, limit}) =>
             id         : x.id,
             title      : x.title,
             description: x.body,
-            image      : x.event_image,
-            start_time : x.started_at,
-            end_time   : x.ended_at,
-            location   : x.venue,
-            limit      : x.entry_upper_limit
+            image      : x.image,
+            startTime  : x.start_time
         }))
     ))

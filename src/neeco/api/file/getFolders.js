@@ -1,9 +1,8 @@
 var environment = require("neeco/environment")
-require("whatwg-fetch")
 
 var uri = environment.api.host + "/folders"
 
-module.exports = ({token}) =>
+module.exports = ({token, limit}) =>
     fetch(uri, {
         method : "GET",
         headers: {
