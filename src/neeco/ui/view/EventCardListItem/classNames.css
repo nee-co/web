@@ -1,4 +1,5 @@
 .EventCardListItem {
+    flex-wrap       : wrap;
     background-color: #FFF;
     box-shadow      : 0 2px 4px rgba(0, 0, 0, .2);
 }
@@ -7,4 +8,20 @@
     min-width      : 216px;
     min-height     : 128px;
     background-size: cover;
+}
+
+.EventInfo {
+    display       : flex;
+    flex-direction: column;
+    padding       : 8px;
+}
+
+.EventTitle {
+    display: inline-block;   
+}
+
+.EventDate {
+    display   : inline-block;
+    align-self: flex-end;
+    font-size : 0.9em;
 }

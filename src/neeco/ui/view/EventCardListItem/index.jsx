@@ -5,7 +5,7 @@ var {browserHistory} = require("react-router")
 
 module.exports = ({event}) =>
     <ListItem
-        className={classNames.EventCard}
+        className={classNames.EventCardListItem}
     >
         <div
             className={classNames.EventImage}
@@ -14,8 +14,10 @@ module.exports = ({event}) =>
             }}
         >
         </div>
-        <div>
-            {event.title}<br />
-            {event.startDate}<br />
+        <div
+            className={classNames.EventInfo}
+        >
+            <p className={classNames.EventTitle}>{event.title}</p>
+            <p className={classNames.EventDate}>{event.startDate}</p>
         </div>
     </ListItem>
