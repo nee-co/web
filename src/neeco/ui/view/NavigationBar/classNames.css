@@ -43,28 +43,28 @@
     cursor  : default;
 }
 
-.MenuItemA,
-.SelectedMenuItemA {
+.ListItemA,
+.SelectedListItemA {
     display        : block;
     padding        : 16px 8px;
     text-decoration: none;
     transition     : all 0.3s ease-out;
 }
 
-.MenuItemA {
+.ListItemA {
     color     : #777;
     transition: all 0.3s ease-out;
 }
 
-.MenuItemA:hover {
+.ListItemA:hover {
     color: unset;
 }
 
-.SelectedMenuItemA {
+.SelectedListItemA {
     color: unset;
 }
 
-.PopupMenuItemA {
+.PopupListItemA {
     display        : block;
     padding        : 8px;
     color          : unset;
@@ -74,7 +74,7 @@
     transition     : all 0.3s ease-out;
 }
 
-.PopupMenuItemA:hover {
+.PopupListItemA:hover {
     background-color: #CCC;
 }
 

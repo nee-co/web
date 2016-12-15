@@ -1,11 +1,11 @@
-var toFormData  = require("neeco/encoding/toFormData")
+var toFormData = require("neeco/encoding/toFormData")
 
-module.exports = ({
+module.exports = async ({
     apiHost,
     token,
     image
-}) =>
-    fetch(apiHost + "/user/image", {
+}) => {
+    var response = await fetch(apiHost + "/user/image", {
         method : "PATCH",
         headers: {
             authorization: "Bearer " + token
@@ -14,4 +14,6 @@ module.exports = ({
             image: image
         })
     })
-        .then(response => response.ok)
+
+    return response
+}

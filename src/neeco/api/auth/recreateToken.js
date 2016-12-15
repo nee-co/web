@@ -1,12 +1,15 @@
-module.exports = ({
+module.exports = async ({
     apiHost,
     token
-}) =>
-    fetch(apiHost + "/token/refresh", {
+}) => {
+    var response = await fetch(apiHost + "/token/refresh", {
         method : "GET",
         headers: {
             authorization: "Bearer " + token
         }
     })
-    .then(response => response.json())
-    .then(x => Promise.resolve(x.token))
+
+    var {token} = await response.json()
+
+    return token
+}

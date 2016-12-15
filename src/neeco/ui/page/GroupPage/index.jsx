@@ -1,5 +1,5 @@
 var getGroups     = require("neeco/api/group/getGroups")
-var classNames    = require("neeco/ui/page/GroupsPage/classNames")
+var classNames    = require("neeco/ui/page/GroupPage/classNames")
 var LinkButton    = require("neeco/ui/view/LinkButton")
 var MainContainer = require("neeco/ui/view/MainContainer")
 var React         = require("react")
@@ -8,20 +8,24 @@ var {Link}        = require("react-router")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            groups: [],
-            ownedEvents: []
+            groups: []
         })
     }
 
     componentDidMount() {
-        getGroups({
-            apiHost: process.env.NEECO_API_HOST,
-            token  : this.props.token,
-            limit  : 10
-        })
-            .then((events) => this.setState({events: events}))
-            .catch((e) => {
+        var {
+            token
+        } = this.props
+
+        ;(async () => { 
+            var groups = await getGroups({
+                apiHost: process.env.NEECO_API_HOST,
+                token  : token,
+                limit  : 10
             })
+
+            this.setState({groups: groups})
+        })()
     }
 
     render() {

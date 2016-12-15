@@ -1,20 +1,21 @@
-module.exports = ({
+module.exports = async ({
     apiHost,
     token,
     id,
     limit
-}) =>
-    fetch(apiHost + "/folders/" + id, {
+}) => {
+    var response = await fetch(apiHost + "/folders/" + id, {
         method : "GET",
         headers: {
             authorization: "Bearer " + token
         }
     })
-    .then(response => response.json())
-    .then(({files}) => Promise.resolve(
-        files.map((x) => ({
-            id       : x.id,
-            name     : x.name,
-            updatedAt: x.updated_at
-        }))
-    ))
+    
+    var {files} = await response.json()
+
+    return files.map((x) => ({
+        id       : x.id,
+        name     : x.name,
+        updatedAt: x.updated_at
+    }))
+}

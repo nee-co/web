@@ -1,6 +1,6 @@
-var toURIQuery   = require("neeco/encoding/toURIQuery")
+var toURIQuery = require("neeco/encoding/toURIQuery")
 
-module.exports = ({
+module.exports = async ({
     apiHost,
     token,
     query,
@@ -8,8 +8,8 @@ module.exports = ({
     owned,
     offset,
     limit
-}) =>
-    fetch((
+}) => {
+    var response = await fetch((
         entried ? (apiHost + "/events/entries")
       : owned   ? (apiHost + "/events/own")
       :           (apiHost + "/events/search")
@@ -23,13 +23,14 @@ module.exports = ({
             authorization: "Bearer " + token
         }
     })
-    .then(response => response.json())
-    .then(({events}) => Promise.resolve(
-        events.map((x) => ({
-            id         : x.id,
-            title      : x.title,
-            description: x.body,
-            image      : x.image,
-            startDate  : x.start_date,
-        }))
-    ))
+
+    var {events} = await response.json()
+   
+    return events.map((x) => ({
+        id         : x.id,
+        title      : x.title,
+        description: x.body,
+        image      : x.image,
+        startDate  : x.start_date,
+    }))
+}

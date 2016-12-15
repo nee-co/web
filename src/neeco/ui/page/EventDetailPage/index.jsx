@@ -1,4 +1,4 @@
-var classNames    = require("neeco/ui/page/EventsPage/classNames")
+var classNames    = require("neeco/ui/page/EventPage/classNames")
 var MainContainer = require("neeco/ui/view/MainContainer")
 var React         = require("react")
 

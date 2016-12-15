@@ -1,12 +1,12 @@
 var getEvents     = require("neeco/api/event/getEvents")
 var searchEvents  = require("neeco/api/event/searchEvents")
-var classNames    = require("neeco/ui/page/EventsPage/classNames")
+var classNames    = require("neeco/ui/page/EventPage/classNames")
 var FormButton    = require("neeco/ui/view/FormButton")
 var FormInput     = require("neeco/ui/view/FormInput")
 var LinkButton    = require("neeco/ui/view/LinkButton")
 var MainContainer = require("neeco/ui/view/MainContainer")
-var Menu          = require("neeco/ui/view/Menu")
-var MenuItem      = require("neeco/ui/view/MenuItem")
+var List          = require("neeco/ui/view/List")
+var ListItem      = require("neeco/ui/view/ListItem")
 var React         = require("react")
 var {Link}        = require("react-router")
 
@@ -20,37 +20,40 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        searchEvents({
-            apiHost: process.env.NEECO_API_HOST,
-            token  : this.props.token,
-            query  : "",
-            limit  : 10
-        })
-            .then((events) => this.setState({events: events}))
-            .catch((e) => {
+        ;(async () => {
+            var events = await searchEvents({
+                apiHost: process.env.NEECO_API_HOST,
+                token  : this.props.token,
+                query  : "",
+                limit  : 10
             })
 
-        searchEvents({
-            apiHost: process.env.NEECO_API_HOST,
-            token  : this.props.token,
-            query  : "",
-            entried: true,
-            limit  : 10
-        })
-            .then((events) => this.setState({entriedEvents: events}))
-            .catch((e) => {
+            this.setState({events: events})
+        })()
+
+        ;(async () => {
+            var entriedEvents = await searchEvents({
+                apiHost: process.env.NEECO_API_HOST,
+                token  : this.props.token,
+                query  : "",
+                entried: true,
+                limit  : 10
             })
 
-        searchEvents({
-            apiHost: process.env.NEECO_API_HOST,
-            token  : this.props.token,
-            query  : "",
-            owned  : true,
-            limit  : 10
-        })
-            .then((events) => this.setState({ownedEvents: events}))
-            .catch((e) => {
+            this.setState({entriedEvents: entriedEvents})
+        })()
+
+        ;(async () => {
+            var ownedEvents = await searchEvents({
+                apiHost: process.env.NEECO_API_HOST,
+                token  : this.props.token,
+                query  : "",
+                owned  : true,
+                limit  : 10
             })
+
+            this.setState({ownedEvents: ownedEvents})
+        })()
     }
 
     render() {
@@ -63,28 +66,29 @@ module.exports = class extends React.Component {
                 {... this.props}
             >
                 <section
-                    className={classNames.EventsPage}
+                    className={classNames.EventPage}
                 >
                     <h2>イベント</h2>
-                    <div className={classNames.PanelContainer}>
+                    <div
+                        className={classNames.PanelContainer}
+                    >
                         <div>
                             <section>
                                 <form
                                     className={classNames.SearchForm}
-                                    onSubmit={(e) => {
+                                    onSubmit={async (e) => {
                                         e.preventDefault()
 
                                         var form = e.target
 
-                                        searchEvents({
+                                        var events = await searchEvents({
                                             apiHost: process.env.NEECO_API_HOST,
                                             token  : token,
                                             query  : form.query.value,
                                             limit  : 10
                                         })
-                                            .then((events) => this.setState({events: events}))
-                                            .catch((e) => {
-                                            })
+
+                                        this.setState({events: events})
                                     }}
                                 >
                                     <label>
@@ -97,7 +101,7 @@ module.exports = class extends React.Component {
                                         className={classNames.SearchButton}
                                     />
                                 </form>
-                                <EventListView
+                                <EventList
                                     events={this.state.events}
                                 />
                             </section>
@@ -113,13 +117,13 @@ module.exports = class extends React.Component {
                             </div>
                             <section>
                                 <h3>参加予定イベント</h3>
-                                <EventListView
+                                <EventList
                                     events={this.state.entriedEvents}
                                 />
                             </section>
                             <section>
                                 <h3>開催イベント</h3>
-                                <EventListView
+                                <EventList
                                     events={this.state.ownedEvents}
                                 />
                             </section>
@@ -131,22 +135,36 @@ module.exports = class extends React.Component {
     }
 }
 
-var EventListView = ({events}) =>  
-    <Menu
+var EventList = ({events}) =>  
+    <List
         className={classNames.EventList}
     >
-        {
-            events.map((event) =>
-                <MenuItem
-                    key={event.id}
-                    className={classNames.Event}
-                >
-                    <h4>{event.title}</h4>
-                    <span
-                        className={classNames.date}>
-                        {event.startDate}
-                    </span>
-                </MenuItem>
-            )
-        }
-    </Menu>
+        {events.map((event) =>
+            <EventListItem
+                event={event}
+                key={event.id}
+            />
+        )}
+    </List>
+
+var EventListItem = ({event}) => 
+    <ListItem className={classNames.EventListItem}>
+        <img
+            alt={event.title}
+            src=""
+            width="64px"
+            height="64px"
+        />
+        <div>
+            <h4
+                className={classNames.EventTitle}
+            >
+                {event.title}
+            </h4>
+            <div
+                className={classNames.EventDate}
+            >
+                {event.startDate}
+            </div>
+        </div>
+    </ListItem>

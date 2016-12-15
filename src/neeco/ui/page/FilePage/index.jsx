@@ -1,9 +1,9 @@
 var getFolders    = require("neeco/api/file/getFolders")
-var classNames    = require("neeco/ui/page/FilesPage/classNames")
+var classNames    = require("neeco/ui/page/FilePage/classNames")
 var LinkButton    = require("neeco/ui/view/LinkButton")
 var MainContainer = require("neeco/ui/view/MainContainer")
-var MenuItem      = require("neeco/ui/view/MenuItem")
-var PopupMenu     = require("neeco/ui/view/PopupMenu")
+var ListItem      = require("neeco/ui/view/ListItem")
+var PopupList     = require("neeco/ui/view/PopupList")
 var React         = require("react")
 var {Link}        = require("react-router")
 
@@ -21,13 +21,14 @@ module.exports = class extends React.Component {
             token,
         } = this.props
 
-        getFolders({
-            apiHost: process.env.NEECO_API_HOST,
-            token  : token
-        })
-            .then((files) => this.setState({files: files}))
-            .catch((e) => {
+        ;(async () => {
+            var files = await getFolders({
+                apiHost: process.env.NEECO_API_HOST,
+                token  : token
             })
+            
+            this.setState({files: files})
+        })()
     }
 
     render() {
@@ -41,7 +42,7 @@ module.exports = class extends React.Component {
                 {... this.props}
             >
                 <section
-                    className={classNames.FilesPage}
+                    className={classNames.FilePage}
                 >
                     <div>
                         <h2>ファイル</h2>
@@ -61,15 +62,15 @@ module.exports = class extends React.Component {
                                 display: this.state.newButtonIsSelected ? "block" : "none"
                             }}
                         />
-                        <PopupMenu
+                        <PopupList
                             style={{
                                 display: this.state.newButtonIsSelected ? "block" : "none"
                             }}
                         >
-                            <PopupMenuItemA>
+                            <PopupListItemA>
                                 フォルダ
-                            </PopupMenuItemA>
-                            <PopupMenuItemA>
+                            </PopupListItemA>
+                            <PopupListItemA>
                                 <form>
                                     <label>
                                         ファイルのアップロード
@@ -80,8 +81,8 @@ module.exports = class extends React.Component {
                                         />
                                     </label>
                                 </form>
-                            </PopupMenuItemA>
-                        </PopupMenu>
+                            </PopupListItemA>
+                        </PopupList>
                         <nav>
                         </nav>
                     </div>
@@ -95,13 +96,13 @@ module.exports = class extends React.Component {
     }
 }
 
-var PopupMenuItemA = (props) =>
-    <MenuItem>
+var PopupListItemA = (props) =>
+    <ListItem>
         <Link
             {... props}
-            className={props.className + " " + classNames.PopupMenuItemA}
+            className={props.className + " " + classNames.PopupListItemA}
         />
-    </MenuItem>
+    </ListItem>
 
 var FileListView = ({files}) =>
     <table

@@ -1,20 +1,20 @@
-.FilesPage {
+.FilePage {
     display       : flex;
     flex-direction: column;
     min-width     : max-content;
 }
 
-.FilesPage > *:nth-child(1) {
+.FilePage > *:nth-child(1) {
     padding   : 16px;
     box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
 
-.FilesPage > *:nth-child(2):not(table) {
+.FilePage > *:nth-child(2):not(table) {
     padding  : 16px;
     flex-grow: 1;
 }
 
-.FilesPage label {
+.FilePage label {
     display: block;
     cursor : pointer;
 }
@@ -46,7 +46,7 @@
     cursor  : default;
 }
 
-.PopupMenuItemA {
+.PopupListItemA {
     display        : block;
     padding        : 8px;
     color          : inherit;
@@ -56,6 +56,6 @@
     transition     : all 0.3s ease-out;
 }
 
-.PopupMenuItemA:hover {
+.PopupListItemA:hover {
     background-color: #CCC;
 }

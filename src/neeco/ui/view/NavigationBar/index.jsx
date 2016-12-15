@@ -1,7 +1,7 @@
-var Menu       = require("neeco/ui/view/Menu")
-var MenuItem   = require("neeco/ui/view/MenuItem")
+var List       = require("neeco/ui/view/List")
+var ListItem   = require("neeco/ui/view/ListItem")
 var classNames = require("neeco/ui/view/NavigationBar/classNames")
-var PopupMenu  = require("neeco/ui/view/PopupMenu")
+var PopupList  = require("neeco/ui/view/PopupList")
 var React      = require("react")
 var {Link}     = require("react-router")
 
@@ -46,74 +46,74 @@ module.exports = class extends React.Component {
                             display: this.state.profileIsSelected ? "block" : "none"
                         }}
                     />
-                    <PopupMenu
+                    <PopupList
                         style={{
                             display: this.state.profileIsSelected ? "block" : "none"
                         }}
                     >
-                        <PopupMenuItemA
+                        <PopupListItemA
                             className={classNames.UserIcon}
                             to="/settings"
                         >
                             プロフィールと設定
-                        </PopupMenuItemA>
-                        <PopupMenuItemA
+                        </PopupListItemA>
+                        <PopupListItemA
                             className={classNames.QuestionIcon}
                             to={"/"}
                         >
                             ヘルプ
-                        </PopupMenuItemA>
-                        <PopupMenuItemA
+                        </PopupListItemA>
+                        <PopupListItemA
                             className={classNames.FeedbackIcon}
                             to={"/"}
                         >
                             フィードバック
-                        </PopupMenuItemA>
-                        <PopupMenuItemA
+                        </PopupListItemA>
+                        <PopupListItemA
                             className={classNames.SignOutIcon}
                             onClick={onSignOut}
                             to={"/"}
                         >
                             サインアウト
-                        </PopupMenuItemA>
-                    </PopupMenu>
+                        </PopupListItemA>
+                    </PopupList>
                 </div>
-                <Menu>
-                    <MenuItemA
+                <List>
+                    <ListItemA
                         className={classNames.DashboardIcon}
                         location={location}
                         to="/"
                     >
                         ダッシュボード
-                    </MenuItemA>
-                    <MenuItemA
+                    </ListItemA>
+                    <ListItemA
                         className={classNames.CalendarIcon}
                         location={location}
                         to="/events"
                     >
                         イベント
-                    </MenuItemA>
-                    <MenuItemA
+                    </ListItemA>
+                    <ListItemA
                         className={classNames.UsersIcon}
                         location={location}
                         to="/groups"
                     >
                         グループ
-                    </MenuItemA>
-                    <MenuItemA
+                    </ListItemA>
+                    <ListItemA
                         className={classNames.ArchiveIcon}
                         location={location}
                         to="/files"
                     >
                         ファイル
-                    </MenuItemA>
-                </Menu>
+                    </ListItemA>
+                </List>
             </nav>
         )
     }
 }
 
-var MenuItemA = ({
+var ListItemA = ({
     className,
     children,
     location: {
@@ -121,11 +121,11 @@ var MenuItemA = ({
     },
     to
 }) =>
-    <MenuItem>
+    <ListItem>
         <Link
             className={className + " " + (
-                pathname == to ? classNames.SelectedMenuItemA
-                               : classNames.MenuItemA
+                pathname == to ? classNames.SelectedListItemA
+                               : classNames.ListItemA
             )}
             to={(
                 pathname == to ? ""
@@ -134,12 +134,12 @@ var MenuItemA = ({
         >
             {children}
         </Link>
-    </MenuItem>
+    </ListItem>
 
-var PopupMenuItemA = (props) =>
-    <MenuItem>
+var PopupListItemA = (props) =>
+    <ListItem>
         <Link
             {... props}
-            className={props.className + " " + classNames.PopupMenuItemA}
+            className={props.className + " " + classNames.PopupListItemA}
         />
-    </MenuItem>
+    </ListItem>

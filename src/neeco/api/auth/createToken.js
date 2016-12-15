@@ -1,16 +1,20 @@
 var toFormData = require("neeco/encoding/toFormData")
 
-module.exports = ({
+module.exports = async ({
     apiHost,
     userName,
     password
-}) =>
-    fetch(apiHost + "/token", {
+}) => {
+    var response = await fetch(apiHost + "/token", {
         method: "POST",
         body  : toFormData({
             number  : userName,
             password: password
         })
     })
-    .then(response => response.json())
-    .then(x => Promise.resolve(x.token))
+
+    var {token} = await response.json()
+
+    return token
+}
+
