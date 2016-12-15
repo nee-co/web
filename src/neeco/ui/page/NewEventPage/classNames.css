@@ -20,14 +20,14 @@
     border-bottom : 1px solid #ccc;
 }
 
-.NewEventPage form > label > *:nth-child(1),
-.NewEventPage form > div   > *:nth-child(1) {
+.NewEventPage form > label > :nth-child(1),
+.NewEventPage form > div   > :nth-child(1) {
     display      : inline-block;
     min-width    : 160px;
     margin-bottom: 8px;
 }
 
-.NewEventPage form > label > *:nth-child(2) > *:nth-child(1) {
+.NewEventPage form > label > :nth-child(2) > :nth-child(1) {
     display      : inline-block;
     margin-bottom: 8px;
 }
@@ -60,7 +60,7 @@
         flex-direction: column;
     }
 
-    .NewEventPage form > label *:nth-child(1) {
+    .NewEventPage form > label :nth-child(1) {
         margin-bottom: 8px;
     }
 }

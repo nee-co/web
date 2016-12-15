@@ -1,14 +1,15 @@
-var getEvents     = require("neeco/api/event/getEvents")
-var searchEvents  = require("neeco/api/event/searchEvents")
-var classNames    = require("neeco/ui/page/EventPage/classNames")
-var FormButton    = require("neeco/ui/view/FormButton")
-var FormInput     = require("neeco/ui/view/FormInput")
-var LinkButton    = require("neeco/ui/view/LinkButton")
-var MainContainer = require("neeco/ui/view/MainContainer")
-var List          = require("neeco/ui/view/List")
-var ListItem      = require("neeco/ui/view/ListItem")
-var React         = require("react")
-var {Link}        = require("react-router")
+var getEvents        = require("neeco/api/event/getEvents")
+var searchEvents     = require("neeco/api/event/searchEvents")
+var classNames       = require("neeco/ui/page/EventPage/classNames")
+var FormButton       = require("neeco/ui/view/FormButton")
+var FormInput        = require("neeco/ui/view/FormInput")
+var LinkButton       = require("neeco/ui/view/LinkButton")
+var MainContainer    = require("neeco/ui/view/MainContainer")
+var List             = require("neeco/ui/view/List")
+var ListItem         = require("neeco/ui/view/ListItem")
+var React            = require("react")
+var {Link}           = require("react-router")
+var {browserHistory} = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -107,24 +108,22 @@ module.exports = class extends React.Component {
                             </section>
                         </div>
                         <div>
-                            <div>
+                            <section>
                                 <LinkButton
                                     className={classNames.NewEventButton}
                                     to="/new_event"
                                 >
                                     開催する
                                 </LinkButton>
-                            </div>
+                                <h3>開催イベント</h3>
+                                <EventList
+                                    events={this.state.ownedEvents}
+                                />
+                            </section>
                             <section>
                                 <h3>参加予定イベント</h3>
                                 <EventList
                                     events={this.state.entriedEvents}
-                                />
-                            </section>
-                            <section>
-                                <h3>開催イベント</h3>
-                                <EventList
-                                    events={this.state.ownedEvents}
                                 />
                             </section>
                         </div>
@@ -148,10 +147,15 @@ var EventList = ({events}) =>
     </List>
 
 var EventListItem = ({event}) => 
-    <ListItem className={classNames.EventListItem}>
+    <ListItem
+        className={classNames.EventListItem}
+        onClick={(e) => {
+            browserHistory.push("/events/" + event.id)
+        }}
+    >
         <img
             alt={event.title}
-            src=""
+            src={event.image}
             width="64px"
             height="64px"
         />

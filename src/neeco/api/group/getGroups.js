@@ -12,13 +12,5 @@ module.exports = async ({
 
     var {groups} = await response.json()
      
-    return groups.map(
-        x => ({
-            id     : x.id,
-            number : x.number,
-            name   : x.name,
-            image  : x.image,
-            college: x.college
-        })
-    )
+    return groups
 }

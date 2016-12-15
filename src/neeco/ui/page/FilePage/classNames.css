@@ -4,12 +4,12 @@
     min-width     : max-content;
 }
 
-.FilePage > *:nth-child(1) {
+.FilePage > :nth-child(1) {
     padding   : 16px;
     box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
 
-.FilePage > *:nth-child(2):not(table) {
+.FilePage > :nth-child(2):not(table) {
     padding  : 16px;
     flex-grow: 1;
 }

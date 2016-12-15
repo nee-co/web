@@ -12,12 +12,5 @@ module.exports = async ({
     
     var user = await response.json()
 
-    return {
-        id     : user.id,
-        number : user.number,
-        name   : user.name,
-        image  : user.image,
-        note   : user.note,
-        college: user.college
-    }
+    return user
 }
