@@ -1,0 +1,9 @@
+.EventCardList {
+    display       : flex;
+    flex-direction: row;
+    flex-wrap     : wrap;
+}
+
+.EventCardList > * {
+    margin-top: 8px;
+}

@@ -24,12 +24,12 @@ module.exports = class extends React.Component {
                     onSubmit={(e) => {
                         e.preventDefault()
 
-                        var form = e.target
+                        var formData = new FormData(e.target)
 
                         onSubmit({
-                            userName    : form.id.value,
-                            password    : form.password.value,
-                            staySignedIn: form.staySignedIn.checked
+                            userName    : formData.getAll("id"),
+                            password    : formData.getAll("password"),
+                            staySignedIn: formData.getAll("staySignedIn")
                         })
                     }}
                 >

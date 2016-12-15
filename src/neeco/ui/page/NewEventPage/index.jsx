@@ -31,14 +31,15 @@ module.exports = class extends React.Component {
                         onSubmit={(e) => {
                             e.preventDefault()
 
-                            var form = e.target
+                            var formData = new FormData(e.target)
+
                             postEvent({
                                 apiHost    : process.env.NEECO_API_HOST,
                                 token      : token,
-                                title      : form.title.value,
-                                startDate  : form.startDate.value.replace("-", "/"),
+                                title      : formData.getAll("title"),
+                                startDate  : formData.getAll("startDate"),
                                 description: "test",
-                                image      : form.image.value
+                                image      : formData.getAll("image")
                             })
                         }}
                     >

@@ -1,6 +1,8 @@
 var getEvents        = require("neeco/api/event/getEvents")
 var searchEvents     = require("neeco/api/event/searchEvents")
 var classNames       = require("neeco/ui/page/EventPage/classNames")
+var EventCardList    = require("neeco/ui/view/EventCardList")
+var EventList        = require("neeco/ui/view/EventList")
 var FormButton       = require("neeco/ui/view/FormButton")
 var FormInput        = require("neeco/ui/view/FormInput")
 var LinkButton       = require("neeco/ui/view/LinkButton")
@@ -9,7 +11,6 @@ var List             = require("neeco/ui/view/List")
 var ListItem         = require("neeco/ui/view/ListItem")
 var React            = require("react")
 var {Link}           = require("react-router")
-var {browserHistory} = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -80,12 +81,12 @@ module.exports = class extends React.Component {
                                     onSubmit={async (e) => {
                                         e.preventDefault()
 
-                                        var form = e.target
+                                        var formData = new FormData(e.target)
 
                                         var events = await searchEvents({
                                             apiHost: process.env.NEECO_API_HOST,
                                             token  : token,
-                                            query  : form.query.value,
+                                            query  : formData.getAll("query"),
                                             limit  : 10
                                         })
 
@@ -102,7 +103,7 @@ module.exports = class extends React.Component {
                                         className={classNames.SearchButton}
                                     />
                                 </form>
-                                <EventList
+                                <EventCardList
                                     events={this.state.events}
                                 />
                             </section>
@@ -133,42 +134,3 @@ module.exports = class extends React.Component {
         )
     }
 }
-
-var EventList = ({events}) =>  
-    <List
-        className={classNames.EventList}
-    >
-        {events.map((event) =>
-            <EventListItem
-                event={event}
-                key={event.id}
-            />
-        )}
-    </List>
-
-var EventListItem = ({event}) => 
-    <ListItem
-        className={classNames.EventListItem}
-        onClick={(e) => {
-            browserHistory.push("/events/" + event.id)
-        }}
-    >
-        <img
-            alt={event.title}
-            src={event.image}
-            width="64px"
-            height="64px"
-        />
-        <div>
-            <h4
-                className={classNames.EventTitle}
-            >
-                {event.title}
-            </h4>
-            <div
-                className={classNames.EventDate}
-            >
-                {event.startDate}
-            </div>
-        </div>
-    </ListItem>

@@ -31,13 +31,13 @@ module.exports = class extends React.Component {
                         onSubmit={(e) => {
                             e.preventDefault()
 
-                            var form = e.target
+                            var formData = new FormData(e.target)
 
                             updatePassword({
                                 apiHost    : process.env.NEECO_API_HOST,
                                 token      : token,
-                                password   : form.password.value,
-                                newPassword: form.newPassword.value
+                                password   : formData.getAll("password"),
+                                newPassword: formData.getAll("newPassword")
                             })
                         }}
                     >

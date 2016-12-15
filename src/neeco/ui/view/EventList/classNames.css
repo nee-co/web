@@ -1,0 +1,4 @@
+.EventList {
+    display       : flex;
+    flex-direction: column;
+}
