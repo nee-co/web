@@ -6,6 +6,9 @@ var {browserHistory} = require("react-router")
 module.exports = ({event}) =>
     <ListItem
         className={classNames.EventCardListItem}
+        onClick={(e) => {
+            browserHistory.push("/events/" + event.id)
+        }}
     >
         <div
             className={classNames.EventImage}

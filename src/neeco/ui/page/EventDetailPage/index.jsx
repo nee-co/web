@@ -39,13 +39,23 @@ module.exports = class extends React.Component {
                 <section
                     className={classNames.EventDetailPage}
                 >
-                    <img
-                        src={this.state.event.image}
-                        alt="this.state.event.title"
-                        width="128"
-                        height="128"
-                    />
-                    <h2>{this.state.event.title}</h2>
+                    <header
+                        className={classNames.Header}
+                    >
+                        <div>
+                            <h2>{this.state.event.title}</h2>
+                            {this.state.event.startDate}
+                        </div>
+                        <img
+                            src={this.state.event.image}
+                            alt={this.state.event.title}
+                            width="128"
+                            height="128"
+                        />
+                    </header>
+                    <section>
+                        {this.state.event.description}
+                    </section>
                 </section>
             </MainContainer>
         )

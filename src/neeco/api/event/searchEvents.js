@@ -25,12 +25,16 @@ module.exports = async ({
     })
 
     var {events} = await response.json()
-   
-    return events.map((x) => ({
-        id         : x.id,
-        title      : x.title,
-        description: x.body,
-        image      : x.image,
-        startDate  : x.start_date,
+
+    return events.map((event) => ({
+        id         : event.id,
+        title      : event.title,
+        description: event.body,
+        image      : event.image,
+        startDate  : event.start_date,
+        isPublic   : event.isPublic,
+        owner      : event.owner,
+        entries    : event.entries,
+        comments   : event.comments
     }))
 }

@@ -1,4 +1,4 @@
-var postEvent     = require("neeco/api/event/postEvent")
+var createEvent     = require("neeco/api/event/createEvent")
 var classNames    = require("neeco/ui/page/NewEventPage/classNames")
 var Editor        = require("neeco/ui/view/Editor")
 var FormButton    = require("neeco/ui/view/FormButton")
@@ -33,7 +33,7 @@ module.exports = class extends React.Component {
 
                             var formData = new FormData(e.target)
 
-                            postEvent({
+                            createEvent({
                                 apiHost    : process.env.NEECO_API_HOST,
                                 token      : token,
                                 title      : formData.getAll("title"),
