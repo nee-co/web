@@ -17,13 +17,6 @@
     margin-bottom: 8px;
 }
 
-.SettingsPage input {
-    border          : 1px solid #ccc;
-    border-radius   : 2px;    
-    background-color: #fff;
-    color           : #777;
-}
-
 .UserImage {
     display            : block;
     width              : 128px;

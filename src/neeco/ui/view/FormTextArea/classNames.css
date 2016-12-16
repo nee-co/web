@@ -1,13 +1,13 @@
 .FormTextArea {
     display         : inline-block;
-    padding         : 0.5em 1em;
+    padding         : .5em 1em;
     border          : 1px solid #ddd;
     border-radius   : 2px;
     outline         : 0;
     background-color: transparent;
     font-family     : inherit;
     font-size       : inherit;
-    transition      : all 0.3s ease-out;
+    transition      : all .3s ease-out;
 }
 
 .FormTextArea,
@@ -16,5 +16,5 @@
 }
 
 .FormTextArea {
-    box-shadow: 0 1px 1px 0 rgba(0, 144, 255, 0.3);
+    box-shadow: 0 1px 1px 0 rgba(0, 144, 255, .3);
 }

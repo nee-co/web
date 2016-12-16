@@ -21,7 +21,7 @@
 .HideNavigationBar,
 .ShowNavigationBar {
     min-width : 200px;
-    transition: all 0.3s ease-out;
+    transition: all .3s ease-out;
 }
 
 .HideNavigationBar {

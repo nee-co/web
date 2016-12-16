@@ -12,11 +12,11 @@
     padding       : 16px 8px;
     font-size     : 14px;
     cursor        : pointer;
-    transition    : all 0.3s ease-out;
+    transition    : all .3s ease-out;
 }
 
 .Profile:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, .1);
 }
 
 .UserImage {
@@ -47,13 +47,14 @@
 .SelectedListItemA {
     display        : block;
     padding        : 16px 8px;
+    border-left    : 2px solid unset;
     text-decoration: none;
-    transition     : all 0.3s ease-out;
+    transition     : all .3s ease-out;
 }
 
 .ListItemA {
     color     : #777;
-    transition: all 0.3s ease-out;
+    transition: all .3s ease-out;
 }
 
 .ListItemA:hover {
@@ -61,7 +62,8 @@
 }
 
 .SelectedListItemA {
-    color: unset;
+    border-left-color: #09F;
+    color            : unset;
 }
 
 .PopupListItemA {
@@ -71,7 +73,7 @@
     font-size      : 12px;
     text-decoration: none;
     cursor         : pointer;
-    transition     : all 0.3s ease-out;
+    transition     : all .3s ease-out;
 }
 
 .PopupListItemA:hover {

@@ -2,6 +2,12 @@
     flex-wrap       : wrap;
     background-color: #FFF;
     box-shadow      : 0 2px 4px rgba(0, 0, 0, .2);
+    transition      : all .3s ease-out;
+}
+
+.EventCardListItem:hover {
+    background-color: rgba(0, 0, 0, .1);
+    cursor          : pointer;
 }
 
 .EventImage {
@@ -23,5 +29,5 @@
 .EventDate {
     display   : inline-block;
     align-self: flex-end;
-    font-size : 0.9em;
+    font-size : .9em;
 }
