@@ -1,4 +1,3 @@
-var createToken    = require("neeco/api/auth/createToken")
 var getCurrentUser = require("neeco/api/user/getCurrentUser")
 var SignInPage     = require("neeco/ui/page/SignInPage")
 var React          = require("react")
@@ -48,14 +47,8 @@ module.exports = class extends React.Component {
         else
             return (
                 <SignInPage
-                    onSubmit={async ({userName, password, staySignedIn}) => {
+                    onSignIn={async ({token, staySignedIn}) => {
                         try {
-                            var token = await createToken({
-                                apiHost : process.env.NEECO_API_HOST,
-                                userName: userName,
-                                password: password
-                            })
-
                             sessionStorage.setItem("token", token)
 
                             if (staySignedIn)
@@ -63,7 +56,10 @@ module.exports = class extends React.Component {
 
                             this.setState({token: token})
 
-                            var user = await getCurrentUser({token: token})
+                            var user = await getCurrentUser({
+                                apiHost: process.env.NEECO_API_HOST,
+                                token  : token
+                            })
 
                             this.setState({user: user})
                         }

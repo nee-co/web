@@ -13,6 +13,9 @@ module.exports = async ({
         })
     })
 
+    if (! response.ok)
+        throw response
+
     var {token} = await response.json()
 
     return token
