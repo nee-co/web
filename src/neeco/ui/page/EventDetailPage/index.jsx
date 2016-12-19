@@ -1,7 +1,7 @@
-var getEventOfID  = require("neeco/api/event/getEventOfID")
-var classNames    = require("neeco/ui/page/EventDetailPage/classNames")
-var MainContainer = require("neeco/ui/view/MainContainer")
-var React         = require("react")
+var getEventByID = require("neeco/api/event/getEventByID")
+var classNames   = require("neeco/ui/page/EventDetailPage/classNames")
+var MainLayout   = require("neeco/ui/view/MainLayout")
+var React        = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -17,7 +17,7 @@ module.exports = class extends React.Component {
         } = this.props
 
         ;(async () => {
-            var event = await getEventOfID({
+            var event = await getEventByID({
                 apiHost: process.env.NEECO_API_HOST,
                 token  : token,
                 id     : params["event_id"]
@@ -33,10 +33,10 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <MainContainer
+            <MainLayout
                 {... this.props}
             >
-                <section
+                <article
                     className={classNames.EventDetailPage}
                 >
                     <header
@@ -53,11 +53,14 @@ module.exports = class extends React.Component {
                             height="128"
                         />
                     </header>
-                    <section>
+                    <section className={classNames.EventDescription}>
                         {this.state.event.description}
                     </section>
-                </section>
-            </MainContainer>
+                    <section className={classNames.EventMembers}>
+                    </section>
+                    
+                </article>
+            </MainLayout>
         )
     }
 }

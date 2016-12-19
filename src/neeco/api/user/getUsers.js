@@ -12,6 +12,6 @@ module.exports = async ({
     })
 
     var {users} = await response.json()
-    
+
     return users
 }

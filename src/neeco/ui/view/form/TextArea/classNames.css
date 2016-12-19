@@ -1,0 +1,20 @@
+.TextArea {
+    display         : inline-block;
+    padding         : .5em 1em;
+    border          : 1px solid #ddd;
+    border-radius   : 2px;
+    outline         : 0;
+    background-color: transparent;
+    font-family     : inherit;
+    font-size       : inherit;
+    transition      : all .3s ease-out;
+}
+
+.TextArea,
+.TextArea {
+    border-color: #09F;
+}
+
+.TextArea {
+    box-shadow: 0 1px 1px 0 rgba(0, 144, 255, .3);
+}

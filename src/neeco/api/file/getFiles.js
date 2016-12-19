@@ -16,6 +16,7 @@ module.exports = async ({
     return files.map((x) => ({
         id       : x.id,
         name     : x.name,
+        
         updatedAt: x.updated_at
     }))
 }

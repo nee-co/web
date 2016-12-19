@@ -1,11 +1,13 @@
-var getFolders    = require("neeco/api/file/getFolders")
-var classNames    = require("neeco/ui/page/FilePage/classNames")
-var LinkButton    = require("neeco/ui/view/LinkButton")
-var MainContainer = require("neeco/ui/view/MainContainer")
-var ListItem      = require("neeco/ui/view/ListItem")
-var PopupList     = require("neeco/ui/view/PopupList")
-var React         = require("react")
-var {Link}        = require("react-router")
+var getFolders = require("neeco/api/file/getFolders")
+var classNames = require("neeco/ui/page/FilePage/classNames")
+var Button     = require("neeco/ui/view/Button")
+var Card       = require("neeco/ui/view/Card")
+var FileList   = require("neeco/ui/view/FileList")
+var Link       = require("neeco/ui/view/Link")
+var List       = require("neeco/ui/view/List")
+var ListItem   = require("neeco/ui/view/ListItem")
+var MainLayout = require("neeco/ui/view/MainLayout")
+var React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -26,7 +28,7 @@ module.exports = class extends React.Component {
                 apiHost: process.env.NEECO_API_HOST,
                 token  : token
             })
-            
+
             this.setState({files: files})
         })()
     }
@@ -38,92 +40,33 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <MainContainer
+            <MainLayout
                 {... this.props}
             >
                 <section
                     className={classNames.FilePage}
                 >
-                    <div>
-                        <h2>ファイル</h2>
-                        <LinkButton
-                            onClick={() => this.setState({
-                                newButtonIsSelected: !this.state.newButtonIsSelected
-                            })}
-                        >
-                            新規
-                        </LinkButton>
-                        <div
-                            className={classNames.PopupBackground}
-                            onClick={() => this.setState({
-                                newButtonIsSelected: false
-                            })}
-                            style={{
-                                display: this.state.newButtonIsSelected ? "block" : "none"
-                            }}
-                        />
-                        <PopupList
-                            style={{
-                                display: this.state.newButtonIsSelected ? "block" : "none"
-                            }}
-                        >
-                            <PopupListItemA>
-                                フォルダ
-                            </PopupListItemA>
-                            <PopupListItemA>
-                                <form>
-                                    <label>
-                                        ファイルのアップロード
-                                        <input
-                                            style={{display: "none"}}
-                                            name="file"
-                                            type="file"
-                                        />
-                                    </label>
-                                </form>
-                            </PopupListItemA>
-                        </PopupList>
-                        <nav>
-                        </nav>
-                    </div>
+                    <Card>
+                        <header>
+                            <h2>ファイル</h2>
+                            <nav>
+                            </nav>
+                        </header>
+                    </Card>
                     {
-                        this.state.files.length > 0 ? <FileListView files={this.state.files} />
+                        this.state.files.length > 0 ? <FileList files={this.state.files} />
                                                     : <div>このフォルダは空です</div>
                     }
                 </section>
-            </MainContainer>
+            </MainLayout>
         )
     }
 }
 
-var PopupListItemA = (props) =>
+var ListItemA = (props) =>
     <ListItem>
         <Link
             {... props}
             className={props.className + " " + classNames.PopupListItemA}
         />
     </ListItem>
-
-var FileListView = ({files}) =>
-    <table
-        className={classNames.FileListView}
-    >
-        <thead>
-            <tr>
-                <th>名前</th>
-                <th>管理者</th>
-            </tr>
-        </thead>
-        <tbody>
-            {
-                files.map(({id, name}) =>
-                    <tr
-                        key={id}
-                    >
-                        <th>{name}</th>
-                        <th>A</th>
-                    </tr>
-                )
-            }
-        </tbody>
-    </table>

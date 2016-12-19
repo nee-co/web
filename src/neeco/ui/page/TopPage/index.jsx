@@ -1,9 +1,9 @@
-var classNames    = require("neeco/ui/page/TopPage/classNames")
-var MainContainer = require("neeco/ui/view/MainContainer")
-var React         = require("react")
+var classNames = require("neeco/ui/page/TopPage/classNames")
+var MainLayout = require("neeco/ui/view/MainLayout")
+var React      = require("react")
 
 module.exports = (props) =>
-    <MainContainer
+    <MainLayout
         {... props}
     >
         <section
@@ -11,4 +11,4 @@ module.exports = (props) =>
         >
             <h2>ダッシュボード</h2>
         </section>
-    </MainContainer>
+    </MainLayout>

@@ -1,8 +1,8 @@
-var classNames    = require("neeco/ui/page/SettingsPage/classNames")
-var FormTextArea  = require("neeco/ui/view/FormTextArea")
-var Link          = require("neeco/ui/view/Link")
-var MainContainer = require("neeco/ui/view/MainContainer")
-var React         = require("react")
+var classNames = require("neeco/ui/page/SettingsPage/classNames")
+var TextArea   = require("neeco/ui/view/form/TextArea")
+var Link       = require("neeco/ui/view/Link")
+var MainLayout = require("neeco/ui/view/MainLayout")
+var React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -18,7 +18,7 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <MainContainer
+            <MainLayout
                 {... this.props}
             >
                 <section
@@ -48,7 +48,7 @@ module.exports = class extends React.Component {
                                     display: "none"
                                 }}
                             >
-                                <FormTextArea
+                                <TextArea
                                     defaultValue={user ? user.note : ""}
                                 />
                             </form>
@@ -61,7 +61,7 @@ module.exports = class extends React.Component {
                         パスワードの変更
                     </Link>
                 </section>
-            </MainContainer>
+            </MainLayout>
         )
     }
 }

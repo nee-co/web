@@ -1,10 +1,10 @@
-var createEvent     = require("neeco/api/event/createEvent")
-var classNames    = require("neeco/ui/page/NewEventPage/classNames")
-var Editor        = require("neeco/ui/view/Editor")
-var FormButton    = require("neeco/ui/view/FormButton")
-var FormInput     = require("neeco/ui/view/FormInput")
-var MainContainer = require("neeco/ui/view/MainContainer")
-var React         = require("react")
+var createEvent = require("neeco/api/event/createEvent")
+var classNames  = require("neeco/ui/page/NewEventPage/classNames")
+var Editor      = require("neeco/ui/view/Editor")
+var FormButton  = require("neeco/ui/view/form/Button")
+var Input       = require("neeco/ui/view/form/Input")
+var MainLayout  = require("neeco/ui/view/MainLayout")
+var React       = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -20,7 +20,7 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <MainContainer
+            <MainLayout
                 {... this.props}
             >
                 <section
@@ -45,7 +45,7 @@ module.exports = class extends React.Component {
                     >
                         <label>
                             <span>タイトル</span>
-                            <FormInput
+                            <Input
                                 name="title"
                                 type="text"
                                 placeholder="例) Rubyもくもく会#1"
@@ -55,7 +55,7 @@ module.exports = class extends React.Component {
                         <label>
                             <span>日時</span>
                             <span>
-                                <FormInput
+                                <Input
                                     name="startDate"
                                     type="date"
                                 />
@@ -63,7 +63,7 @@ module.exports = class extends React.Component {
                         </label>
                         <label>
                             <span>画像</span>
-                            <FormInput
+                            <Input
                                 name="image"
                                 type="file"
                             />
@@ -79,7 +79,7 @@ module.exports = class extends React.Component {
                         </FormButton>
                     </form>
                 </section>
-            </MainContainer>
+            </MainLayout>
         )
     }
 }

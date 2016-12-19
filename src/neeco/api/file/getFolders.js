@@ -1,3 +1,5 @@
+var toFolder = require("neeco/api/file/toFolder")
+
 module.exports = async ({
     apiHost,
     token,
@@ -12,9 +14,5 @@ module.exports = async ({
 
     var {folders} = await response.json()
 
-    return folders.map((x) => ({
-        id       : x.id,
-        name     : x.name,
-        updatedAt: x.updated_at
-    }))
+    return folders.map(toFolder)
 }

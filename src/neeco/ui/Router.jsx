@@ -2,6 +2,7 @@ var Authentication                  = require("neeco/ui/page/Authentication")
 var EventDetailPage                 = require("neeco/ui/page/EventDetailPage")
 var EventPage                       = require("neeco/ui/page/EventPage")
 var FilePage                        = require("neeco/ui/page/FilePage")
+var FolderPage                      = require("neeco/ui/page/FolderPage")
 var GroupPage                       = require("neeco/ui/page/GroupPage")
 var NewEventPage                    = require("neeco/ui/page/NewEventPage")
 var PasswordSettingsPage            = require("neeco/ui/page/PasswordSettingsPage")
@@ -31,8 +32,12 @@ module.exports = (props) =>
                 component={EventDetailPage}
             />
             <Route
-                path="/files"
+                path="/file"
                 component={FilePage}
+            />
+            <Route
+                path="/folders/:folder_id"
+                component={FolderPage}
             />
             <Route
                 path="/groups"

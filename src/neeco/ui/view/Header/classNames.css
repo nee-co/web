@@ -4,10 +4,27 @@
     flex-wrap       : nowrap;
     align-items     : center;
     min-height      : max-content;
-    padding         : 8px 0;
-    border-bottom   : 1px solid #CCC;
+    padding         : 8px 16px;
+    border-bottom   : 1px solid rgba(0, 0, 0, .1);
     background-color: #FFF;
     color           : #777;
+    font-size       : 12px;
+}
+
+.Toggle {
+    display     : inline-block;
+    min-width   : 24px;
+    min-height  : 24px;
+    margin-right: 32px;
+    color       : #777;
+    font-size   : 1.4em;
+    line-height : 24px;
+    cursor      : pointer;
+    transition  : all .3s ease-out;
+}
+
+.Toggle:hover {
+    color: #555;
 }
 
 .Logo {
@@ -16,3 +33,4 @@
     font-weight   : 900;
     text-transform: uppercase;
 }
+

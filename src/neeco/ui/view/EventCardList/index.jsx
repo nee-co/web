@@ -1,16 +1,23 @@
-var classNames        = require("neeco/ui/view/EventCardList/classNames")
-var EventCardListItem = require("neeco/ui/view/EventCardListItem")
-var List              = require("neeco/ui/view/List")
-var React             = require("react")
+var classNames = require("neeco/ui/view/EventCardList/classNames")
+var EventCard  = require("neeco/ui/view/EventCard")
+var List       = require("neeco/ui/view/List")
+var ListItem   = require("neeco/ui/view/ListItem")
+var React      = require("react")
 
 module.exports = ({events}) =>
-    <List className={classNames.EventCardList}>
+    <List
+        className={classNames.EventCardList}
+    >
         {
             events.map((x) =>
-                <EventCardListItem
-                    event={x}
+                <ListItem
                     key={x.id}
-                />
+                >
+                    <EventCard
+                        
+                        event={x}
+                    />
+                </ListItem>
             )
         }
     </List>

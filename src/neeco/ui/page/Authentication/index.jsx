@@ -1,4 +1,4 @@
-var getCurrentUser = require("neeco/api/user/getCurrentUser")
+var getUserByToken = require("neeco/api/user/getUserByToken")
 var SignInPage     = require("neeco/ui/page/SignInPage")
 var React          = require("react")
 
@@ -18,7 +18,7 @@ module.exports = class extends React.Component {
             this.setState({token: token})
 
             ;(async () => {
-                var user = await getCurrentUser({
+                var user = await getUserByToken({
                     apiHost: process.env.NEECO_API_HOST,
                     token  : token
                 })
@@ -56,7 +56,7 @@ module.exports = class extends React.Component {
 
                             this.setState({token: token})
 
-                            var user = await getCurrentUser({
+                            var user = await getUserByToken({
                                 apiHost: process.env.NEECO_API_HOST,
                                 token  : token
                             })

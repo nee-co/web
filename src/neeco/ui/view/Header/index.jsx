@@ -1,6 +1,6 @@
-var classNames = require("neeco/ui/view/Header/classNames")
-var Toggle     = require("neeco/ui/view/Toggle")
-var React      = require("react")
+var FontAwesomeIcon = require("neeco/ui/view/FontAwesomeIcon")
+var classNames      = require("neeco/ui/view/Header/classNames")
+var React           = require("react")
 
 module.exports = ({
     onToggle,
@@ -9,7 +9,9 @@ module.exports = ({
     <header
         className={classNames.Header}
     >
-        <Toggle
+        <FontAwesomeIcon
+            className={classNames.Toggle}
+            children={"\uF0C9"}
             onClick={onToggle}
         />
         <h1

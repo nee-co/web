@@ -1,6 +1,6 @@
 .NavigationBar {
     overflow    : auto;
-    border-right: 1px solid #CCC;
+    border-right: 1px solid rgba(0, 0, 0, .1);
     font-size   : 12px;
 }
 
@@ -8,33 +8,32 @@
     display       : flex;
     flex-direction: row;
     align-items   : center;
-    margin-bottom : 16px;
-    padding       : 16px 8px;
+    padding       : 16px;
     font-size     : 14px;
     cursor        : pointer;
     transition    : all .3s ease-out;
 }
 
 .Profile:hover {
-    background-color: rgba(0, 0, 0, .1);
+    background-color: rgba(0, 0, 0, .05);
 }
 
 .UserImage {
-    display            : block;
-    min-width          : 32px;
-    min-height         : 32px;
-    margin-right       : 8px;
+    display            : inline-block;
+    min-width          : 24px;
+    min-height         : 24px;
+    margin-right       : 32px;
     border-radius      : 50%;
     background-position: center;
-    background-size    : 100% auto;
-    background-repeat  : no-repeat;
+    background-size    : cover;
+    font-size          : 1.4em;
 }
 
 .Profile .UserNumber {
     white-space: nowrap;
 }
 
-.PopupBackground {
+.ModalWindowBack {
     position: absolute;
     left    : 0;
     top     : 0;
@@ -43,30 +42,32 @@
     cursor  : default;
 }
 
-.ListItemA,
-.SelectedListItemA {
-    display        : block;
-    padding        : 16px 8px;
-    border-left    : 2px solid unset;
+.ListItemA a,
+.SelectedListItemA a {
+    display        : flex;
+    flex-direction : row;
+    align-items    : center;
+    height         : 48px;
+    padding        : 0 16px;
+    color          : inherit;
+    font-size      : 14px;
+    font-weight    : bolder;
     text-decoration: none;
     transition     : all .3s ease-out;
 }
 
-.ListItemA {
-    color     : #777;
-    transition: all .3s ease-out;
-}
-
-.ListItemA:hover {
-    color: unset;
-}
-
+.ListItemA a:hover,
 .SelectedListItemA {
-    border-left-color: #09F;
-    color            : unset;
+    background-color: rgba(0, 0, 0, .05);
 }
 
-.PopupListItemA {
+.ListItemA         a > :nth-child(1),
+.SelectedListItemA a > :nth-child(1),
+.ListItemB         a > :nth-child(1) {
+    margin-right: 32px;
+}
+
+.ListItemB {
     display        : block;
     padding        : 8px;
     color          : unset;
@@ -76,113 +77,15 @@
     transition     : all .3s ease-out;
 }
 
-.PopupListItemA:hover {
-    background-color: #CCC;
+.ListItemB:hover {
+    background-color: rgba(0, 0, 0, .05);
 }
 
-.Icon::before {
-    display     : inline-block;
-    width       : 1.2em;
-    height      : 1.2em;
-    margin-right: 8px;
-    font-family : "FontAwesome";
-    font-size   : 1.2em;
-    text-align  : center;
-    content     : "";
-}
-
-.ArchiveIcon {
-    composes: Icon;
-}
-
-.ArchiveIcon::before {
-    content: "\F0A0";
-}
-
-.CalendarIcon {
-    composes: Icon;
-}
-
-.CalendarIcon::before {
-    content: "\F073";
-}
-
-.CogIcon {
-    composes: Icon;
-}
-
-.CogIcon::before {
-    content: "\F013";
-}
-
-.DashboardIcon {
-    composes: Icon;
-}
-
-.DashboardIcon::before {
-    content: "\F0E4";
-}
-
-.EnvelopeIcon {
-    composes: Icon;
-}
-
-.EnvelopeIcon::before {
-    content: "\F0E0";
-}
-
-.FeedbackIcon {
-    composes: Icon;
-}
-
-.FeedbackIcon::before {
-    content: "\F27B";
-}
-
-.LinkIcon {
-    composes: Icon;
-}
-
-.LinkIcon::before {
-    content: "\F0C1";
-}
-
-.QuestionIcon {
-    composes: Icon;
-}
-
-.QuestionIcon::before {
-    content: "\F128";
-}
-
-.SignOutIcon {
-    composes: Icon;
-}
-
-.SignOutIcon::before {
-    content: "\F08B";
-}
-
-.TasksIcon {
-    composes: Icon;
-}
-
-.TasksIcon::before {
-    content: "\F0AE";
-}
-
-.UserIcon {
-    composes: Icon;
-}
-
-.UserIcon::before {
-    content: "\F007";
-}
-
-.UsersIcon {
-    composes: Icon;
-}
-
-.UsersIcon::before {
-    content: "\F0C0";
+.Icon {
+    min-width  : 24px;
+    min-height : 24px;
+    color      : #777;
+    font-size  : 1.4em;
+    font-weight: normal;
+    line-height: 24px;
 }

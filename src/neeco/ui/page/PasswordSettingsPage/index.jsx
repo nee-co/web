@@ -1,8 +1,8 @@
 var updatePassword = require("neeco/api/user/updatePassword")
 var classNames     = require("neeco/ui/page/PasswordSettingsPage/classNames")
-var FormButton     = require("neeco/ui/view/FormButton")
-var FormInput      = require("neeco/ui/view/FormInput")
-var MainContainer  = require("neeco/ui/view/MainContainer")
+var FormButton     = require("neeco/ui/view/form/Button")
+var Input          = require("neeco/ui/view/form/Input")
+var MainLayout     = require("neeco/ui/view/MainLayout")
 var React          = require("react")
 var {Link}         = require("react-router")
 
@@ -20,7 +20,7 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <MainContainer
+            <MainLayout
                 {... this.props}
             >
                 <section
@@ -43,7 +43,7 @@ module.exports = class extends React.Component {
                     >
                         <label>
                             現在のパスワード<br />
-                            <FormInput
+                            <Input
                                 name="password"
                                 required
                                 type="password"
@@ -51,7 +51,7 @@ module.exports = class extends React.Component {
                         </label>
                         <label>
                             新しいパスワード<br />
-                            <FormInput
+                            <Input
                                 name="newPassword"
                                 required
                                 type="password"
@@ -59,7 +59,7 @@ module.exports = class extends React.Component {
                         </label>
                         <label>
                             パスワードの再入力<br />
-                            <FormInput
+                            <Input
                                 name="newPasswordConfirmation"
                                 required
                                 type="password"
@@ -76,7 +76,7 @@ module.exports = class extends React.Component {
                         </div>
                     </form>
                 </section>
-            </MainContainer>
+            </MainLayout>
         )
     }
 }

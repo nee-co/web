@@ -1,14 +1,15 @@
 var getEvents     = require("neeco/api/event/getEvents")
 var searchEvents  = require("neeco/api/event/searchEvents")
 var classNames    = require("neeco/ui/page/EventPage/classNames")
+var Card          = require("neeco/ui/view/Card")
 var EventCardList = require("neeco/ui/view/EventCardList")
 var EventList     = require("neeco/ui/view/EventList")
-var FormButton    = require("neeco/ui/view/FormButton")
-var FormInput     = require("neeco/ui/view/FormInput")
+var FormButton    = require("neeco/ui/view/form/Button")
+var Input         = require("neeco/ui/view/form/Input")
 var LinkButton    = require("neeco/ui/view/LinkButton")
 var List          = require("neeco/ui/view/List")
 var ListItem      = require("neeco/ui/view/ListItem")
-var MainContainer = require("neeco/ui/view/MainContainer")
+var MainLayout    = require("neeco/ui/view/MainLayout")
 var React         = require("react")
 var {Link}        = require("react-router")
 
@@ -64,7 +65,7 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <MainContainer
+            <MainLayout
                 {... this.props}
             >
                 <section
@@ -75,7 +76,7 @@ module.exports = class extends React.Component {
                         className={classNames.PanelContainer}
                     >
                         <div>
-                            <section>
+                            <Card>
                                 <form
                                     className={classNames.SearchForm}
                                     onSubmit={async (e) => {
@@ -94,7 +95,7 @@ module.exports = class extends React.Component {
                                     }}
                                 >
                                     <label>
-                                        <FormInput
+                                        <Input
                                             name="query"
                                             type="text"
                                         />
@@ -103,34 +104,42 @@ module.exports = class extends React.Component {
                                         className={classNames.SearchButton}
                                     />
                                 </form>
-                                <EventCardList
-                                    events={this.state.events}
-                                />
-                            </section>
+                            </Card>
+                            <EventCardList
+                                events={this.state.events}
+                            />
                         </div>
                         <div>
-                            <section>
-                                <LinkButton
-                                    className={classNames.NewEventButton}
-                                    to="/new_event"
-                                >
-                                    開催する
-                                </LinkButton>
-                                <h3>開催イベント</h3>
+                            <Card
+                                className={classNames.EventListCard}
+                            >
+                                <header>
+                                    <h3>開催イベント</h3>
+                                    <LinkButton
+                                        className={classNames.NewEventButton}
+                                        to="/new_event"
+                                    >
+                                        イベント作成
+                                    </LinkButton>
+                                </header>
                                 <EventList
                                     events={this.state.ownedEvents}
                                 />
-                            </section>
-                            <section>
-                                <h3>参加予定イベント</h3>
+                            </Card>
+                            <Card
+                                className={classNames.EventListCard}
+                            >
+                                <header>
+                                    <h3>参加予定</h3>
+                                </header>
                                 <EventList
                                     events={this.state.entriedEvents}
                                 />
-                            </section>
+                            </Card>
                         </div>
                     </div>
                 </section>
-            </MainContainer>
+            </MainLayout>
         )
     }
 }

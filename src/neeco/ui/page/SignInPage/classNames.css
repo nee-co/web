@@ -12,7 +12,7 @@
     color              : #FFF;
 }
 
-.SignInPage > :not(:nth-child(1)) {
+.SignInPage > :nth-child(n+2) {
     margin-top: 16px;
 }
 
@@ -28,7 +28,7 @@
     padding         : 16px;
 }
 
-.SignInCard > :not(:nth-child(1)) {
+.SignInCard > :nth-child(n+2) {
     margin-top: 16px;
 }
 
@@ -37,7 +37,7 @@
     flex-direction: column;
 }
 
-.SignInCard form > :not(:nth-child(1)) {
+.SignInCard form > :nth-child(n+2) {
     margin-top: 16px;
 }
 

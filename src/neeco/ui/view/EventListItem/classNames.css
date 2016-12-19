@@ -1,18 +1,15 @@
 .EventListItem {
-    display       : flex;
-    flex-direction: row;
-    border-bottom : 1px solid #CCC;
-    border-radius : 2px;
-    transition    : all .3s ease-out;
+    display        : flex;
+    flex-direction : row;
+    padding        : 8px;
+    border-radius  : 2px;
+    color          : inherit;
+    text-decoration: inherit;
+    transition     : all .3s ease-out; 
 }
 
 .EventListItem:hover {
-    background-color: rgba(0, 0, 0, .1);
-    cursor          : pointer;
-}
-
-.EventListItem > :nth-child(1) {
-    padding: 1px;
+    background-color: rgba(0, 0, 0, .05);
 }
 
 .EventListItem > :nth-child(2) {
@@ -22,13 +19,17 @@
     flex-grow  : 1;
 }
 
-.EventListItem .EventTitle {
-    font-size  : inherit;
-    font-weight: inherit;
+.EventImage {
+    display   : block;
 }
 
-.EventListItem .EventDate {
+.EventDate {
     color     : #777;
     font-size : .9em;
     text-align: right;
+}
+
+.EventTitle {
+    font-size  : inherit;
+    font-weight: inherit;
 }

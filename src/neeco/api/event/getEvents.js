@@ -1,3 +1,4 @@
+var toEvent    = require("neeco/api/event/toEvent")
 var toURIQuery = require("neeco/encoding/toURIQuery")
 
 module.eeventports = async ({
@@ -18,15 +19,5 @@ module.eeventports = async ({
 
     var {events} = await response.json()
 
-    return events.map((event) => ({
-        id         : event.id,
-        title      : event.title,
-        description: event.body,
-        image      : event.image,
-        startDate  : event.start_date,
-        isPublic   : event.isPublic,
-        owner      : event.owner,
-        entries    : event.entries,
-        comments   : event.comments
-    }))
+    return events.map(toEvent)
 }

@@ -1,9 +1,10 @@
-var List       = require("neeco/ui/view/List")
-var ListItem   = require("neeco/ui/view/ListItem")
-var classNames = require("neeco/ui/view/NavigationBar/classNames")
-var PopupList  = require("neeco/ui/view/PopupList")
-var React      = require("react")
-var {Link}     = require("react-router")
+var Card            = require("neeco/ui/view/Card")
+var FontAwesomeIcon = require("neeco/ui/view/FontAwesomeIcon")
+var List            = require("neeco/ui/view/List")
+var ListItem        = require("neeco/ui/view/ListItem")
+var classNames      = require("neeco/ui/view/NavigationBar/classNames")
+var React           = require("react")
+var {Link}          = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -37,74 +38,79 @@ module.exports = class extends React.Component {
                         }}
                     />
                     {user ? user.number : ""}&nbsp;<br />
-                    <div
-                        className={classNames.PopupBackground}
-                        onClick={() => this.setState({
-                            profileIsSelected: !this.state.profileIsSelected
-                        })}
-                        style={{
-                            display: this.state.profileIsSelected ? "block" : "none"
-                        }}
-                    />
-                    <PopupList
+                    <Card
                         style={{
                             display: this.state.profileIsSelected ? "block" : "none"
                         }}
                     >
-                        <PopupListItemA
-                            className={classNames.UserIcon}
-                            to="/settings"
-                        >
-                            プロフィールと設定
-                        </PopupListItemA>
-                        <PopupListItemA
-                            className={classNames.QuestionIcon}
-                            to={"/"}
-                        >
-                            ヘルプ
-                        </PopupListItemA>
-                        <PopupListItemA
-                            className={classNames.FeedbackIcon}
-                            to={"/"}
-                        >
-                            フィードバック
-                        </PopupListItemA>
-                        <PopupListItemA
-                            className={classNames.SignOutIcon}
-                            onClick={onSignOut}
-                            to={"/"}
-                        >
-                            サインアウト
-                        </PopupListItemA>
-                    </PopupList>
+                        <List>
+                            <ListItemB
+                                to="/settings"
+                            >
+                                <FontAwesomeIcon children={"\uF007"} />
+                                プロフィールと設定
+                            </ListItemB>
+                            <ListItemB
+                                to={"/"}
+                            >
+                                <FontAwesomeIcon children={"\uF128"} />
+                                ヘルプ
+                            </ListItemB>
+                            <ListItemB
+                                to={"/"}
+                            >
+                                <FontAwesomeIcon children={"\uF27B"} />
+                                フィードバック
+                            </ListItemB>
+                            <ListItemB
+                                onClick={onSignOut}
+                                to={"/"}
+                            >
+                                <FontAwesomeIcon children={"\uF08B"} />
+                                サインアウト
+                            </ListItemB>
+                        </List>
+                    </Card>
                 </div>
                 <List>
                     <ListItemA
-                        className={classNames.DashboardIcon}
                         location={location}
                         to="/"
                     >
-                        ダッシュボード
+                        <FontAwesomeIcon
+                            children={"\uF0E4"}
+                            className={classNames.Icon}
+                        />
+                        ホーム
                     </ListItemA>
                     <ListItemA
-                        className={classNames.CalendarIcon}
                         location={location}
                         to="/events"
                     >
+                        <FontAwesomeIcon
+                            children={"\uF073"}
+                            className={classNames.Icon}
+                        />
                         イベント
                     </ListItemA>
                     <ListItemA
-                        className={classNames.UsersIcon}
                         location={location}
                         to="/groups"
                     >
+                        <FontAwesomeIcon
+                            children={"\uF0C0"}
+                            className={classNames.Icon}
+                        />
                         グループ
                     </ListItemA>
                     <ListItemA
-                        className={classNames.ArchiveIcon}
                         location={location}
-                        to="/files"
+                        to="/file"
                     >
+                        <FontAwesomeIcon
+                            children={"\uF0A0"}
+                            className={classNames.Icon}
+                        />
                         ファイル
                     </ListItemA>
                 </List>
@@ -121,12 +127,13 @@ var ListItemA = ({
     },
     to
 }) =>
-    <ListItem>
+    <ListItem 
+        className={className + " " + (
+            pathname == to ? classNames.SelectedListItemA
+                           : classNames.ListItemA
+        )}
+    >
         <Link
-            className={className + " " + (
-                pathname == to ? classNames.SelectedListItemA
-                               : classNames.ListItemA
-            )}
             to={(
                 pathname == to ? ""
                                : to
@@ -136,10 +143,10 @@ var ListItemA = ({
         </Link>
     </ListItem>
 
-var PopupListItemA = (props) =>
+var ListItemB = (props) =>
     <ListItem>
         <Link
             {... props}
-            className={props.className + " " + classNames.PopupListItemA}
+            className={props.className + " " + classNames.ListItemB}
         />
     </ListItem>

@@ -7,6 +7,9 @@ module.exports = {
             "babel-polyfill",
             "whatwg-fetch",
             "main"
+        ],
+        "js/ServiceWorker.js": [
+            "neeco/ServiceWorker"
         ]
     },
     module: {

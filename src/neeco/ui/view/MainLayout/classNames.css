@@ -1,0 +1,33 @@
+.Contents {
+    display       : flex;
+    flex-direction: row;
+    flex-grow     : 1;
+}
+
+.Main {
+    flex-grow: 1;
+    overflow : auto;
+}
+
+.MainLayout {
+    display         : flex;
+    flex-direction  : column;
+    max-width       : 100%;
+    max-height      : 100%;
+    width           : 100vw;
+    height          : 100vh;
+}
+
+.HideNavigationBar,
+.ShowNavigationBar {
+    min-width : 216px;
+    transition: all .3s ease-out;
+}
+
+.HideNavigationBar {
+    margin-left: -216px;
+}
+
+.ShowNavigationBar {
+    margin-left: 0;
+}
