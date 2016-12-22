@@ -35,7 +35,7 @@
     background-color: #FFF;
 }
 
-.FolderCreationCard :nth-child(n+2) {
+.FolderCreationCard > :nth-child(n+2) {
     margin-top: 8px;
 }
 
@@ -46,6 +46,12 @@
 
 .FolderCreationCard > form > :nth-child(n+2) {
     margin-top: 8px;
+}
+
+.FolderCreationCard > form > :nth-child(2) > :nth-child(1) {
+    margin-right    : 8px;
+    border-color    : #CCC;
+    background-color: #CCC;
 }
 
 .Breadcrumbs {

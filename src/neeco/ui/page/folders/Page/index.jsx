@@ -20,7 +20,7 @@ module.exports = class extends React.Component {
             error: null,
             files: [],
             newButtonIsSelected: false,
-            compareFunction: (x, y) => compare(x.name, y.name)
+            compareFunction    : (x, y) => compare(x.name, y.name)
         })
     }
 

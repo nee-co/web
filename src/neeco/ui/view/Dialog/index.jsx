@@ -1,11 +1,10 @@
 var Card       = require("neeco/ui/view/Card")
-var classNames = require("neeco/ui/view/ModalWindow/classNames")
+var classNames = require("neeco/ui/view/Dialog/classNames")
 var React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            isClicked: false,
             isVisible: this.props.isVisible
         })
     }
@@ -26,25 +25,15 @@ module.exports = class extends React.Component {
                   :                        classNames.Hidden
                 }
                 onClick={(e) => {
-                    if (this.state.isClicked)
-                        this.setState({
-                            isClicked: false
-                        }) 
-                    else
-                        this.setState({
-                            isVisible: false
-                        })
-                    }
-                }
+                    this.setState({
+                        isVisible: false
+                    })
+                }}
             >
                 <Card
                     children={this.props.children}
                     className={this.props.className}
-                    onClick={(e) => {
-                        this.setState({
-                            isClicked: true
-                        })
-                    }}
+                    onClick={(e) => e.stopPropagation()}
                 />
             </div>
         )

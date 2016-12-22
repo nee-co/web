@@ -4,13 +4,13 @@ var getFolderByID = require("neeco/api/file/getFolderByID")
 var classNames    = require("neeco/ui/page/folder_detail/Page/classNames")
 var Button        = require("neeco/ui/view/Button")
 var Card          = require("neeco/ui/view/Card")
+var Dialog        = require("neeco/ui/view/Dialog")
 var FileList      = require("neeco/ui/view/FileList")
 var Link          = require("neeco/ui/view/Link")
 var List          = require("neeco/ui/view/List")
 var ListItem      = require("neeco/ui/view/ListItem")
 var MainLayout    = require("neeco/ui/view/MainLayout")
-var ModalWindow   = require("neeco/ui/view/ModalWindow")
-var PopupCard     = require("neeco/ui/view/PopupCard")
+var Popup         = require("neeco/ui/view/Popup")
 var FormButton    = require("neeco/ui/view/form/Button")
 var FormInput     = require("neeco/ui/view/form/Input")
 var React         = require("react")
@@ -107,13 +107,17 @@ module.exports = class extends React.Component {
                             </h2>
                             <div>
                                 <Button
-                                    onClick={() => this.setState({
-                                        creationMenuIsVisible: true
-                                    })}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+
+                                        this.setState({
+                                            creationMenuIsVisible: true
+                                        })
+                                    }}
                                 >
                                     新規
                                 </Button><br />
-                                <PopupCard
+                                <Popup
                                     className={classNames.Popup}
                                     isVisible={this.state.creationMenuIsVisible}
                                 >
@@ -124,43 +128,6 @@ module.exports = class extends React.Component {
                                             })}
                                         >
                                             フォルダ
-                                            <ModalWindow
-                                                className={classNames.FolderCreationCard}
-                                                isVisible={this.state.folderCreationCardIsVisible}
-                                            >
-                                                <h4>
-                                                    新しいフォルダを作成
-                                                </h4>
-                                                <form
-                                                    onSubmit={async (e) => {
-                                                        e.preventDefault()
-
-                                                        var formData = new FormData(e.target)
-
-                                                        var f = await createFolder({
-                                                            token   : token,
-                                                            apiHost : process.env.NEECO_API_HOST,
-                                                            name    : formData.getAll("name"),
-                                                            parentID: this.state.folder.id
-                                                        })
-
-                                                        this.state.folder.children.push(f)
-                                                        this.state.folder.children.sort(this.state.compareFunction)
-
-                                                        this.setState({
-                                                            folderCreationCardIsVisible: false
-                                                        })
-                                                    }}
-                                                >
-                                                    <FormInput
-                                                        type="text"
-                                                        name="name"
-                                                    />
-                                                    <FormButton>
-                                                        作成
-                                                    </FormButton>
-                                                </form>
-                                            </ModalWindow>
                                         </ListItemA>
                                         <ListItemA>
                                             <form>
@@ -195,8 +162,56 @@ module.exports = class extends React.Component {
                                             フォルダをアップロード
                                         </ListItemA>
                                     </List>
-                                </PopupCard>
+                                </Popup>
                             </div>
+                            <Dialog
+                                className={classNames.FolderCreationCard}
+                                isVisible={this.state.folderCreationCardIsVisible}
+                            >
+                                <h4>
+                                    新しいフォルダを作成
+                                </h4>
+                                <form
+                                    onSubmit={async (e) => {
+                                        e.preventDefault()
+
+                                        var formData = new FormData(e.target)
+
+                                        var f = await createFolder({
+                                            token   : token,
+                                            apiHost : process.env.NEECO_API_HOST,
+                                            name    : formData.getAll("name"),
+                                            parentID: this.state.folder.id
+                                        })
+
+                                        this.state.folder.children.push(f)
+                                        this.state.folder.children.sort(this.state.compareFunction)
+
+                                        this.setState({
+                                            folderCreationCardIsVisible: false
+                                        })
+                                    }}
+                                >
+                                    <FormInput
+                                        type="text"
+                                        name="name"
+                                    />
+                                    <div>
+                                        <Button
+                                            onClick={() => {
+                                                this.setState({
+                                                    folderCreationCardIsVisible: false
+                                                })
+                                            }}
+                                        >
+                                            キャンセル
+                                        </Button>
+                                        <FormButton>
+                                            作成
+                                        </FormButton>
+                                    </div>
+                                </form>
+                            </Dialog>
                         </header>
                     </Card>
                     {

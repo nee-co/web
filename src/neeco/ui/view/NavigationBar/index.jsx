@@ -3,7 +3,7 @@ var FontAwesomeIcon = require("neeco/ui/view/FontAwesomeIcon")
 var List            = require("neeco/ui/view/List")
 var ListItem        = require("neeco/ui/view/ListItem")
 var classNames      = require("neeco/ui/view/NavigationBar/classNames")
-var PopupCard       = require("neeco/ui/view/PopupCard")
+var Popup           = require("neeco/ui/view/Popup")
 var React           = require("react")
 var {Link}          = require("react-router")
 
@@ -29,9 +29,13 @@ module.exports = class extends React.Component {
                 <div>
                     <div
                         className={classNames.Profile}
-                        onClick={() => this.setState({
-                            profileIsSelected: true
-                        })}
+                        onClick={(e) => {
+                            e.stopPropagation()
+
+                            this.setState({
+                                profileIsSelected: true
+                            })
+                        }}
                     >
                         <div
                             className={classNames.UserImage}
@@ -41,8 +45,8 @@ module.exports = class extends React.Component {
                         />
                         {user ? user.number : ""}&nbsp;<br />
                     </div>
-                    <PopupCard
-                        className={classNames.PopupCard}
+                    <Popup
+                        className={classNames.Popup}
                         isVisible={this.state.profileIsSelected}
                     >
                         <List>
@@ -72,7 +76,7 @@ module.exports = class extends React.Component {
                                 サインアウト
                             </ListItemB>
                         </List>
-                    </PopupCard>
+                    </Popup>
                 </div>
                 <List>
                     <ListItemA
