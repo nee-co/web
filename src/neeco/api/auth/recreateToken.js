@@ -5,7 +5,7 @@ module.exports = async ({
     var response = await fetch(apiHost + "/token/refresh", {
         method : "GET",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         }
     })
 

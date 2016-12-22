@@ -13,7 +13,7 @@ module.eeventports = async ({
     }), {
         method : "GET",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         }
     })
 

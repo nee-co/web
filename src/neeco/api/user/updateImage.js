@@ -8,10 +8,10 @@ module.exports = async ({
     var response = await fetch(apiHost + "/user/image", {
         method : "PATCH",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         },
         body   : toFormData({
-            image: image
+            "image": image
         })
     })
 

@@ -9,11 +9,11 @@ module.exports = async ({
     var response = await fetch(apiHost + "/user/password", {
         method : "PATCH",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         },
         body   : toFormData({
-            current_password: password,
-            new_password    : newPassword
+            "current_password": password,
+            "new_password"    : newPassword
         })
     })
     

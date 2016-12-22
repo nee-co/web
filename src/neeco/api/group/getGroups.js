@@ -6,7 +6,7 @@ module.exports = async ({
     var response = await fetch(apiHost + "/groups", {
         method : "GET",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         }
     })
 

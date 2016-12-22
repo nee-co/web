@@ -21,7 +21,7 @@ module.exports = async ({
     }), {
         method : "GET",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         }
     })
 

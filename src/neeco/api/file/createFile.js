@@ -10,11 +10,11 @@ module.exports = async ({
     var response = await fetch(apiHost + "/files", {
         method : "POST",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         },
         body: toFormData({
-            file     : file,
-            parent_id: parentID
+            "file"     : file,
+            "parent_id": parentID
         })
     })
 

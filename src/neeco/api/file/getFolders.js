@@ -8,7 +8,7 @@ module.exports = async ({
     var response = await fetch(apiHost + "/folders", {
         method : "GET",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         }
     })
 

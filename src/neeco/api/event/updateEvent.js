@@ -13,13 +13,13 @@ module.exports = async ({
     var response = await fetch(apiHost + "/events/" + id, {
         method : "PATCH",
         headers: {
-            authorization: "Bearer " + token
+            "Authorization": "Bearer " + token
         },
         body   : toFormData({
-            title     : title,
-            start_date: startDate,
-            body      : description,
-            image     : image
+            "title"     : title,
+            "start_date": startDate,
+            "body"      : description,
+            "image"     : image
         })
     })
 

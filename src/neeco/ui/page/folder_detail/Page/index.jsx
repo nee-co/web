@@ -9,7 +9,10 @@ var Link          = require("neeco/ui/view/Link")
 var List          = require("neeco/ui/view/List")
 var ListItem      = require("neeco/ui/view/ListItem")
 var MainLayout    = require("neeco/ui/view/MainLayout")
+var ModalWindow   = require("neeco/ui/view/ModalWindow")
 var PopupCard     = require("neeco/ui/view/PopupCard")
+var FormButton    = require("neeco/ui/view/form/Button")
+var FormInput     = require("neeco/ui/view/form/Input")
 var React         = require("react")
 
 var compare = (x, y) =>
@@ -20,11 +23,12 @@ var compare = (x, y) =>
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            error              : null,
-            folder             : null,
-            newButtonIsSelected: false,
-            compareFunction    : (x, y) => compare(x.name, y.name),
-            sortColumnNumber   : 0
+            compareFunction            : (x, y) => compare(x.name, y.name),
+            error                      : null,
+            folder                     : null,
+            creationMenuIsVisible      : false,
+            folderCreationCardIsVisible: false,
+            sortColumnNumber           : 0
         })
     }
 
@@ -40,7 +44,6 @@ module.exports = class extends React.Component {
                 token  : token,
                 id     : params["folder_id"]
             })
-            
             folder.children.sort(this.state.compareFunction)
 
             this.setState({
@@ -59,10 +62,7 @@ module.exports = class extends React.Component {
                 token  : token,
                 id     : params["folder_id"]
             })
-
             folder.children.sort(this.state.compareFunction)
-
-            folder.children.sort(this.state.compareFunction).forEach((o) => console.log(o.name))
 
             this.setState({
                 folder: folder
@@ -108,34 +108,59 @@ module.exports = class extends React.Component {
                             <div>
                                 <Button
                                     onClick={() => this.setState({
-                                        newButtonIsSelected: true
+                                        creationMenuIsVisible: true
                                     })}
                                 >
                                     新規
                                 </Button><br />
                                 <PopupCard
                                     className={classNames.Popup}
-                                    isVisible={this.state.newButtonIsSelected}
+                                    isVisible={this.state.creationMenuIsVisible}
                                 >
                                     <List>
                                         <ListItemA
-                                            onClick={async () => {
-                                                var folder = await createFolder({
-                                                    token   : token,
-                                                    apiHost : process.env.NEECO_API_HOST,
-                                                    parentID: this.state.folder.id
-                                                })
-
-                                                this.state.folder.children = this.state.folder.children
-                                                    .concat(folder)
-                                                    .sort(this.state.compareFunction)
-
-                                                this.setState({
-                                                    newButtonIsSelected: false
-                                                })
-                                            }}
+                                            onClick={() => this.setState({
+                                                folderCreationCardIsVisible: true
+                                            })}
                                         >
                                             フォルダ
+                                            <ModalWindow
+                                                className={classNames.FolderCreationCard}
+                                                isVisible={this.state.folderCreationCardIsVisible}
+                                            >
+                                                <h4>
+                                                    新しいフォルダを作成
+                                                </h4>
+                                                <form
+                                                    onSubmit={async (e) => {
+                                                        e.preventDefault()
+
+                                                        var formData = new FormData(e.target)
+
+                                                        var f = await createFolder({
+                                                            token   : token,
+                                                            apiHost : process.env.NEECO_API_HOST,
+                                                            name    : formData.getAll("name"),
+                                                            parentID: this.state.folder.id
+                                                        })
+
+                                                        this.state.folder.children.push(f)
+                                                        this.state.folder.children.sort(this.state.compareFunction)
+
+                                                        this.setState({
+                                                            folderCreationCardIsVisible: false
+                                                        })
+                                                    }}
+                                                >
+                                                    <FormInput
+                                                        type="text"
+                                                        name="name"
+                                                    />
+                                                    <FormButton>
+                                                        作成
+                                                    </FormButton>
+                                                </form>
+                                            </ModalWindow>
                                         </ListItemA>
                                         <ListItemA>
                                             <form>
@@ -148,19 +173,18 @@ module.exports = class extends React.Component {
                                                         onChange={async (e) => {
                                                             var formData = new FormData(e.target.form)
 
-                                                            var file = await createFile({
+                                                            var f = await createFile({
                                                                 token   : token,
                                                                 apiHost : process.env.NEECO_API_HOST,
                                                                 file    : formData.getAll("file"),
                                                                 parentID: this.state.folder.id
                                                             })
 
-                                                            this.state.folder.children = this.state.folder.children
-                                                                .concat(file)
-                                                                .sort(this.state.compareFunction)
+                                                            this.state.folder.children.push(f)
+                                                            this.state.folder.children.sort(this.state.compareFunction)
 
                                                             this.setState({
-                                                                newButtonIsSelected: false
+                                                                creationMenuIsVisible: false
                                                             })
                                                         }}
                                                     />

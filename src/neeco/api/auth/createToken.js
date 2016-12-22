@@ -8,8 +8,8 @@ module.exports = async ({
     var response = await fetch(apiHost + "/token", {
         method: "POST",
         body  : toFormData({
-            number  : userName,
-            password: password
+            "number"  : userName,
+            "password": password
         })
     })
 
