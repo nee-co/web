@@ -1,6 +1,7 @@
-var classNames = require("neeco/ui/view/FileListItem/classNames")
-var React      = require("react")
-var {Link}     = require("react-router")
+var FontAwesomeIcon = require("neeco/ui/view/FontAwesomeIcon")
+var classNames      = require("neeco/ui/view/FileListItem/classNames")
+var React           = require("react")
+var {Link}          = require("react-router")
 
 module.exports = ({file}) =>
     <tr
@@ -10,6 +11,13 @@ module.exports = ({file}) =>
             <FileLink
                 file={file}
             >
+                <FontAwesomeIcon
+                    children={
+                        file.kind == "file" ? "\uF016"
+                      :                       "\uF114"
+                    }
+                    className={classNames.Icon}
+                />
                 {file.name}
             </FileLink>
         </td>
@@ -24,7 +32,7 @@ module.exports = ({file}) =>
             <FileLink
                 file={file}
             >
-                {file.updatedAt}
+                {new Date(file.updatedAt).toLocaleDateString()}
             </FileLink>
         </td>
     </tr>

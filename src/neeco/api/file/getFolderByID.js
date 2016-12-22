@@ -1,4 +1,4 @@
-var toFolder = require("neeco/api/file/toFolder")
+var toFile = require("neeco/api/file/toFile")
 
 module.exports = async ({
     apiHost,
@@ -21,6 +21,6 @@ module.exports = async ({
         createdBy: folder["current_folder"]["created_user"],
         updatedAt: folder["current_folder"]["updated_at"],
         updatedBy: folder["current_folder"]["updated_user"],
-        children : folder["elements"].map(toFolder)
+        children : folder["elements"].map(toFile)
     }
 }

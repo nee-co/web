@@ -10,7 +10,7 @@ module.exports = async ({
             authorization: "Bearer " + token
         }
     })
-    
+
     var {files} = await response.json()
 
     return files.map((x) => ({

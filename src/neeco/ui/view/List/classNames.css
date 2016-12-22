@@ -1,8 +1,7 @@
 .List {
-    display: flex;
+    display       : flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: stretch;
+    align-items   : stretch1;
     -webkit-padding-start: 0;
-    list-style: none;
+    list-style    : none;
 }

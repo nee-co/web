@@ -4,21 +4,21 @@ var toFormData = require("neeco/encoding/toFormData")
 module.exports = async ({
     apiHost,
     token,
-    file,
+    name,
     parentID
 }) => {
-    var response = await fetch(apiHost + "/files", {
+    var response = await fetch(apiHost + "/folder", {
         method : "POST",
         headers: {
             authorization: "Bearer " + token
         },
         body: toFormData({
-            file     : file,
+            name     : name,
             parent_id: parentID
         })
     })
 
-    var file = await response.json()
+    var x = await response.json()
 
-    return toFile(file)
+    return toFile(x)
 }

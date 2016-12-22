@@ -1,15 +1,19 @@
-var Authentication                  = require("neeco/ui/page/Authentication")
-var EventDetailPage                 = require("neeco/ui/page/EventDetailPage")
-var EventPage                       = require("neeco/ui/page/EventPage")
-var FilePage                        = require("neeco/ui/page/FilePage")
-var FolderPage                      = require("neeco/ui/page/FolderPage")
-var GroupPage                       = require("neeco/ui/page/GroupPage")
-var NewEventPage                    = require("neeco/ui/page/NewEventPage")
-var PasswordSettingsPage            = require("neeco/ui/page/PasswordSettingsPage")
-var SettingsPage                    = require("neeco/ui/page/SettingsPage")
-var TopPage                         = require("neeco/ui/page/TopPage")
-var React                           = require("react")
-var {Router, Route, browserHistory} = require("react-router")
+var Authentication       = require("neeco/ui/auth/Authentication")
+var EventCreationPage    = require("neeco/ui/page/event_creation/Page")
+var EventDetailPage      = require("neeco/ui/page/event_detail/Page")
+var EventsPage           = require("neeco/ui/page/events/Page")
+var FolderDetailPage     = require("neeco/ui/page/folder_detail/Page")
+var FoldersPage          = require("neeco/ui/page/folders/Page")
+var GroupDetailPage      = require("neeco/ui/page/group_detail/Page")
+var GroupsPage           = require("neeco/ui/page/groups/Page")
+var SettingsPage         = require("neeco/ui/page/settings/Page")
+var PasswordSettingsPage = require("neeco/ui/page/settings/password/Page")
+var TopPage              = require("neeco/ui/page/top/Page")
+var React                = require("react")
+var {Redirect}           = require("react-router")
+var {Route}              = require("react-router")
+var {Router}             = require("react-router")
+var {browserHistory}     = require("react-router")
 
 module.exports = (props) =>
     <Router
@@ -24,28 +28,28 @@ module.exports = (props) =>
                 component={TopPage}
             />
             <Route
+                path="/event_creation"
+                component={EventCreationPage}
+            />
+            <Route
                 path="/events"
-                component={EventPage}
+                component={EventsPage}
             />
             <Route
                 path="/events/:event_id"
                 component={EventDetailPage}
             />
             <Route
-                path="/file"
-                component={FilePage}
+                path="/folders"
+                component={FoldersPage}
             />
             <Route
                 path="/folders/:folder_id"
-                component={FolderPage}
+                component={FolderDetailPage}
             />
             <Route
                 path="/groups"
-                component={GroupPage}
-            />
-            <Route
-                path="/new_event"
-                component={NewEventPage}
+                component={GroupsPage}
             />
             <Route
                 path="/settings"
@@ -54,6 +58,10 @@ module.exports = (props) =>
             <Route
                 path="/settings/password"
                 component={PasswordSettingsPage}
+            />
+            <Redirect
+                from="file"
+                to="folders"
             />
         </Route>
     </Router>

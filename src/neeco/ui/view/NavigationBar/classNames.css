@@ -33,13 +33,8 @@
     white-space: nowrap;
 }
 
-.ModalWindowBack {
-    position: absolute;
-    left    : 0;
-    top     : 0;
-    width   : 100%;
-    height  : 100%;
-    cursor  : default;
+.PopupCard {
+    background-color: #FFF;
 }
 
 .ListItemA a,
@@ -79,6 +74,13 @@
 
 .ListItemB:hover {
     background-color: rgba(0, 0, 0, .05);
+}
+
+.ListItemB > :nth-child(1) {
+    min-width   : 1.2em;
+    min-height  : 1.2em;
+    line-height : 1.2em;
+    margin-right: 16px;
 }
 
 .Icon {
