@@ -1,12 +1,12 @@
 var getFolders = require("neeco/api/file/getFolders")
 var classNames = require("neeco/ui/page/folders/Page/classNames")
 var Button     = require("neeco/ui/view/Button")
-var Card       = require("neeco/ui/view/Card")
 var FileList   = require("neeco/ui/view/FileList")
 var Link       = require("neeco/ui/view/Link")
 var List       = require("neeco/ui/view/List")
 var ListItem   = require("neeco/ui/view/ListItem")
 var MainLayout = require("neeco/ui/view/MainLayout")
+var Paper      = require("neeco/ui/view/Paper")
 var React      = require("react")
 
 var compare = (x, y) =>
@@ -51,16 +51,16 @@ module.exports = class extends React.Component {
 
         return (
             <MainLayout
-                {... this.props}
+                {...this.props}
             >
                 <section
                     className={classNames.FilePage}
                 >
-                    <Card>
+                    <Paper>
                         <header>
                             <h2>ファイル</h2>
                         </header>
-                    </Card>
+                    </Paper>
                     {
                         this.state.files.length > 0 ? <FileList files={this.state.files} />
                                                     : <div>このフォルダは空です</div>
@@ -71,10 +71,13 @@ module.exports = class extends React.Component {
     }
 }
 
-var ListItemA = (props) =>
+var ListItemA = ({
+    className,
+    ...props
+}) =>
     <ListItem>
         <Link
-            {... props}
-            className={props.className + " " + classNames.PopupListItemA}
+            {...props}
+            className={className + " " + classNames.PopupListItemA}
         />
     </ListItem>

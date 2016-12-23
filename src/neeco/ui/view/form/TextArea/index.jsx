@@ -1,8 +1,11 @@
 var classNames = require("neeco/ui/view/form/TextArea/classNames")
 var React      = require("react")
 
-module.exports = (props) =>
+module.exports = ({
+    className,
+    ...props
+}) =>
     <textarea
-        {... props}
-        className={classNames.TextArea + " " + props.className}
+        {...props}
+        className={className + " " + classNames.textarea}
     />

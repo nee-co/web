@@ -1,8 +1,11 @@
 var classNames = require("neeco/ui/view/form/Input/classNames")
 var React      = require("react")
 
-module.exports = (props) =>
+module.exports = ({
+    className,
+    ...props
+}) =>
     <input
-        {... props}
-        className={classNames.Input + " " + props.className}
+        {...props}
+        className={className + " " + classNames.Input}
     />

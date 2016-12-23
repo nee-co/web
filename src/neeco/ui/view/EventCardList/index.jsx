@@ -4,9 +4,14 @@ var List       = require("neeco/ui/view/List")
 var ListItem   = require("neeco/ui/view/ListItem")
 var React      = require("react")
 
-module.exports = ({events}) =>
+module.exports = ({
+    className,
+    events,
+    ...props
+}) =>
     <List
-        className={classNames.EventCardList}
+        {...props}
+        className={className + " " + classNames.EventCardList}
     >
         {
             events.map((x) =>
@@ -14,7 +19,6 @@ module.exports = ({events}) =>
                     key={x.id}
                 >
                     <EventCard
-                        
                         event={x}
                     />
                 </ListItem>

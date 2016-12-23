@@ -1,7 +1,6 @@
 var getEvents     = require("neeco/api/event/getEvents")
 var searchEvents  = require("neeco/api/event/searchEvents")
 var classNames    = require("neeco/ui/page/events/Page/classNames")
-var Card          = require("neeco/ui/view/Card")
 var EventCardList = require("neeco/ui/view/EventCardList")
 var EventList     = require("neeco/ui/view/EventList")
 var FormButton    = require("neeco/ui/view/form/Button")
@@ -10,14 +9,15 @@ var LinkButton    = require("neeco/ui/view/LinkButton")
 var List          = require("neeco/ui/view/List")
 var ListItem      = require("neeco/ui/view/ListItem")
 var MainLayout    = require("neeco/ui/view/MainLayout")
+var Paper         = require("neeco/ui/view/Paper")
 var React         = require("react")
 var {Link}        = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            events: [],
-            ownedEvents: [],
+            events       : [],
+            ownedEvents  : [],
             entriedEvents: []
         })
     }
@@ -70,7 +70,7 @@ module.exports = class extends React.Component {
 
         return (
             <MainLayout
-                {... this.props}
+                {...this.props}
             >
                 <section
                     className={classNames.EventPage}
@@ -80,7 +80,7 @@ module.exports = class extends React.Component {
                         className={classNames.PanelContainer}
                     >
                         <div>
-                            <Card>
+                            <Paper>
                                 <form
                                     className={classNames.SearchForm}
                                     onSubmit={async (e) => {
@@ -108,13 +108,13 @@ module.exports = class extends React.Component {
                                         className={classNames.SearchButton}
                                     />
                                 </form>
-                            </Card>
+                            </Paper>
                             <EventCardList
                                 events={this.state.events}
                             />
                         </div>
                         <div>
-                            <Card
+                            <Paper
                                 className={classNames.EventListCard}
                             >
                                 <header>
@@ -129,8 +129,8 @@ module.exports = class extends React.Component {
                                 <EventList
                                     events={this.state.ownedEvents}
                                 />
-                            </Card>
-                            <Card
+                            </Paper>
+                            <Paper
                                 className={classNames.EventListCard}
                             >
                                 <header>
@@ -139,7 +139,7 @@ module.exports = class extends React.Component {
                                 <EventList
                                     events={this.state.entriedEvents}
                                 />
-                            </Card>
+                            </Paper>
                         </div>
                     </div>
                 </section>

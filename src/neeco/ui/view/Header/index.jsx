@@ -4,7 +4,8 @@ var React           = require("react")
 
 module.exports = ({
     onToggle,
-    user
+    user,
+    ...props
 }) =>
     <header
         className={classNames.Header}

@@ -37,7 +37,7 @@ module.exports = class extends React.Component {
 
         return (
             <MainLayout
-                {... this.props}
+                {...this.props}
             >
                 <section
                     className={classNames.GroupPage}

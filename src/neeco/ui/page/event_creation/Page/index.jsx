@@ -21,7 +21,7 @@ module.exports = class extends React.Component {
 
         return (
             <MainLayout
-                {... this.props}
+                {...this.props}
             >
                 <section
                     className={classNames.NewEventPage}
@@ -86,7 +86,7 @@ module.exports = class extends React.Component {
 
 var TimeSelect = (props) =>
     <select
-        {... props}
+        {...props}
     >
         {
             Array.from(Array(24).keys())

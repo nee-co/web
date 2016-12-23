@@ -4,7 +4,7 @@ var React      = require("react")
 
 module.exports = (props) =>
     <MainLayout
-        {... props}
+        {...props}
     >
         <section
             className={classNames.TopPage}

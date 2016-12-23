@@ -1,0 +1,13 @@
+.ListItem {
+    cursor    : pointer;
+    transition: all .3s ease-out;
+}
+
+.SelectedListItem {
+    cursor: default;
+}
+
+.ListItem:hover,
+.SelectedListItem {
+    background-color: rgba(0, 0, 0, .05);
+}

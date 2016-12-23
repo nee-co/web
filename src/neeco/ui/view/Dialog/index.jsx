@@ -1,5 +1,5 @@
-var Card       = require("neeco/ui/view/Card")
 var classNames = require("neeco/ui/view/Dialog/classNames")
+var Paper      = require("neeco/ui/view/Paper")
 var React      = require("react")
 
 module.exports = class extends React.Component {
@@ -18,6 +18,12 @@ module.exports = class extends React.Component {
     }
 
     render() {
+        var {
+            children,
+            className,
+            ...props
+        } = this.props
+
         return (
             <div
                 className={
@@ -25,15 +31,16 @@ module.exports = class extends React.Component {
                   :                        classNames.Hidden
                 }
                 onClick={(e) => {
-                    this.setState({
-                        isVisible: false
-                    })
+                    if (!this.refs.self.contains(e.target))
+                        this.setState({
+                            isVisible: false
+                        })
                 }}
+                ref="self"
             >
-                <Card
-                    children={this.props.children}
-                    className={this.props.className}
-                    onClick={(e) => e.stopPropagation()}
+                <Paper
+                    children={children}
+                    className={className}
                 />
             </div>
         )

@@ -1,11 +1,30 @@
 .NavigationBar {
-    overflow    : auto;
-    border-right: 1px solid rgba(0, 0, 0, .1);
-    font-size   : 12px;
+    display       : flex;
+    flex-direction: row;
+    align-items   : stretch;
+    overflow      : hidden;
+    position      : relative;
+    border-right  : 1px solid rgba(0, 0, 0, .1);
+    font-size     : 12px;
+}
+
+.NavigationBar > :nth-child(1) {
+    display       : flex;
+    flex-direction: row;
+    align-items   : stretch;
+    position      : absolute;
+    height        : 100%;
+    transition    : all 0.3s ease-out;
+}
+
+.NavigationBar > :nth-child(1) > * {
+    overflow : auto;
+    width    : 216px;
 }
 
 .Profile {
     display       : flex;
+    flex-grow     : 1;
     flex-direction: row;
     align-items   : center;
     padding       : 16px;
@@ -33,12 +52,7 @@
     white-space: nowrap;
 }
 
-.Popup {
-    background-color: #FFF;
-}
-
-.ListItemA a,
-.SelectedListItemA a {
+.ListItem a {
     display        : flex;
     flex-direction : row;
     align-items    : center;
@@ -48,42 +62,14 @@
     font-size      : 14px;
     font-weight    : bolder;
     text-decoration: none;
-    transition     : all .3s ease-out;
 }
 
-.ListItemA a:hover,
-.SelectedListItemA {
-    background-color: rgba(0, 0, 0, .05);
-}
-
-.ListItemA         a > :nth-child(1),
-.SelectedListItemA a > :nth-child(1),
-.ListItemB         a > :nth-child(1) {
+.ListItem a > :nth-child(1),
+.SelectedListItem a > :nth-child(1) {
     margin-right: 32px;
 }
 
-.ListItemB {
-    display        : block;
-    padding        : 8px;
-    color          : unset;
-    font-size      : 12px;
-    text-decoration: none;
-    cursor         : pointer;
-    transition     : all .3s ease-out;
-}
-
-.ListItemB:hover {
-    background-color: rgba(0, 0, 0, .05);
-}
-
-.ListItemB > :nth-child(1) {
-    min-width   : 1.2em;
-    min-height  : 1.2em;
-    line-height : 1.2em;
-    margin-right: 16px;
-}
-
-.Icon {
+.ListItemIcon {
     min-width  : 24px;
     min-height : 24px;
     color      : #777;

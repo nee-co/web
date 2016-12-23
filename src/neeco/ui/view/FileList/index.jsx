@@ -2,9 +2,14 @@ var classNames   = require("neeco/ui/view/FileList/classNames")
 var FileListItem = require("neeco/ui/view/FileListItem")
 var React        = require("react")
 
-module.exports = ({files}) =>
+module.exports = ({
+    className,
+    files,
+    ...props
+}) =>
     <table
-        className={classNames.FileList}
+        {...props}
+        className={className + " " + classNames.FileList}
     >
         <thead>
             <tr>

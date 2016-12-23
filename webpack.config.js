@@ -23,10 +23,10 @@ module.exports = {
                 loader: "babel",
                 query: {
                     plugins: [
-                        "transform-async-to-generator"
+                        "transform-object-rest-spread"
                     ],
                     presets: [
-                        "es2015",
+                        "latest",
                         "react"
                     ]
                 },

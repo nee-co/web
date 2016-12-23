@@ -3,8 +3,15 @@ var ListItem   = require("neeco/ui/view/ListItem")
 var React      = require("react")
 var {Link}     = require("react-router")
 
-module.exports = ({event}) => 
-    <ListItem>
+module.exports = ({
+    className,
+    event,
+    ...props
+}) => 
+    <ListItem
+        {...props}
+        className={className}
+    >
         <Link
             className={classNames.EventListItem}
             to={"/events/" + event.id}

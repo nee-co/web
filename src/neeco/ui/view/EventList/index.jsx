@@ -3,9 +3,12 @@ var EventListItem = require("neeco/ui/view/EventListItem")
 var List          = require("neeco/ui/view/List")
 var React         = require("react")
 
-module.exports = ({events}) =>  
+module.exports = ({
+    className,
+    events
+}) =>
     <List
-        className={classNames.EventList}
+        className={className + " " + classNames.EventList}
     >
         {events.map((event) =>
             <EventListItem

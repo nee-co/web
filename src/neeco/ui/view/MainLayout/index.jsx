@@ -26,9 +26,11 @@ module.exports = class extends React.Component {
             >
                 <Header
                     notifications={this.state.notifications}
-                    onToggle={() => this.setState({
-                        navigationBarIsVisible: !this.state.navigationBarIsVisible
-                    })}
+                    onToggle={() => {
+                        this.setState({
+                            navigationBarIsVisible: !this.state.navigationBarIsVisible
+                        })
+                    }}
                     user={user}
                 />
                 <div
@@ -44,10 +46,9 @@ module.exports = class extends React.Component {
                         user={user}
                     />
                     <main
+                        children={children}
                         className={classNames.Main}
-                    >
-                        {children}
-                    </main>
+                    />
                 </div>
                 <Footer />
             </div>

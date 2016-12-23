@@ -3,9 +3,14 @@ var classNames      = require("neeco/ui/view/FileListItem/classNames")
 var React           = require("react")
 var {Link}          = require("react-router")
 
-module.exports = ({file}) =>
+module.exports = ({
+    className,
+    file,
+    ...props
+}) =>
     <tr
-        className={classNames.FileListItem}
+        {...props}
+        className={className + " " + classNames.FileListItem}
     >
         <td>
             <FileLink
@@ -37,7 +42,7 @@ module.exports = ({file}) =>
         </td>
     </tr>
 
-var FileLink = ({children, file}) => 
+var FileLink = ({children, file}) =>
     <Link
         children={children}
         className={classNames.FileLink}

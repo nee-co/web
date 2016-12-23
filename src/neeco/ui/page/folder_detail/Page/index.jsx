@@ -3,13 +3,13 @@ var createFolder  = require("neeco/api/file/createFolder")
 var getFolderByID = require("neeco/api/file/getFolderByID")
 var classNames    = require("neeco/ui/page/folder_detail/Page/classNames")
 var Button        = require("neeco/ui/view/Button")
-var Card          = require("neeco/ui/view/Card")
 var Dialog        = require("neeco/ui/view/Dialog")
 var FileList      = require("neeco/ui/view/FileList")
 var Link          = require("neeco/ui/view/Link")
 var List          = require("neeco/ui/view/List")
 var ListItem      = require("neeco/ui/view/ListItem")
 var MainLayout    = require("neeco/ui/view/MainLayout")
+var Paper         = require("neeco/ui/view/Paper")
 var Popup         = require("neeco/ui/view/Popup")
 var FormButton    = require("neeco/ui/view/form/Button")
 var FormInput     = require("neeco/ui/view/form/Input")
@@ -77,12 +77,12 @@ module.exports = class extends React.Component {
 
         return (
             <MainLayout
-                {... this.props}
+                {...this.props}
             >
                 <section
                     className={classNames.FolderPage}
                 >
-                    <Card>
+                    <Paper>
                         <header>
                             <h2>
                                 <nav>
@@ -120,6 +120,11 @@ module.exports = class extends React.Component {
                                 <Popup
                                     className={classNames.Popup}
                                     isVisible={this.state.creationMenuIsVisible}
+                                    onCancel={() => {
+                                        this.setState({
+                                            creationMenuIsVisible: false
+                                        })
+                                    }}
                                 >
                                     <List>
                                         <ListItemA
@@ -213,7 +218,7 @@ module.exports = class extends React.Component {
                                 </form>
                             </Dialog>
                         </header>
-                    </Card>
+                    </Paper>
                     {
                         this.state.folder
                      && this.state.folder.children.length > 0
@@ -228,8 +233,11 @@ module.exports = class extends React.Component {
     }
 }
 
-var ListItemA = (props) =>
+var ListItemA = ({
+    className,
+    ...props
+}) =>
     <ListItem
-        {... props}
-         className={props.className + " " + classNames.PopupListItemA}
+        {...props}
+         className={className + " " + classNames.PopupListItemA}
     />

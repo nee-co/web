@@ -2,8 +2,11 @@ var classNames = require("neeco/ui/view/Link/classNames")
 var React      = require("react")
 var {Link}     = require("react-router")
 
-module.exports = (props) =>
+module.exports = ({
+    className,
+    ...props
+}) =>
     <Link
-        {... props}
-        className={classNames.Link + " " + props.className}
+        {...props}
+        className={className + " " + classNames.Link}
     />

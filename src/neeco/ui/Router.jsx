@@ -17,7 +17,7 @@ var {browserHistory}     = require("react-router")
 
 module.exports = (props) =>
     <Router
-        {... props}
+        {...props}
         history={browserHistory}
     >
         <Route
@@ -58,10 +58,6 @@ module.exports = (props) =>
             <Route
                 path="/settings/password"
                 component={PasswordSettingsPage}
-            />
-            <Redirect
-                from="file"
-                to="folders"
             />
         </Route>
     </Router>

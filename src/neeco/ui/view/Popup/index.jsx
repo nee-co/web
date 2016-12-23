@@ -1,52 +1,55 @@
-var Card       = require("neeco/ui/view/Card")
+var Paper      = require("neeco/ui/view/Paper")
 var classNames = require("neeco/ui/view/Popup/classNames")
 var React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            isClicked: undefined,
-            isVisible: this.props.isVisible,
-            onClick  : (e) => {
-                this.setState({
-                    isVisible: false
-                })
+            onClick: (e) => {
+                if (!this.refs.self.contains(e.target))
+                    this.props.onCancel()
             }
         })
     }
 
     componentDidMount() {
-        window.addEventListener("click", this.state.onClick, false)
+        if (this.props.isVisible)
+            window.addEventListener("click", this.state.onClick, false)
     }
 
-    componentWillReceiveProps({
-        isVisible
-    }) {
-        this.setState({
-            isVisible: isVisible
-        })
+    componentWillReceiveProps({isVisible}) {
+        if (this.props.isVisible != isVisible) {
+            if (isVisible)
+                window.addEventListener("click", this.state.onClick, false)
+            else
+                window.removeEventListener("click", this.state.onClick, false)
+        }
     }
 
-    componentWillUnMount() {
-        window.removeEventListener("click", this.state.onClick, false)
+    componentWillUnmount() {
+        if (this.props.isVisible)
+            window.removeEventListener("click", this.state.onClick, false)
     }
 
     render() {
+        var {
+            children,
+            className,
+            isVisible
+        } = this.props
+
         return (
-            <Card
-                children={this.props.children}
-                className={
-                    (
-                        this.state.isVisible ? classNames.Visible
-                      :                        classNames.Hidden
-                    )
-                  + " "
-                  + this.props.className
-                }
-                onClick={(e) => {
-                    e.stopPropagation()
-                }}
-            />
+            <div
+                ref="self"
+            >
+                <Paper
+                    children={children}
+                    className={className + " " + (
+                        isVisible ? classNames.Visible
+                      :             classNames.Hidden
+                    )}
+                />
+            </div>
         )
     }
 }
