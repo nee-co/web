@@ -1,4 +1,3 @@
-var Authentication       = require("neeco/ui/auth/Authentication")
 var EventCreationPage    = require("neeco/ui/page/event_creation/Page")
 var EventDetailPage      = require("neeco/ui/page/event_detail/Page")
 var EventsPage           = require("neeco/ui/page/events/Page")
@@ -9,8 +8,9 @@ var GroupsPage           = require("neeco/ui/page/groups/Page")
 var SettingsPage         = require("neeco/ui/page/settings/Page")
 var PasswordSettingsPage = require("neeco/ui/page/settings/password/Page")
 var TopPage              = require("neeco/ui/page/top/Page")
+var Authentication       = require("neeco/ui/wrapper/Authentication")
+var MainLayout           = require("neeco/ui/wrapper/MainLayout")
 var React                = require("react")
-var {Redirect}           = require("react-router")
 var {Route}              = require("react-router")
 var {Router}             = require("react-router")
 var {browserHistory}     = require("react-router")
@@ -21,7 +21,15 @@ module.exports = (props) =>
         history={browserHistory}
     >
         <Route
-            component={Authentication}
+            component={({children, ...props}) =>
+                <Authentication
+                    {...props}
+                >
+                    <MainLayout
+                        children={children}
+                    />
+                </Authentication>
+            }
         >
             <Route
                 path="/"

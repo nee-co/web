@@ -1,7 +1,6 @@
 var getGroups  = require("neeco/api/group/getGroups")
 var classNames = require("neeco/ui/page/groups/Page/classNames")
 var LinkButton = require("neeco/ui/view/LinkButton")
-var MainLayout = require("neeco/ui/view/MainLayout")
 var React      = require("react")
 var {Link}     = require("react-router")
 
@@ -36,15 +35,11 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <MainLayout
-                {...this.props}
+            <section
+                className={classNames.GroupPage}
             >
-                <section
-                    className={classNames.GroupPage}
-                >
-                    <h2>グループ</h2>
-                </section>
-            </MainLayout>
+                <h2>グループ</h2>
+            </section>
         )
     }
 }

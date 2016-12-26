@@ -3,7 +3,7 @@
     padding         : .5em 1em;
     border          : 1px solid #ddd;
     border-radius   : 2px;
-    outline         : 0;
+    outline-width   : 0;
     background-color: transparent;
     font-family     : inherit;
     font-size       : inherit;

@@ -4,12 +4,14 @@
     padding         : 4px;
     border          : 1px solid #09F;
     border-radius   : 2px;
+    outline-width   : 0; 
     background-color: #09F;
     color           : #FFF;
     font-size       : 14px;
     text-align      : center;
     cursor          : pointer;
     transition      : all .3s ease-out;
+    user-select     : none;
 }
 
 .Button:hover {

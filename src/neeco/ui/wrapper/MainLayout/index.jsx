@@ -1,7 +1,8 @@
+var Shadow        = require("neeco/ui/effect/Shadow")
 var Footer        = require("neeco/ui/view/Footer")
 var Header        = require("neeco/ui/view/Header")
-var classNames    = require("neeco/ui/view/MainLayout/classNames")
-var NavigationBar = require("neeco/ui/view/NavigationBar")
+var NavigationBar = require("neeco/ui/view/navigation/NavigationBar")
+var classNames    = require("neeco/ui/wrapper/MainLayout/classNames")
 var React         = require("react")
 
 module.exports = class extends React.Component {
@@ -17,7 +18,8 @@ module.exports = class extends React.Component {
             children,
             location,
             onSignOut,
-            user
+            user,
+            ... props
         } = this.props
 
         return (
@@ -36,17 +38,23 @@ module.exports = class extends React.Component {
                 <div
                     className={classNames.Contents}
                 >
-                    <NavigationBar
-                        className={
-                            this.state.navigationBarIsVisible ? classNames.ShowNavigationBar
-                          :                                     classNames.HideNavigationBar
-                        }
-                        location={location}
-                        onSignOut={onSignOut}
-                        user={user}
-                    />
+                    <Shadow>
+                        <NavigationBar
+                            className={
+                                this.state.navigationBarIsVisible ? classNames.ShowNavigationBar
+                              :                                     classNames.HideNavigationBar
+                            }
+                            location={location}
+                            onSignOut={onSignOut}
+                            user={user}
+                        />
+                    </Shadow>
                     <main
-                        children={children}
+                        children={React.cloneElement(children, {
+                            location,
+                            user,
+                            ...props
+                        })}
                         className={classNames.Main}
                     />
                 </div>

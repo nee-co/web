@@ -9,7 +9,7 @@ module.exports = ({
 }) =>
     <table
         {...props}
-        className={className + " " + classNames.FileList}
+        className={[className, classNames.FileList].join(" ")}
     >
         <thead>
             <tr>

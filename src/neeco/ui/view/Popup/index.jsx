@@ -1,4 +1,4 @@
-var Paper      = require("neeco/ui/view/Paper")
+var Shadow     = require("neeco/ui/effect/Shadow")
 var classNames = require("neeco/ui/view/Popup/classNames")
 var React      = require("react")
 
@@ -35,19 +35,25 @@ module.exports = class extends React.Component {
         var {
             children,
             className,
-            isVisible
+            isVisible,
+            onCancel,
+            ...props
         } = this.props
 
         return (
             <div
                 ref="self"
             >
-                <Paper
+                <Shadow
+                    {...props}
                     children={children}
-                    className={className + " " + (
-                        isVisible ? classNames.Visible
-                      :             classNames.Hidden
-                    )}
+                    className={[
+                        className,
+                        (
+                            isVisible ? classNames.Visible
+                          :             classNames.Hidden
+                        )
+                    ].join(" ")}
                 />
             </div>
         )

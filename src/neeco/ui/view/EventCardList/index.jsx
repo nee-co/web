@@ -11,7 +11,7 @@ module.exports = ({
 }) =>
     <List
         {...props}
-        className={className + " " + classNames.EventCardList}
+        className={[className, classNames.EventCardList].join(" ")}
     >
         {
             events.map((x) =>

@@ -7,5 +7,5 @@ module.exports = ({
 }) => 
     <span
         {...props}
-        className={className + " " + classNames.FontAwesomeIcon}
+        className={[className, classNames.FontAwesomeIcon].join(" ")}
     />

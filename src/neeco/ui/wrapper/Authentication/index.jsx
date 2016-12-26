@@ -30,7 +30,8 @@ module.exports = class extends React.Component {
 
     render() {
         var {
-            children
+            children,
+            ...props
         } = this.props
 
         if (this.state.token)
@@ -42,7 +43,8 @@ module.exports = class extends React.Component {
                     localStorage.removeItem("token")
 
                     this.setState({token: null})
-                }
+                },
+                ...props
             })
         else
             return (

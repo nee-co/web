@@ -8,5 +8,5 @@ module.exports = ({
 }) =>
     <Link
         {...props}
-        className={className + " " + classNames.LinkButton}
+        className={[className, classNames.LinkButton].join(" ")}
     />

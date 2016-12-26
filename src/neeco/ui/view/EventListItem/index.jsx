@@ -36,7 +36,6 @@ module.exports = ({
                 >
                     {event.startDate}
                 </div>
-                
             </div>
         </Link>
     </ListItem>

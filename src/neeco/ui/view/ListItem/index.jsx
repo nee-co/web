@@ -8,8 +8,9 @@ module.exports = ({
 }) =>
     <li
         {...props}
-        className={className + " " + (
+        className={[
+            className,
             isSelected ? classNames.SelectedListItem
-          :              classNames.ListItem
-        )}
+           :              classNames.ListItem
+        ].join(" ")}
     />

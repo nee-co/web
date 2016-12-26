@@ -5,8 +5,8 @@
 }
 
 .FolderPage > :nth-child(1) {
-    position: relative;
-    padding : 16px;
+    z-index: 1;
+    padding: 16px;
 }
 
 .FolderPage > :nth-child(1) > :nth-child(1) > :nth-child(n+2) {

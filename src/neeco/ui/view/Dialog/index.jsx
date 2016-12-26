@@ -1,5 +1,5 @@
+var Shadow     = require("neeco/ui/effect/Shadow")
 var classNames = require("neeco/ui/view/Dialog/classNames")
-var Paper      = require("neeco/ui/view/Paper")
 var React      = require("react")
 
 module.exports = class extends React.Component {
@@ -38,7 +38,7 @@ module.exports = class extends React.Component {
                 }}
                 ref="self"
             >
-                <Paper
+                <Shadow
                     children={children}
                     className={className}
                 />

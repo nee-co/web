@@ -1,4 +1,4 @@
-var classNames = require("neeco/ui/view/Paper/classNames")
+var classNames = require("neeco/ui/effect/Shadow/classNames")
 var React      = require("react")
 
 module.exports = ({
@@ -7,5 +7,5 @@ module.exports = ({
 }) =>
     <div
         {...props}
-        className={className + " " + classNames.Paper}
+        className={[className, classNames.Paper].join(" ")}
     />

@@ -1,12 +1,19 @@
 .EventDetailPage {
-    padding: 16px;
 }
 
 .Header {
+    z-index: 1;
+}
+
+.Header > :nth-child(1) {
+    padding: 16px;
+}
+
+.HeaderInfo {
     display       : flex;
     flex-direction: row;
 }
 
-.Header > :nth-child(1) {
+.HeaderInfo > :nth-child(1) {
     order: 1;
 }

@@ -7,5 +7,5 @@ module.exports = ({
 }) =>
     <ul
         {...props}
-        className={className + " " + classNames.List}
+        className={[className, classNames.List].join(" ")}
     />

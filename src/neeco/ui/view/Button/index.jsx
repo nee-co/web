@@ -7,5 +7,5 @@ module.exports = ({
 }) =>
     <span
         {...props}
-        className={className + " " + classNames.Button}
+        className={[className, classNames.Button].join(" ")}
     />

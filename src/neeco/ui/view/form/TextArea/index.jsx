@@ -7,5 +7,5 @@ module.exports = ({
 }) =>
     <textarea
         {...props}
-        className={className + " " + classNames.textarea}
+        className={[className, classNames.textarea].join(" ")}
     />

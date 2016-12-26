@@ -10,7 +10,7 @@ module.exports = ({
 }) =>
     <LinkPaper
         {...props}
-        className={className + " " + classNames.EventCard}
+        className={[className, classNames.EventCard].join(" ")}
         to={"/events/" + event.id}
     >
         <div

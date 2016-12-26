@@ -1,12 +1,11 @@
 var getFolders = require("neeco/api/file/getFolders")
-var classNames = require("neeco/ui/page/folders/Page/classNames")
+var Shadow     = require("neeco/ui/effect/Shadow")
 var Button     = require("neeco/ui/view/Button")
 var FileList   = require("neeco/ui/view/FileList")
 var Link       = require("neeco/ui/view/Link")
 var List       = require("neeco/ui/view/List")
 var ListItem   = require("neeco/ui/view/ListItem")
-var MainLayout = require("neeco/ui/view/MainLayout")
-var Paper      = require("neeco/ui/view/Paper")
+var classNames = require("neeco/ui/page/folders/Page/classNames")
 var React      = require("react")
 
 var compare = (x, y) =>
@@ -50,23 +49,19 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <MainLayout
-                {...this.props}
+            <section
+                className={classNames.FilePage}
             >
-                <section
-                    className={classNames.FilePage}
-                >
-                    <Paper>
-                        <header>
-                            <h2>ファイル</h2>
-                        </header>
-                    </Paper>
-                    {
-                        this.state.files.length > 0 ? <FileList files={this.state.files} />
-                                                    : <div>このフォルダは空です</div>
-                    }
-                </section>
-            </MainLayout>
+                <Shadow>
+                    <header>
+                        <h2>ファイル</h2>
+                    </header>
+                </Shadow>
+                {
+                    this.state.files.length > 0 ? <FileList files={this.state.files} />
+                  :                               <div>このフォルダは空です</div>
+                }
+            </section>
         )
     }
 }
@@ -78,6 +73,6 @@ var ListItemA = ({
     <ListItem>
         <Link
             {...props}
-            className={className + " " + classNames.PopupListItemA}
+            className={[className, classNames.PopupListItemA].join(" ")}
         />
     </ListItem>

@@ -42,7 +42,7 @@ module.exports = class extends React.Component {
         return (
             <div
                 {...this.props}
-                className={classNames.ScrollArea + " " + this.props.className}
+                className={this.props.className + " "+ classNames.ScrollArea}
                 ref="scrollArea"
                 onWheel={(e) => {
                     e.preventDefault()

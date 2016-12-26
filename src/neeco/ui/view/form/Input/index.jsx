@@ -7,5 +7,5 @@ module.exports = ({
 }) =>
     <input
         {...props}
-        className={className + " " + classNames.Input}
+        className={[className, classNames.Input].join(" ")}
     />

@@ -10,7 +10,7 @@ module.exports = ({
 }) =>
     <tr
         {...props}
-        className={className + " " + classNames.FileListItem}
+        className={[className, classNames.FileListItem].join(" ")}
     >
         <td>
             <FileLink
@@ -18,8 +18,8 @@ module.exports = ({
             >
                 <FontAwesomeIcon
                     children={
-                        file.kind == "file" ? "\uF016"
-                      :                       "\uF114"
+                        file.kind == "folder" ? "\uF114"
+                      :                         "\uF016"
                     }
                     className={classNames.Icon}
                 />
@@ -42,8 +42,13 @@ module.exports = ({
         </td>
     </tr>
 
-var FileLink = ({children, file}) =>
+var FileLink = ({
+    children,
+    file,
+    ...props
+}) =>
     <Link
+        {...props}
         children={children}
         className={classNames.FileLink}
         to={"/folders/" + file.id}

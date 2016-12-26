@@ -8,7 +8,7 @@ module.exports = ({
     events
 }) =>
     <List
-        className={className + " " + classNames.EventList}
+        className={[className, classNames.EventList].join(" ")}
     >
         {events.map((event) =>
             <EventListItem
