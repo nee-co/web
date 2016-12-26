@@ -1,9 +1,11 @@
 .ViewPager {
     overflow: hidden;
+    position: relative;
 }
 
 .ViewPager > * {
     display       : flex;
+    position      : absolute;
     flex-direction: row;
     align-items   : stretch;
     width         : 100%;
