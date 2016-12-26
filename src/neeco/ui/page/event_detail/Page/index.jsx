@@ -85,7 +85,9 @@ module.exports = class extends React.Component {
                         }}
                     >
                         <Tab>概要</Tab>
-                        <Tab>メンバー</Tab>
+                        <Tab>
+                            メンバー ({this.state.event && this.state.event.entries.length})
+                        </Tab>
                     </TabBar>
                 </Shadow>
                 <ViewPager
