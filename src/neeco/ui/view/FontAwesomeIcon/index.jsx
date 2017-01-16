@@ -1,5 +1,5 @@
-var classNames = require("neeco/ui/view/FontAwesomeIcon/classNames")
-var React      = require("react")
+let classNames = require("neeco/ui/view/FontAwesomeIcon/classNames")
+let React      = require("react")
 
 module.exports = ({
     className,

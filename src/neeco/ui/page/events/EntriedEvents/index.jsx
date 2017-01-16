@@ -1,38 +1,40 @@
-var searchEvents = require("neeco/api/event/searchEvents")
-var EventList    = require("neeco/ui/view/EventList")
-var classNames   = require("neeco/ui/page/events/EntriedEvents/classNames")
-var React        = require("react")
-var {Link}       = require("react-router")
+let searchEvents  = require("neeco/api/event/searchEvents")
+let EventListItem = require("neeco/ui/view/EventListItem")
+let List          = require("neeco/ui/view/List")
+let classNames    = require("neeco/ui/page/events/EntriedEvents/classNames")
+let React         = require("react")
+let {Link}        = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            events: []
+            eventsPage: undefined
         })
     }
 
     componentDidMount() {
-        var {
+        let {
             token
         } = this.props
 
         ;(async () => {
-            var events = await searchEvents({
+            let eventsPage = await searchEvents({
                 apiHost: process.env.NEECO_API_HOST,
                 token  : token,
                 query  : "",
                 entried: true,
-                limit  : 10
+                limit  : 10,
+                offset : 0
             })
 
             this.setState({
-                events: events
+                eventsPage: eventsPage
             })
         })()
     }
 
     render() {
-        var {
+        let {
             className,
             token,
             ...props
@@ -43,9 +45,12 @@ module.exports = class extends React.Component {
                 {...props}
                 className={[className, classNames.EntriedEvents].join(" ")}
             >
-                <EventList
-                    events={this.state.events}
-                />
+                <List>
+                    {
+                        this.state.eventsPage
+                     && this.state.eventsPage.data.map((x) => <EventListItem key={x.id} event={x} />)
+                    }
+                </List>
             </section>
         )
     }

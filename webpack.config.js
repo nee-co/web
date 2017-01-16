@@ -1,5 +1,5 @@
-var HtmlWebpackPlugin = require("html-webpack-plugin")
-var {DefinePlugin}    = require("webpack")
+let HtmlWebpackPlugin = require("html-webpack-plugin")
+let {DefinePlugin}    = require("webpack")
 
 module.exports = {
     entry: {

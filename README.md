@@ -2,15 +2,13 @@ Nee-co WEB
 ====
 
 ## How to build
-`npm install`
+    npm install
 
 ## How to debug
-`npm start`
+    npm start
 
 ## How to deploy
 Copy all files from `assets` and `build` to the website's root directory.
 
-```
-mv assets/* <htdocs>
-mv build/* <htdocs>
-```
+    mv assets/* <htdocs>
+    mv build/* <htdocs>

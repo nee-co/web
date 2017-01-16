@@ -1,0 +1,11 @@
+.LinkCard {
+    color          : inherit;
+    text-decoration: inherit;
+    cursor         : pointer;
+    transition     : all .3s ease-out;
+}
+
+.LinkCard:hover {
+    box-shadow      : 0 8px 8px 0 rgba(0, 0, 0, .1);
+    background-color: rgba(0, 0, 0, .05);
+}

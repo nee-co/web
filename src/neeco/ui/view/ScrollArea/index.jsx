@@ -1,5 +1,5 @@
-var classNames = require("neeco/ui/view/ScrollArea/classNames")
-var React      = require("react")
+let classNames = require("neeco/ui/view/ScrollArea/classNames")
+let React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -13,7 +13,7 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        var onResize = (e) => {
+        let onResize = (e) => {
             this.setState({
                 childrenWrapperPosition: this.normalize(this.state.childrenWrapperPosition),
                 childrenWrapperSize: [
@@ -47,9 +47,9 @@ module.exports = class extends React.Component {
                 onWheel={(e) => {
                     e.preventDefault()
 
-                    var shifted = e.shiftKey
+                    let shifted = e.shiftKey
 
-                    var [x, y] = this.state.childrenWrapperPosition
+                    let [x, y] = this.state.childrenWrapperPosition
 
                     if (shifted)
                         this.setState({
@@ -69,7 +69,7 @@ module.exports = class extends React.Component {
                 onTouchStart={(e) => {
                     e.preventDefault()
 
-                    var touch = e.targetTouches[0]
+                    let touch = e.targetTouches[0]
 
                     this.setState({
                         dragging: true,
@@ -80,9 +80,9 @@ module.exports = class extends React.Component {
                     if (this.state.dragging) {
                         e.preventDefault()
 
-                        var touch = e.targetTouches[0]
+                        let touch = e.targetTouches[0]
 
-                        var [x, y] = this.state.childrenWrapperPosition
+                        let [x, y] = this.state.childrenWrapperPosition
 
                         this.setState({
                             childrenWrapperPosition: this.normalize([
@@ -112,10 +112,10 @@ module.exports = class extends React.Component {
     }
 
     normalize(p) {
-        var newPosition = []
+        let newPosition = []
 
-        for (var i = 0; i < p.length; i += 1) {
-            var end = this.state.scrollAreaSize[i] - this.state.childrenWrapperSize[i]
+        for (let i = 0; i < p.length; i += 1) {
+            let end = this.state.scrollAreaSize[i] - this.state.childrenWrapperSize[i]
 
             newPosition[i] = p[i] > 0   ? 0
                            : p[i] > end ? p[i]

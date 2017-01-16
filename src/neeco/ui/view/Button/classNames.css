@@ -1,18 +1,49 @@
 .Button {
-    display         : inline-block;
-    width           : 8em;
-    padding         : 4px;
-    border          : 1px solid #09F;
-    border-radius   : 2px;
-    background-color: #09F;
-    color           : #FFF;
-    font-size       : 14px;
-    text-align      : center;
-    cursor          : pointer;
-    transition      : all .3s ease-out;
-    user-select     : none;
+    display      : inline-block;
+    border-width : 0;
+    outline-width: 0;
+    text-align   : center;
+    cursor       : pointer;
+    transition   : all .3s ease-out;
+    user-select  : none;
 }
 
-.Button:hover {
+.FAB {
+    min-width : 40px;
+    min-height: 40px;
+}
+
+.Flat,
+.Raised {
+    box-sizing   : border-box;
+    min-width    : 88px;
+    min-height   : 36px;
+    border-radius: 2px;
+    font-size    : 14px;
+    line-height  : 36px;
+}
+
+.Flat {
+    padding         : 0 8px;
+    background-color: transparent;
+    color           : #09F;
+}
+
+.Flat:active {
+    background-color: rgba(153, 153, 153, .4)
+}
+
+.Raised {
+    padding         : 0 16px;
+    background-color: #09F;
+    color           : #FFF;
+}
+
+.Raised:hover {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .24);
+}
+
+.Raised.Dense {
+    min-height : 32px;
+    line-height: 32px;
 }

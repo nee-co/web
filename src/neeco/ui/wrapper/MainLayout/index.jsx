@@ -1,20 +1,18 @@
-var Shadow        = require("neeco/ui/effect/Shadow")
-var Footer        = require("neeco/ui/view/Footer")
-var Header        = require("neeco/ui/view/Header")
-var NavigationBar = require("neeco/ui/view/navigation/NavigationBar")
-var classNames    = require("neeco/ui/wrapper/MainLayout/classNames")
-var React         = require("react")
+let Toolbar          = require("neeco/ui/view/Toolbar")
+let NavigationDrawer = require("neeco/ui/view/NavigationDrawer")
+let classNames       = require("neeco/ui/wrapper/MainLayout/classNames")
+let React            = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            navigationBarIsVisible: true,
+            drawerIsVisible: true,
             notifications         : []
         })
     }
 
     render() {
-        var {
+        let {
             children,
             location,
             onSignOut,
@@ -26,11 +24,11 @@ module.exports = class extends React.Component {
             <div
                 className={classNames.MainLayout}
             >
-                <Header
+                <Toolbar
                     notifications={this.state.notifications}
                     onToggle={() => {
                         this.setState({
-                            navigationBarIsVisible: !this.state.navigationBarIsVisible
+                            drawerIsVisible: !this.state.drawerIsVisible
                         })
                     }}
                     user={user}
@@ -38,17 +36,15 @@ module.exports = class extends React.Component {
                 <div
                     className={classNames.Contents}
                 >
-                    <Shadow>
-                        <NavigationBar
-                            className={
-                                this.state.navigationBarIsVisible ? classNames.ShowNavigationBar
-                              :                                     classNames.HideNavigationBar
-                            }
-                            location={location}
-                            onSignOut={onSignOut}
-                            user={user}
-                        />
-                    </Shadow>
+                    <NavigationDrawer
+                        className={
+                            this.state.drawerIsVisible ? classNames.ShowNavigationBar
+                          :                              classNames.HideNavigationBar
+                        }
+                        location={location}
+                        onSignOut={onSignOut}
+                        user={user}
+                    />
                     <main
                         children={React.cloneElement(children, {
                             location,
@@ -58,7 +54,6 @@ module.exports = class extends React.Component {
                         className={classNames.Main}
                     />
                 </div>
-                <Footer />
             </div>
         )
     }

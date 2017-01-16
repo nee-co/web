@@ -1,20 +1,27 @@
-var getEventByID   = require("neeco/api/event/getEventByID")
-var addUserToEvent = require("neeco/api/event/addUserToEvent")
-var Shadow         = require("neeco/ui/effect/Shadow")
-var Button         = require("neeco/ui/view/Button")
-var List           = require("neeco/ui/view/List")
-var ListItem       = require("neeco/ui/view/ListItem")
-var ViewPager      = require("neeco/ui/view/ViewPager")
-var Tab            = require("neeco/ui/view/navigation/Tab")
-var TabBar         = require("neeco/ui/view/navigation/TabBar")
-var classNames     = require("neeco/ui/page/event_detail/Page/classNames")
-var React          = require("react")
+let addCommentToEvent   = require("neeco/api/event/addCommentToEvent")
+let addUserToEvent      = require("neeco/api/event/addUserToEvent")
+let getEventByID        = require("neeco/api/event/getEventByID")
+let removeUserFromEvent = require("neeco/api/event/removeUserFromEvent")
+let updateEvent         = require("neeco/api/event/updateEvent")
+let sanitize            = require("neeco/encoding/html/sanitize")
+let toHTML              = require("neeco/encoding/html/toHTML")
+let Shadow              = require("neeco/ui/effect/Shadow")
+let Button              = require("neeco/ui/view/Button")
+let List                = require("neeco/ui/view/List")
+let ListItem            = require("neeco/ui/view/ListItem")
+let ListItemAvatar      = require("neeco/ui/view/ListItemAvatar")
+let Tab                 = require("neeco/ui/view/Tab")
+let TabBar              = require("neeco/ui/view/TabBar")
+let ViewPager           = require("neeco/ui/view/ViewPager")
+let FormButton          = require("neeco/ui/view/form/Button")
+let TextField           = require("neeco/ui/view/form/TextField")
+let classNames          = require("neeco/ui/page/event_detail/Page/classNames")
+let React               = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            event   : undefined,
-            tabIndex: 0
+            event   : undefined
         })
     }
 
@@ -27,7 +34,7 @@ module.exports = class extends React.Component {
         params
     }) {
         (async () => {
-            var event = await getEventByID({
+            let event = await getEventByID({
                 apiHost: process.env.NEECO_API_HOST,
                 token  : token,
                 id     : params["event_id"]
@@ -38,9 +45,21 @@ module.exports = class extends React.Component {
     }
 
     render() {
-        var {
-            token
+        let {
+            location,
+            params,
+            token,
+            user
         } = this.props
+
+        let isOwner   = this.state.event && this.state.event.owner.id == user.id
+        let isEntried = this.state.event && this.state.event.entries.find((x) => x.id == user.id)
+        let selectedIndex = [
+            "/events/" + params["event_id"],
+            "/events/" + params["event_id"] + "/entries",
+            "/events/" + params["event_id"] + "/comments"
+        ]
+            .findIndex((x) => x == location.pathname)
 
         return (
             <article
@@ -62,41 +81,88 @@ module.exports = class extends React.Component {
                                 height="128"
                             />
                         </div>
-                        <Button
-                            onClick={async () => {
-                                var responce = await addUserToEvent({
-                                    apiHost: process.env.NEECO_API_HOST,
-                                    token  : token,
-                                    eventID: this.state.event.id 
-                                })
+                        {
+                            isOwner && this.state.event && this.state.event ? (
+                                <Button
+                                    onClick={async () => {
+                                        let responce = await updateEvent({
+                                            apiHost : process.env.NEECO_API_HOST,
+                                            token   : token,
+                                            id      : this.state.event.id,
+                                            isPublic: true
+                                        })
 
-                                this.componentWillReceiveProps(this.props)
-                            }}
-                        >
-                            参加
-                        </Button>
+                                        this.componentWillReceiveProps(this.props)
+                                    }}
+                                    type="raised"
+                                >
+                                    公開する
+                                </Button>
+                            )
+                          : isEntried ? (
+                                <Button
+                                    onClick={async () => {
+                                        let responce = await removeUserFromEvent({
+                                            apiHost: process.env.NEECO_API_HOST,
+                                            token  : token,
+                                            eventID: this.state.event.id 
+                                        })
+
+                                        this.componentWillReceiveProps(this.props)
+                                    }}
+                                    type="raised"
+                                >
+                                    キャンセル
+                                </Button>
+                            )
+                          :             (
+                                <Button
+                                    onClick={async () => {
+                                        let responce = await addUserToEvent({
+                                            apiHost: process.env.NEECO_API_HOST,
+                                            token  : token,
+                                            eventID: this.state.event.id 
+                                        })
+
+                                        this.componentWillReceiveProps(this.props)
+                                    }}
+                                    type="raised"
+                                >
+                                    参加
+                                </Button>
+                            )
+                        }
                     </div>
                     <TabBar
-                        selectedIndex={this.state.tabIndex}
-                        onSelect={(index) => {
-                            this.setState({
-                                tabIndex: index
-                            })
-                        }}
+                        selectedIndex={selectedIndex}
                     >
-                        <Tab>概要</Tab>
-                        <Tab>
-                            メンバー ({this.state.event && this.state.event.entries.length})
+                        <Tab
+                            to={"/events/" + params["event_id"]}
+                        >
+                            概要
+                        </Tab>
+                        <Tab
+                            to={"/events/" + params["event_id"] + "/entries"}
+                        >
+                            参加者 ({this.state.event && this.state.event.entries.length})
+                        </Tab>
+                        <Tab
+                            to={"/events/" + params["event_id"] + "/comments"}
+                        >
+                            コメント
                         </Tab>
                     </TabBar>
                 </Shadow>
                 <ViewPager
-                    selectedIndex={this.state.tabIndex}
+                    selectedIndex={selectedIndex}
                 >
-                    <section className={classNames.EventDescription}>
-                        {this.state.event && this.state.event.description}
-                    </section>
-                    <section className={classNames.EventMembers}>
+                    <div
+                        className={classNames.EventDescription}
+                        dangerouslySetInnerHTML={{
+                            __html: this.state.event && sanitize(toHTML(this.state.event.description))
+                        }}
+                    />
+                    <div>
                         <List>
                             {this.state.event && this.state.event.entries.map((x) =>
                                 <ListItem
@@ -106,7 +172,63 @@ module.exports = class extends React.Component {
                                 </ListItem>
                             )}
                         </List>
-                    </section>
+                    </div>
+                    <div>
+                        <List>
+                            {this.state.event && Array.from(this.state.event.comments.entries()).map(([i, x]) =>
+                                <ListItem
+                                    key={i}
+                                >
+                                    <ListItemAvatar
+                                        src={x.postedBy.image}
+                                        alt=""
+                                    />
+                                    <div>
+                                        <p>
+                                            {((
+                                                date = new Date(x.postedAt),
+                                                d = (Date.now() - date.getTime()) / 1000
+                                            ) =>
+                                                d < 60    ? "now"
+                                            : d < 3600  ? Math.floor(d / 60) + " min"
+                                            : d < 86400 ? Math.floor(d / 3600) + " hour"
+                                            :             date.toLocaleString()
+                                            )()}
+                                        </p>
+                                        <p>
+                                            {x.body}
+                                        </p>
+                                    </div>
+                                </ListItem>
+                            )}
+                        </List>
+                        <form
+                            onSubmit={async (e) => {
+                                e.preventDefault()
+
+                                let formData = new FormData(e.target)
+
+                                let responce = await addCommentToEvent({
+                                    apiHost: process.env.NEECO_API_HOST,
+                                    token  : token,
+                                    eventID: this.state.event.id,
+                                    comment: {
+                                        body: formData.get("comment")
+                                    }
+                                })
+
+                                this.componentWillReceiveProps(this.props)
+                            }}
+                        >
+                            <TextField
+                                hintText={"コメント"}
+                                name="comment"
+                            />
+                            <FormButton>
+                                送信
+                            </FormButton>
+                        </form>
+                    </div>
                 </ViewPager>
             </article>
         )

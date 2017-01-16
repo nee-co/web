@@ -1,5 +1,5 @@
-var toFile     = require("neeco/api/file/toFile")
-var toFormData = require("neeco/encoding/toFormData")
+let toFile     = require("neeco/api/file/toFile")
+let toFormData = require("neeco/encoding/toFormData")
 
 module.exports = async ({
     apiHost,
@@ -7,7 +7,7 @@ module.exports = async ({
     file,
     parentID
 }) => {
-    var response = await fetch(apiHost + "/files", {
+    let response = await fetch(apiHost + "/files", {
         method : "POST",
         headers: {
             "Authorization": "Bearer " + token
@@ -18,7 +18,8 @@ module.exports = async ({
         })
     })
 
-    var file = await response.json()
+    if (! response.ok)
+        throw response
 
-    return toFile(file)
+    return toFile(object.assign({type: "file"}, await response.json()))
 }

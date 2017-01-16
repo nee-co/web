@@ -1,6 +1,6 @@
-var Shadow     = require("neeco/ui/effect/Shadow")
-var classNames = require("neeco/ui/view/Popup/classNames")
-var React      = require("react")
+let Shadow     = require("neeco/ui/effect/Shadow")
+let classNames = require("neeco/ui/view/Popup/classNames")
+let React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -13,29 +13,30 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.isVisible)
-            window.addEventListener("click", this.state.onClick, false)
+        if (this.props.visible)
+            setTimeout(() => window.addEventListener("click", this.state.onClick, false), 0)
     }
 
-    componentWillReceiveProps({isVisible}) {
-        if (this.props.isVisible != isVisible) {
-            if (isVisible)
-                window.addEventListener("click", this.state.onClick, false)
+    componentWillReceiveProps({
+        visible
+    }) {
+        if (this.props.visible != visible) {
+            if (visible)
+                setTimeout(() => window.addEventListener("click", this.state.onClick, false), 0)
             else
                 window.removeEventListener("click", this.state.onClick, false)
         }
     }
 
     componentWillUnmount() {
-        if (this.props.isVisible)
+        if (this.props.visible)
             window.removeEventListener("click", this.state.onClick, false)
     }
 
     render() {
-        var {
-            children,
+        let {
             className,
-            isVisible,
+            visible,
             onCancel,
             ...props
         } = this.props
@@ -46,14 +47,14 @@ module.exports = class extends React.Component {
             >
                 <Shadow
                     {...props}
-                    children={children}
-                    className={[
-                        className,
-                        (
-                            isVisible ? classNames.Visible
-                          :             classNames.Hidden
-                        )
-                    ].join(" ")}
+                    className={
+                        [
+                            className,
+                            classNames.Popup,
+                            visible ? undefined
+                          :           classNames.Hidden
+                        ].join(" ")
+                    }
                 />
             </div>
         )

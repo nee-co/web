@@ -1,7 +1,9 @@
-.Visible {
+.Popup {
     position: absolute;
+    opacity : 1;
 }
 
-.Hidden {
-    display: none;
+.Popup.Hidden {
+    opacity       : 0;
+    pointer-events: none;
 }

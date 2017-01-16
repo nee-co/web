@@ -1,4 +1,4 @@
-var toFormData = require("neeco/encoding/toFormData")
+let toFormData = require("neeco/encoding/toFormData")
 
 module.exports = async ({
     apiHost,
@@ -6,7 +6,7 @@ module.exports = async ({
     password,
     newPassword
 }) => {
-    var response = await fetch(apiHost + "/user/password", {
+    let response = await fetch(apiHost + "/user/password", {
         method : "PATCH",
         headers: {
             "Authorization": "Bearer " + token
@@ -16,6 +16,9 @@ module.exports = async ({
             "new_password"    : newPassword
         })
     })
+
+    if (! response.ok)
+        throw response
     
     return response
 }

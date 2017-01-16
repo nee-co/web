@@ -1,18 +1,21 @@
-var toEvent = require("neeco/api/event/toEvent")
+let toEvent = require("neeco/api/event/toEvent")
 
 module.exports = async ({
     apiHost,
     token,
     id
 }) => {
-    var response = await fetch(apiHost + "/events/" + id, {
+    let response = await fetch(apiHost + "/events/" + id, {
         method : "GET",
         headers: {
             "Authorization": "Bearer " + token
         }
     })
 
-    var event = await response.json()
+    if (! response.ok)
+        throw response
+
+    let event = await response.json()
 
     return toEvent(event)
 }

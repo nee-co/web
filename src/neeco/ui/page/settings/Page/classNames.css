@@ -9,8 +9,6 @@
     flex-direction  : column;
     margin-top      : 16px;
     padding         : 8px;
-    background-color: #fff;
-    color           : #777;
 }
 
 .SettingsPage label {

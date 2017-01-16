@@ -1,8 +1,8 @@
-var createToken = require("neeco/api/auth/createToken")
-var classNames  = require("neeco/ui/page/sign_in/Page/classNames")
-var FormButton  = require("neeco/ui/view/form/Button")
-var Input       = require("neeco/ui/view/form/Input")
-var React       = require("react")
+let createToken = require("neeco/api/auth/createToken")
+let classNames  = require("neeco/ui/page/sign_in/Page/classNames")
+let FormButton  = require("neeco/ui/view/form/Button")
+let Input       = require("neeco/ui/view/form/Input")
+let React       = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -12,7 +12,7 @@ module.exports = class extends React.Component {
     }
 
     render() {
-        var {
+        let {
             onSignIn
         } = this.props
 
@@ -21,15 +21,17 @@ module.exports = class extends React.Component {
                 className={classNames.SignInPage}
             >
                 <h2>Sign in to NEE-CO</h2>
-                <div className={classNames.SignInCard}>
+                <div
+                    className={classNames.SignInCard}
+                >
                     <form
                         onSubmit={async (e) => {
                             e.preventDefault()
 
-                            var formData = new FormData(e.target)
+                            let formData = new FormData(e.target)
 
                             try {
-                                var token = await createToken({
+                                let token = await createToken({
                                     apiHost : process.env.NEECO_API_HOST,
                                     userName: formData.getAll("id"),
                                     password: formData.getAll("password")
@@ -40,7 +42,7 @@ module.exports = class extends React.Component {
                                     staySignedIn: formData.getAll("staySignedIn")
                                 })
                             } catch (e) {
-                                var error = e instanceof Response ? "学籍番号またはパスワードが間違っています"
+                                let error = e instanceof Response ? "学籍番号またはパスワードが間違っています"
                                           :                         "不明なエラー"
                                 
                                 this.setState({
@@ -77,7 +79,9 @@ module.exports = class extends React.Component {
                                 サインイン状態を保持する
                             </span>
                         </label>
-                        <FormButton>
+                        <FormButton
+                            type="raised"
+                        >
                             サインイン
                         </FormButton>
                     </form>

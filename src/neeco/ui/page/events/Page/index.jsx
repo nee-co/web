@@ -1,14 +1,15 @@
-var Shadow        = require("neeco/ui/effect/Shadow")
-var EntriedEvents = require("neeco/ui/page/events/EntriedEvents")
-var NewEvents     = require("neeco/ui/page/events/NewEvents")
-var OwnedEvents   = require("neeco/ui/page/events/OwnedEvents")
-var LinkButton    = require("neeco/ui/view/LinkButton")
-var ViewPager     = require("neeco/ui/view/ViewPager")
-var Tab           = require("neeco/ui/view/navigation/Tab")
-var TabBar        = require("neeco/ui/view/navigation/TabBar")
-var classNames    = require("neeco/ui/page/events/Page/classNames")
-var React         = require("react")
-var {Link}        = require("react-router")
+let Shadow        = require("neeco/ui/effect/Shadow")
+let EntriedEvents = require("neeco/ui/page/events/EntriedEvents")
+let NewEvents     = require("neeco/ui/page/events/NewEvents")
+let OwnedEvents   = require("neeco/ui/page/events/OwnedEvents")
+let Card          = require("neeco/ui/view/Card")
+let LinkButton    = require("neeco/ui/view/LinkButton")
+let ViewPager     = require("neeco/ui/view/ViewPager")
+let Tab           = require("neeco/ui/view/Tab")
+let TabBar        = require("neeco/ui/view/TabBar")
+let classNames    = require("neeco/ui/page/events/Page/classNames")
+let React         = require("react")
+let {Link}        = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -18,22 +19,24 @@ module.exports = class extends React.Component {
     }
 
     render() {
-        var {
+        let {
             token
         } = this.props
 
         return (
-            <section
+            <Card
                 className={classNames.EventPage}
+                component={"section"}
             >
-                <Shadow
+                <div
                     className={classNames.Header}
                 >
-                    <div>
+                    <div className={classNames.Summary}>
                         <h2>イベント</h2>
                         <LinkButton
                             className={classNames.NewEventButton}
                             to="/event_creation"
+                            type="raised"
                         >
                             イベント作成
                         </LinkButton>
@@ -50,7 +53,7 @@ module.exports = class extends React.Component {
                         <Tab>参加中</Tab>
                         <Tab>管理中</Tab>
                     </TabBar>
-                </Shadow>
+                </div>
                 <ViewPager
                     selectedIndex={this.state.tabIndex}
                 >
@@ -64,7 +67,7 @@ module.exports = class extends React.Component {
                         token={token}
                     />
                 </ViewPager>
-            </section>
+            </Card>
         )
     }
 }

@@ -1,12 +1,14 @@
-var classNames = require("neeco/ui/view/LinkButton/classNames")
-var React      = require("react")
-var {Link}     = require("react-router")
+let Button     = require("neeco/ui/view/Button")
+let classNames = require("neeco/ui/view/LinkButton/classNames")
+let React      = require("react")
+let {Link}     = require("react-router")
 
 module.exports = ({
     className,
     ...props
 }) =>
-    <Link
-        {...props}
-        className={[className, classNames.LinkButton].join(" ")}
+    <Button
+      className={[className, classNames.LinkButton].join(" ")}
+      component={Link}
+      {...props}
     />

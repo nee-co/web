@@ -1,5 +1,5 @@
-var toFile     = require("neeco/api/file/toFile")
-var toURIQuery = require("neeco/encoding/toURIQuery")
+let toFile     = require("neeco/api/file/toFile")
+let toURIQuery = require("neeco/encoding/toURIQuery")
 
 module.exports = async ({
     apiHost,
@@ -7,7 +7,7 @@ module.exports = async ({
     name,
     parentID
 }) => {
-    var response = await fetch(apiHost + "/folders", {
+    let response = await fetch(apiHost + "/folders", {
         method : "POST",
         headers: {
             "Authorization": "Bearer " + token,
@@ -19,7 +19,8 @@ module.exports = async ({
         })
     })
 
-    var x = await response.json()
+    if (! response.ok)
+        throw response
 
-    return toFile(x)
+    return toFile(object.assign({type: "folder"}, await response.json()))
 }

@@ -1,5 +1,5 @@
-var classNames = require("neeco/ui/page/top/Page/classNames")
-var React      = require("react")
+let classNames = require("neeco/ui/page/top/Page/classNames")
+let React      = require("react")
 
 module.exports = (props) =>
     <section

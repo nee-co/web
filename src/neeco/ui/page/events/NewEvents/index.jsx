@@ -1,41 +1,41 @@
-var searchEvents  = require("neeco/api/event/searchEvents")
-var Shadow        = require("neeco/ui/effect/Shadow")
-var EventCardList = require("neeco/ui/view/EventCardList")
-var EventList     = require("neeco/ui/view/EventList")
-var FormButton    = require("neeco/ui/view/form/Button")
-var Input         = require("neeco/ui/view/form/Input")
-var classNames    = require("neeco/ui/page/events/NewEvents/classNames")
-var React         = require("react")
-var {Link}        = require("react-router")
+let searchEvents  = require("neeco/api/event/searchEvents")
+let Shadow        = require("neeco/ui/effect/Shadow")
+let EventCardList = require("neeco/ui/view/EventCardList")
+let FormButton    = require("neeco/ui/view/form/Button")
+let Input         = require("neeco/ui/view/form/Input")
+let classNames    = require("neeco/ui/page/events/NewEvents/classNames")
+let React         = require("react")
+let {Link}        = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            events: []
+            eventsPage: undefined
         })
     }
 
     componentDidMount() {
-        var {
+        let {
             token
         } = this.props
 
         ;(async () => {
-            var events = await searchEvents({
+            let eventsPage = await searchEvents({
                 apiHost: process.env.NEECO_API_HOST,
                 token  : token,
                 query  : "",
-                limit  : 10
+                page   : 1,
+                perPage: 10
             })
 
             this.setState({
-                events: events
+                eventsPage: eventsPage
             })
         })()
     }
 
     render() {
-        var {
+        let {
             className,
             token,
             ...props
@@ -51,9 +51,9 @@ module.exports = class extends React.Component {
                     onSubmit={async (e) => {
                         e.preventDefault()
 
-                        var formData = new FormData(e.target)
+                        let formData = new FormData(e.target)
 
-                        var events = await searchEvents({
+                        let events = await searchEvents({
                             apiHost: process.env.NEECO_API_HOST,
                             token  : token,
                             query  : formData.getAll("query"),
@@ -74,7 +74,10 @@ module.exports = class extends React.Component {
                     />
                 </form>
                 <EventCardList
-                    events={this.state.events}
+                    events={
+                        this.state.eventsPage ? this.state.eventsPage.data
+                      :                         []
+                    }
                 />
             </section>
         )

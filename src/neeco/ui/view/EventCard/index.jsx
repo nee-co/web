@@ -1,14 +1,14 @@
-var classNames = require("neeco/ui/view/EventCard/classNames")
-var LinkPaper  = require("neeco/ui/view/LinkPaper")
-var ListItem   = require("neeco/ui/view/ListItem")
-var React      = require("react")
+let classNames = require("neeco/ui/view/EventCard/classNames")
+let LinkCard   = require("neeco/ui/view/LinkCard")
+let ListItem   = require("neeco/ui/view/ListItem")
+let React      = require("react")
 
 module.exports = ({
     className,
     event,
     ...props
 }) =>
-    <LinkPaper
+    <LinkCard
         {...props}
         className={[className, classNames.EventCard].join(" ")}
         to={"/events/" + event.id}
@@ -34,4 +34,4 @@ module.exports = ({
                 {event.startDate}
             </p>
         </div>
-    </LinkPaper>
+    </LinkCard>

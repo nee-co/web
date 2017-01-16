@@ -1,14 +1,13 @@
-var getFolders = require("neeco/api/file/getFolders")
-var Shadow     = require("neeco/ui/effect/Shadow")
-var Button     = require("neeco/ui/view/Button")
-var FileList   = require("neeco/ui/view/FileList")
-var Link       = require("neeco/ui/view/Link")
-var List       = require("neeco/ui/view/List")
-var ListItem   = require("neeco/ui/view/ListItem")
-var classNames = require("neeco/ui/page/folders/Page/classNames")
-var React      = require("react")
+let getFolders = require("neeco/api/file/getFolders")
+let Shadow     = require("neeco/ui/effect/Shadow")
+let Button     = require("neeco/ui/view/Button")
+let FileList   = require("neeco/ui/view/FileList")
+let List       = require("neeco/ui/view/List")
+let ListItem   = require("neeco/ui/view/ListItem")
+let classNames = require("neeco/ui/page/folders/Page/classNames")
+let React      = require("react")
 
-var compare = (x, y) =>
+let compare = (x, y) =>
     x < y ? -1
   : x > y ? 1
   :         0
@@ -31,7 +30,7 @@ module.exports = class extends React.Component {
         token
     }) {
         (async () => {
-            var files = await getFolders({
+            let files = await getFolders({
                 apiHost: process.env.NEECO_API_HOST,
                 token  : token
             })
@@ -43,36 +42,25 @@ module.exports = class extends React.Component {
     }
 
     render() {
-        var {
+        let {
             token,
             user
         } = this.props
 
         return (
             <section
-                className={classNames.FilePage}
+                className={classNames.FolderPage}
             >
                 <Shadow>
-                    <header>
-                        <h2>ファイル</h2>
-                    </header>
+                    <h2>ファイル</h2>
                 </Shadow>
-                {
-                    this.state.files.length > 0 ? <FileList files={this.state.files} />
-                  :                               <div>このフォルダは空です</div>
-                }
+                <div>
+                    {
+                        this.state.files.length > 0 ? <FileList files={this.state.files} />
+                      :                               <div>このフォルダは空です</div>
+                    }
+                </div>                
             </section>
         )
     }
 }
-
-var ListItemA = ({
-    className,
-    ...props
-}) =>
-    <ListItem>
-        <Link
-            {...props}
-            className={[className, classNames.PopupListItemA].join(" ")}
-        />
-    </ListItem>

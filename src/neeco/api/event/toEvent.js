@@ -1,3 +1,5 @@
+let toUser = require("neeco/api/user/toUser")
+
 module.exports = (event) => ({
     id         : event["id"],
     title      : event["title"],
@@ -6,6 +8,10 @@ module.exports = (event) => ({
     startDate  : event["start_date"],
     isPublic   : event["isPublic"],
     owner      : event["owner"],
-    entries    : event["entries"],
-    comments   : event["comments"]
-}) 
+    entries    : event["entries"] && event["entries"].map(toUser),
+    comments   : event["comments"] && event["comments"].map((x) => ({
+        body    : x["body"],
+        postedAt: x["posted_at"],
+        postedBy: toUser(x["user"])
+    }))
+})

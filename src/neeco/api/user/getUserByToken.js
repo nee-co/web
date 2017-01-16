@@ -1,15 +1,18 @@
+let toUser = require("neeco/api/user/toUser")
+
 module.exports = async ({
     apiHost,
     token
 }) => {
-    var response = await fetch(apiHost + "/user", {
+    let response = await fetch(apiHost + "/user", {
         method : "GET",
         headers: {
             "Authorization": "Bearer " + token
         }
     })
+
+    if (! response.ok)
+        throw response
     
-    var user = await response.json()
-    
-    return user
+    return toUser(await response.json())    
 }

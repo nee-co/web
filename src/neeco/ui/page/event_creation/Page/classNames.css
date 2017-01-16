@@ -1,66 +1,16 @@
 .NewEventPage {
-    min-width: max-content;
-    padding  : 16px;
+    width  : max-content;
+    padding: 0 16px;
 }
 
 .NewEventPage form {
     display         : flex;
     flex-direction  : column;
-    align-content   : stretch;
-    margin-top      : 16px;
-    background-color: #fff;
+    align-items     : stretch;
+    background-color: #FFF;
 }
 
-.NewEventPage form > label,
-.NewEventPage form > div {
-    display       : flex;
-    flex-direction: row;
-    flex-flow     : nowrap;
-    padding       : 8px;
-    border-bottom : 1px solid #ccc;
-}
-
-.NewEventPage form > label > :nth-child(1),
-.NewEventPage form > div   > :nth-child(1) {
-    display      : inline-block;
-    min-width    : 160px;
-    margin-bottom: 8px;
-}
-
-.NewEventPage form > label > :nth-child(2) > :nth-child(1) {
-    display      : inline-block;
-    margin-bottom: 8px;
-}
-
-.NewEventPage input,
-.NewEventPage select,
-.NewEventPage textarea {
-    flex-grow : 1;
-    min-height: 22px;
-    padding   : 4px 8px;
-}
-
-.NewEventPage select {
-    min-height: 32px;
-}
-
-.NewEventPage input[type="date"],
-.NewEventPage select {
-    flex-grow   : 0;
-    margin-right: 8px;
-}
-
-@media all and (max-width: 640px) {
-    .NewEventPage {
-        padding  : 8px;
-        font-size: 12px;
-    }
-
-    .NewEventPage form > label {
-        flex-direction: column;
-    }
-
-    .NewEventPage form > label :nth-child(1) {
-        margin-bottom: 8px;
-    }
+.NewEventPage form > :nth-child(1) {
+    display  : flex;
+    flex-wrap: wrap;
 }

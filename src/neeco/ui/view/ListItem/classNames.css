@@ -1,13 +1,15 @@
 .ListItem {
+    display    : flex;
+    min-height : max-content;
+}
+
+.ListItem > * {
+    flex-grow : 1;
     cursor    : pointer;
     transition: all .3s ease-out;
 }
 
-.SelectedListItem {
-    cursor: default;
-}
-
-.ListItem:hover,
-.SelectedListItem {
+.ListItem.Selected > :nth-child(1) {
     background-color: rgba(0, 0, 0, .05);
+    cursor          : default;
 }

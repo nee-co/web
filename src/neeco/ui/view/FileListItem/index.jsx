@@ -1,7 +1,7 @@
-var FontAwesomeIcon = require("neeco/ui/view/FontAwesomeIcon")
-var classNames      = require("neeco/ui/view/FileListItem/classNames")
-var React           = require("react")
-var {Link}          = require("react-router")
+let FontAwesomeIcon = require("neeco/ui/view/FontAwesomeIcon")
+let classNames      = require("neeco/ui/view/FileListItem/classNames")
+let React           = require("react")
+let {Link}          = require("react-router")
 
 module.exports = ({
     className,
@@ -42,7 +42,7 @@ module.exports = ({
         </td>
     </tr>
 
-var FileLink = ({
+let FileLink = ({
     children,
     file,
     ...props

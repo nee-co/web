@@ -1,10 +1,10 @@
-var updatePassword = require("neeco/api/user/updatePassword")
-var LinkButton     = require("neeco/ui/view/LinkButton")
-var FormButton     = require("neeco/ui/view/form/Button")
-var Input          = require("neeco/ui/view/form/Input")
-var classNames     = require("neeco/ui/page/settings/password/Page/classNames")
-var React          = require("react")
-var {Link}         = require("react-router")
+let updatePassword = require("neeco/api/user/updatePassword")
+let LinkButton     = require("neeco/ui/view/LinkButton")
+let FormButton     = require("neeco/ui/view/form/Button")
+let TextField      = require("neeco/ui/view/form/TextField")
+let classNames     = require("neeco/ui/page/settings/password/Page/classNames")
+let React          = require("react")
+let {Link}         = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -14,7 +14,7 @@ module.exports = class extends React.Component {
     }
 
     render() {
-        var {
+        let {
             token,
             user
         } = this.props
@@ -28,7 +28,7 @@ module.exports = class extends React.Component {
                     onSubmit={(e) => {
                         e.preventDefault()
 
-                        var formData = new FormData(e.target)
+                        let formData = new FormData(e.target)
 
                         updatePassword({
                             apiHost    : process.env.NEECO_API_HOST,
@@ -38,38 +38,35 @@ module.exports = class extends React.Component {
                         })
                     }}
                 >
-                    <label>
-                        現在のパスワード<br />
-                        <Input
-                            name="password"
-                            required
-                            type="password"
-                        />
-                    </label>
-                    <label>
-                        新しいパスワード<br />
-                        <Input
-                            name="newPassword"
-                            required
-                            type="password"
-                        />
-                    </label>
-                    <label>
-                        パスワードの再入力<br />
-                        <Input
-                            name="newPasswordConfirmation"
-                            required
-                            type="password"
-                        />
-                    </label>
-                    <div>
-                        <FormButton>変更</FormButton>
+                    <TextField
+                        labelText={"現在のパスワード"}
+                        name="password"
+                        required
+                        type="password"
+                    />
+                    <TextField
+                        labelText={"新しいパスワード"}
+                        name="password"
+                        required
+                        type="password"
+                    />
+                    <TextField
+                        labelText={"パスワードの再入力"}
+                        name="password"
+                        required
+                        type="password"
+                    />
+                    <div
+                        className={classNames.Buttons}
+                    >
                         <LinkButton
-                            className={classNames.CancelButton}
                             to="/settings"
                         >
                             キャンセル
                         </LinkButton>
+                        <FormButton>
+                            変更
+                        </FormButton>
                     </div>
                 </form>
             </section>

@@ -1,7 +1,7 @@
-var classNames = require("neeco/ui/view/EventListItem/classNames")
-var ListItem   = require("neeco/ui/view/ListItem")
-var React      = require("react")
-var {Link}     = require("react-router")
+let classNames = require("neeco/ui/view/EventListItem/classNames")
+let ListItem   = require("neeco/ui/view/ListItem")
+let React      = require("react")
+let {Link}     = require("react-router")
 
 module.exports = ({
     className,

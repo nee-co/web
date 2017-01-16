@@ -1,6 +1,6 @@
-var classNames   = require("neeco/ui/view/FileList/classNames")
-var FileListItem = require("neeco/ui/view/FileListItem")
-var React        = require("react")
+let classNames   = require("neeco/ui/view/FileList/classNames")
+let FileListItem = require("neeco/ui/view/FileListItem")
+let React        = require("react")
 
 module.exports = ({
     className,

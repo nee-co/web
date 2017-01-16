@@ -1,7 +1,7 @@
-var classNames = require("neeco/ui/page/settings/Page/classNames")
-var TextArea   = require("neeco/ui/view/form/TextArea")
-var Link       = require("neeco/ui/view/Link")
-var React      = require("react")
+let classNames = require("neeco/ui/page/settings/Page/classNames")
+let TextArea   = require("neeco/ui/view/form/TextArea")
+let LinkButton = require("neeco/ui/view/LinkButton")
+let React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -11,7 +11,7 @@ module.exports = class extends React.Component {
     }
 
     render() {
-        var {
+        let {
             token,
             user
         } = this.props
@@ -51,11 +51,13 @@ module.exports = class extends React.Component {
                     </dd>
                 </dl>
                 <br />
-                <Link
-                    to="/settings/password"
-                >
-                    パスワードの変更
-                </Link>
+                <div>
+                    <LinkButton
+                        to="/settings/password"
+                    >
+                        パスワードの変更
+                    </LinkButton>
+                </div>
             </section>
         )
     }

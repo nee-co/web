@@ -1,9 +1,12 @@
-module.exports = (file) => ({
-    kind     : file["type"],
-    id       : file["id"],
-    name     : file["name"],
-    createdAt: file["created_at"],
-    createdBy: file["created_user"],
-    updatedAt: file["updated_at"],
-    updatedBy: file["updated_user"]
+let toFile = (x) => ({
+    kind     : x["type"],
+    id       : x["id"],
+    name     : x["name"],
+    createdAt: x["created_at"],
+    createdBy: x["created_user"],
+    updatedAt: x["updated_at"],
+    updatedBy: x["updated_user"],
+    children : x["elements"] && x["elements"].map(toFile)
 })
+
+module.exports = toFile

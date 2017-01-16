@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items   : stretch;
     width         : 100%;
+    min-width     : max-content;
     height        : 100%;
 }
 
@@ -11,12 +12,15 @@
 }
 
 .Header {
-    z-index  : 1;
     min-width: max-content;
 }
 
-.Header > :nth-child(1) {
-    padding: 16px;
+.Summary {
+    padding: 0 16px;
+}
+
+.Summary > :nth-child(n+2) {
+    margin-top: 16px;
 }
 
 .NewEventButton {

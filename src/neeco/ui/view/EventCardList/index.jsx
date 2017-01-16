@@ -1,8 +1,8 @@
-var classNames = require("neeco/ui/view/EventCardList/classNames")
-var EventCard  = require("neeco/ui/view/EventCard")
-var List       = require("neeco/ui/view/List")
-var ListItem   = require("neeco/ui/view/ListItem")
-var React      = require("react")
+let classNames = require("neeco/ui/view/EventCardList/classNames")
+let EventCard  = require("neeco/ui/view/EventCard")
+let List       = require("neeco/ui/view/List")
+let ListItem   = require("neeco/ui/view/ListItem")
+let React      = require("react")
 
 module.exports = ({
     className,

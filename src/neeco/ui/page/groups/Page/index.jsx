@@ -1,8 +1,7 @@
-var getGroups  = require("neeco/api/group/getGroups")
-var classNames = require("neeco/ui/page/groups/Page/classNames")
-var LinkButton = require("neeco/ui/view/LinkButton")
-var React      = require("react")
-var {Link}     = require("react-router")
+let getGroups  = require("neeco/api/group/getGroups")
+let classNames = require("neeco/ui/page/groups/Page/classNames")
+let React      = require("react")
+let {Link}     = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -19,7 +18,7 @@ module.exports = class extends React.Component {
         token
     }) {
         (async () => {
-            var groups = await getGroups({
+            let groups = await getGroups({
                 apiHost: process.env.NEECO_API_HOST,
                 token  : token,
                 limit  : 10
@@ -30,7 +29,7 @@ module.exports = class extends React.Component {
     }
 
     render() {
-        var {
+        let {
             token
         } = this.props
 

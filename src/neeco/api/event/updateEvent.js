@@ -1,4 +1,4 @@
-var toFormData = require("neeco/encoding/toFormData")
+let toFormData = require("neeco/encoding/toFormData")
 
 module.exports = async ({
     apiHost,
@@ -10,7 +10,7 @@ module.exports = async ({
     image,
     isPublic
 }) => {
-    var response = await fetch(apiHost + "/events/" + id, {
+    let response = await fetch(apiHost + "/events/" + id, {
         method : "PATCH",
         headers: {
             "Authorization": "Bearer " + token
@@ -23,20 +23,15 @@ module.exports = async ({
         })
     })
 
-    if (typeof isPublic != "undefined") {
-        if (isPublic)
-            var response = await fetch(apiHost + "/events/" + id + "/public", {
-                method : "PUT",
-                headers: {
-                    authorization: "Bearer " + token
-                }
-            })
-        else
-            var response = await fetch(apiHost + "/events/" + id + "/private", {
-                method : "PUT",
-                headers: {
-                    authorization: "Bearer " + token
-                }
-            })
+    if (! response.ok)
+        throw response
+
+    if (isPublic !== undefined) {
+        let response = await fetch(apiHost + "/events/" + id + (isPublic ? "/public" : "/private"), {
+            method : "PUT",
+            headers: {
+                authorization: "Bearer " + token
+            }
+        })
     }    
 }

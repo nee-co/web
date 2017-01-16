@@ -1,16 +1,26 @@
 .MainLayout {
-    display         : flex;
-    flex-direction  : column;
-    max-width       : 100%;
-    max-height      : 100%;
-    width           : 100vw;
-    height          : 100vh;
+    display       : flex;
+    flex-direction: column;
+    align-items   : stretch;
+    max-width     : 100%;
+    max-height    : 100%;
+    width         : 100vw;
+    height        : 100vh;
+}
+
+.MainLayout > :nth-child(1) {
+    z-index: 1;
+}
+
+.MainLayout > :nth-child(2) {
+    z-index: 0;
 }
 
 .Contents {
     display       : flex;
     flex-direction: row;
     flex-grow     : 1;
+    align-items   : stretch;
 }
 
 .Contents > :nth-child(1) {
@@ -28,8 +38,6 @@
 
 .HideNavigationBar,
 .ShowNavigationBar {
-    min-width : 216px;
-    height    : 100%;
     transition: all .3s ease-out;
 }
 

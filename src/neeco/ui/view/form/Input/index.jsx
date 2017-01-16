@@ -1,5 +1,5 @@
-var classNames = require("neeco/ui/view/form/Input/classNames")
-var React      = require("react")
+let classNames = require("neeco/ui/view/form/Input/classNames")
+let React      = require("react")
 
 module.exports = ({
     className,

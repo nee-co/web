@@ -4,12 +4,15 @@ module.exports = async ({
     token,
     userID
 }) => {
-    var response = await fetch(apiHost + "/events/" + eventID + (userID ? "/users/" : "/entry"), {
+    let response = await fetch(apiHost + "/events/" + eventID + (userID ? "/users/" : "/entry"), {
         method : "PUT",
         headers: {
             "Authorization": "Bearer " + token
         }
     })
+
+    if (! response.ok)
+        throw response
 
     return response
 }

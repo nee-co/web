@@ -1,19 +1,19 @@
-var EventCreationPage    = require("neeco/ui/page/event_creation/Page")
-var EventDetailPage      = require("neeco/ui/page/event_detail/Page")
-var EventsPage           = require("neeco/ui/page/events/Page")
-var FolderDetailPage     = require("neeco/ui/page/folder_detail/Page")
-var FoldersPage          = require("neeco/ui/page/folders/Page")
-var GroupDetailPage      = require("neeco/ui/page/group_detail/Page")
-var GroupsPage           = require("neeco/ui/page/groups/Page")
-var SettingsPage         = require("neeco/ui/page/settings/Page")
-var PasswordSettingsPage = require("neeco/ui/page/settings/password/Page")
-var TopPage              = require("neeco/ui/page/top/Page")
-var Authentication       = require("neeco/ui/wrapper/Authentication")
-var MainLayout           = require("neeco/ui/wrapper/MainLayout")
-var React                = require("react")
-var {Route}              = require("react-router")
-var {Router}             = require("react-router")
-var {browserHistory}     = require("react-router")
+let EventCreationPage    = require("neeco/ui/page/event_creation/Page")
+let EventDetailPage      = require("neeco/ui/page/event_detail/Page")
+let EventsPage           = require("neeco/ui/page/events/Page")
+let FolderDetailPage     = require("neeco/ui/page/folder_detail/Page")
+let FoldersPage          = require("neeco/ui/page/folders/Page")
+let GroupDetailPage      = require("neeco/ui/page/group_detail/Page")
+let GroupsPage           = require("neeco/ui/page/groups/Page")
+let SettingsPage         = require("neeco/ui/page/settings/Page")
+let PasswordSettingsPage = require("neeco/ui/page/settings/password/Page")
+let TopPage              = require("neeco/ui/page/top/Page")
+let Authentication       = require("neeco/ui/wrapper/Authentication")
+let MainLayout           = require("neeco/ui/wrapper/MainLayout")
+let React                = require("react")
+let {Route}              = require("react-router")
+let {Router}             = require("react-router")
+let {browserHistory}     = require("react-router")
 
 module.exports = (props) =>
     <Router
@@ -45,6 +45,14 @@ module.exports = (props) =>
             />
             <Route
                 path="/events/:event_id"
+                component={EventDetailPage}
+            />
+            <Route
+                path="/events/:event_id/comments"
+                component={EventDetailPage}
+            />
+            <Route
+                path="/events/:event_id/entries"
                 component={EventDetailPage}
             />
             <Route

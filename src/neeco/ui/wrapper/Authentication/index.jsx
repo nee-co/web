@@ -1,6 +1,6 @@
-var getUserByToken = require("neeco/api/user/getUserByToken")
-var SignInPage     = require("neeco/ui/page/sign_in/Page")
-var React          = require("react")
+let getUserByToken = require("neeco/api/user/getUserByToken")
+let SignInPage     = require("neeco/ui/page/sign_in/Page")
+let React          = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -11,14 +11,14 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        var token = sessionStorage.getItem("token")
+        let token = sessionStorage.getItem("token")
                  || localStorage.getItem("token")
 
         if (token) {
             this.setState({token: token})
 
             ;(async () => {
-                var user = await getUserByToken({
+                let user = await getUserByToken({
                     apiHost: process.env.NEECO_API_HOST,
                     token  : token
                 })
@@ -29,7 +29,7 @@ module.exports = class extends React.Component {
     }
 
     render() {
-        var {
+        let {
             children,
             ...props
         } = this.props
@@ -58,7 +58,7 @@ module.exports = class extends React.Component {
 
                             this.setState({token: token})
 
-                            var user = await getUserByToken({
+                            let user = await getUserByToken({
                                 apiHost: process.env.NEECO_API_HOST,
                                 token  : token
                             })

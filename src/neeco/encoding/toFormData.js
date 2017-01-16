@@ -1,12 +1,12 @@
 module.exports = (a) => {
-    var b = new FormData()
+    let b = new FormData()
 
-    for (var i in a)
-    if (typeof a[i] == "string")
-        b.append(i, a[i])
-    else
-        for (var x of a[i])
+    for (let i in a)
+    if (Array.isArray(a[i]))
+        for (let x of a[i])
             b.append(i, x)
+    else if (typeof(a[i]) != "undefined")
+        b.append(i, a[i])
 
     return b
 }

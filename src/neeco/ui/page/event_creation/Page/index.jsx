@@ -1,20 +1,22 @@
-var createEvent = require("neeco/api/event/createEvent")
-var classNames  = require("neeco/ui/page/event_creation/Page/classNames")
-var Editor      = require("neeco/ui/view/Editor")
-var FormButton  = require("neeco/ui/view/form/Button")
-var Input       = require("neeco/ui/view/form/Input")
-var React       = require("react")
+let createEvent = require("neeco/api/event/createEvent")
+let classNames  = require("neeco/ui/page/event_creation/Page/classNames")
+let Editor      = require("neeco/ui/view/Editor")
+let FormButton  = require("neeco/ui/view/form/Button")
+let ImageInput  = require("neeco/ui/view/form/ImageInput")
+let TextField   = require("neeco/ui/view/form/TextField")
+let React       = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            error: null,
-            description: ""
+            error      : null,
+            description: "",
+            imageURL   : undefined
         })
     }
 
     render() {
-        var {
+        let {
             token
         } = this.props
 
@@ -27,7 +29,7 @@ module.exports = class extends React.Component {
                     onSubmit={(e) => {
                         e.preventDefault()
 
-                        var formData = new FormData(e.target)
+                        let formData = new FormData(e.target)
 
                         createEvent({
                             apiHost    : process.env.NEECO_API_HOST,
@@ -39,47 +41,44 @@ module.exports = class extends React.Component {
                         })
                     }}
                 >
-                    <label>
-                        <span>タイトル</span>
-                        <Input
-                            name="title"
-                            type="text"
-                            placeholder="例) Rubyもくもく会#1"
-                            required
-                        />
-                    </label>
-                    <label>
-                        <span>日時</span>
-                        <span>
-                            <Input
-                                name="startDate"
-                                type="date"
-                            />
-                        </span>
-                    </label>
-                    <label>
-                        <span>画像</span>
-                        <Input
-                            name="image"
-                            type="file"
-                        />
-                    </label>
+                    <TextField
+                        labelText={"タイトル"}
+                        name="title"
+                        required
+                    />
+                    <TextField
+                        labelText={"日時"}
+                        name="startDate"
+                        required
+                        type="date"
+                        defaultValue={
+                            new Date().toISOString().slice(0, 10)
+                        }
+                    />
+                    <ImageInput
+                        labelText={"イベント画像"}
+                        name="image"
+                    />
                     <div>
                         <span>説明</span>
                         <Editor>
                             {this.state.description}
                         </Editor>
                     </div>
-                    <FormButton>
-                        作成
-                    </FormButton>
+                    <div>
+                        <FormButton
+                            type="raised"
+                        >
+                            作成
+                        </FormButton>
+                    </div>
                 </form>
             </section>
         )
     }
 }
 
-var TimeSelect = (props) =>
+let TimeSelect = (props) =>
     <select
         {...props}
     >

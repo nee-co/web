@@ -1,7 +1,10 @@
 .FolderPage {
     display       : flex;
     flex-direction: column;
+    align-items   : stretch;
+    width         : 100%;
     min-width     : max-content;
+    height        : 100%;
 }
 
 .FolderPage > :nth-child(1) {
@@ -9,58 +12,33 @@
     padding: 16px;
 }
 
-.FolderPage > :nth-child(1) > :nth-child(1) > :nth-child(n+2) {
+.FolderPage > :nth-child(1) > :nth-child(n+2) {
     margin-top: 16px;
 }
 
 .FolderPage > :nth-child(2) {
-    min-width: 100%;
+    overflow : auto;
+    flex-grow: 1;
 }
 
-.FolderPage > :nth-child(1) > :nth-child(2):not(table) {
+.FolderPage > :nth-child(2) > * {
+    width    : 100%;
+    min-width: max-content;
+}
+
+.FolderPage > :nth-child(2) > :not(table) {
     padding  : 16px;
     flex-grow: 1;
 }
 
-.FolderPage label {
-    display: block;
-    cursor : pointer;
-}
-
-.FolderCreationCard {
-    display         : flex;
-    flex-direction  : column;
-    font-size       : 14px;
-    padding         : 8px;
-    background-color: #FFF;
-}
-
-.FolderCreationCard > :nth-child(n+2) {
-    margin-top: 8px;
-}
-
-.FolderCreationCard > form {
-    display       : flex;
-    flex-direction: column;
-}
-
-.FolderCreationCard > form > :nth-child(n+2) {
-    margin-top: 8px;
-}
-
-.FolderCreationCard > form > :nth-child(2) > :nth-child(1) {
-    margin-right    : 8px;
-    border-color    : #CCC;
-    background-color: #CCC;
-}
-
 .Breadcrumbs {
     flex-direction: row;
+    font-weight   : normal;
 }
 
 .Breadcrumbs li:nth-child(n+2):before {
     font-family: "FontAwesome";
-    padding    : 16px;
+    padding    : 0 16px;
     content    : "\F105";
 }
 
