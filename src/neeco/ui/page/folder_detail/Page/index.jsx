@@ -1,21 +1,23 @@
-let createFile    = require("neeco/api/file/createFile")
-let createFolder  = require("neeco/api/file/createFolder")
-let getFolderByID = require("neeco/api/file/getFolderByID")
-let Dialog        = require("neeco/ui/control/Dialog")
-let DialogBody    = require("neeco/ui/control/DialogBody")
-let DialogFooter  = require("neeco/ui/control/DialogFooter")
-let DialogHeader  = require("neeco/ui/control/DialogHeader")
-let Shadow        = require("neeco/ui/effect/Shadow")
-let classNames    = require("neeco/ui/page/folder_detail/Page/classNames")
-let Button        = require("neeco/ui/view/Button")
-let FileList      = require("neeco/ui/view/FileList")
-let LinkButton    = require("neeco/ui/view/LinkButton")
-let List          = require("neeco/ui/view/List")
-let ListItem      = require("neeco/ui/view/ListItem")
-let Popup         = require("neeco/ui/view/Popup")
-let FormButton    = require("neeco/ui/view/form/Button")
-let TextField     = require("neeco/ui/view/form/TextField")
-let React         = require("react")
+let createFile     = require("neeco/api/file/createFile")
+let createFolder   = require("neeco/api/file/createFolder")
+let getFolderByID  = require("neeco/api/file/getFolderByID")
+let FileList       = require("neeco/ui/view/file/FileList")
+let React          = require("react")
+let Dialog         = require("react-material/ui/control/Dialog")
+let DialogBody     = require("react-material/ui/control/DialogBody")
+let DialogFooter   = require("react-material/ui/control/DialogFooter")
+let DialogHeader   = require("react-material/ui/control/DialogHeader")
+let Shadow         = require("react-material/ui/effect/Shadow")
+let Popup          = require("react-material/ui/view/Popup")
+let BreadcrumbList = require("react-material/ui/view/BreadcrumbList") 
+let Button         = require("react-material/ui/view/Button")
+let LinkButton     = require("react-material/ui/view/LinkButton")
+let List           = require("react-material/ui/view/List")
+let ListItem       = require("react-material/ui/view/ListItem")
+let FormButton     = require("react-material/ui/view/form/Button")
+let TextField      = require("react-material/ui/view/form/TextField")
+
+let classNames = require("neeco/ui/page/folder_detail/Page/classNames")
 
 let compare = (x, y) =>
     x < y ? -1
@@ -84,23 +86,16 @@ module.exports = class extends React.Component {
                 <Shadow>
                     <h2>
                         <nav>
-                            <List
-                                className={classNames.Breadcrumbs}
-                            >
-                                <ListItem>
-                                    <LinkButton
-                                        to="/folders"
-                                    >
-                                        /
-                                    </LinkButton>
+                            <BreadcrumbList>
+                                <ListItem
+                                    to="/folders"
+                                >
+                                    /
                                 </ListItem>
                                 <ListItem>
-                                    {
-                                        this.state.folder ? this.state.folder.name
-                                      :                     ""
-                                    }
+                                    {this.state.folder && this.state.folder.name}
                                 </ListItem>
-                            </List>
+                            </BreadcrumbList>
                         </nav>
                     </h2>
                     <div>

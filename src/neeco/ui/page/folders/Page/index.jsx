@@ -1,11 +1,12 @@
 let getFolders = require("neeco/api/file/getFolders")
-let Shadow     = require("neeco/ui/effect/Shadow")
-let Button     = require("neeco/ui/view/Button")
-let FileList   = require("neeco/ui/view/FileList")
-let List       = require("neeco/ui/view/List")
-let ListItem   = require("neeco/ui/view/ListItem")
-let classNames = require("neeco/ui/page/folders/Page/classNames")
+let FileList   = require("neeco/ui/view/file/FileList")
 let React      = require("react")
+let Shadow     = require("react-material/ui/effect/Shadow")
+let Button     = require("react-material/ui/view/Button")
+let List       = require("react-material/ui/view/List")
+let ListItem   = require("react-material/ui/view/ListItem")
+
+let classNames = require("neeco/ui/page/folders/Page/classNames")
 
 let compare = (x, y) =>
     x < y ? -1

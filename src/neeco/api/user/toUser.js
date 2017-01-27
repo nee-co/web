@@ -1,3 +1,5 @@
+let toUser = require("neeco/api/user/toUser")
+
 module.exports = (user) => ({
     id     : user["id"],
     number : user["number"],

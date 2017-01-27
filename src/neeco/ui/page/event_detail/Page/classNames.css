@@ -29,3 +29,9 @@
     height      : 100%;
     border-width: 0px;
 }
+
+.CommentPage {
+    display       : flex;
+    flex-direction: column;
+    height        : 100%;
+}

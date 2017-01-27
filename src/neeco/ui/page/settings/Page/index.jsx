@@ -1,7 +1,8 @@
-let classNames = require("neeco/ui/page/settings/Page/classNames")
-let TextArea   = require("neeco/ui/view/form/TextArea")
-let LinkButton = require("neeco/ui/view/LinkButton")
 let React      = require("react")
+let LinkButton = require("react-material/ui/view/LinkButton")
+let TextArea   = require("react-material/ui/view/form/TextArea")
+
+let classNames = require("neeco/ui/page/settings/Page/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {

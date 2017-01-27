@@ -1,6 +1,6 @@
 let toCharacterReference = require("neeco/encoding/xml/toCharacterReference")
 
-module.exports = (string) =>
+module.exports = window.x = (string) =>
     string
         .replace(
             /(`+)\s*?\r?\n((?:.+?\r?\n)*?)\s*\1/g,
@@ -8,7 +8,7 @@ module.exports = (string) =>
                 "<pre><code>" + toCharacterReference($2) + "</code></pre>"
         )
         .replace(
-            /((?:^ {4}(?!(?:[\*\+\-] )).*?\r?\n)+)/gm,
+            /((?:^ {4}(?!(?:[\*\+\-] )).*?$\r?\n?)+)/gm,
             (match, $1) =>
                 "<pre><code>" + toCharacterReference($1) + "</code></pre>"
         )
@@ -17,37 +17,53 @@ module.exports = (string) =>
             (match, $1, $2) =>
                 "<code>" + toCharacterReference($2) + "</code>"
         )
-        .replace(/((?:^> .*?\r?\n)+)/gm, "<blockquote>$1</blockquote>")
+        .replace(/((?:^> .*?$\r?\n?)+)/gm, "<blockquote>$1</blockquote>")
         .replace(/\[(.*?)\]\((.*?)\)/g, "<a href=\"$2\">$1</a>")
-        .replace(/^\s*([_=\-\*])(?: ?\1)+\s*$/gm, "<hr />")
-        .replace(/.*/, (string) => {
+        .replace(/^\s*([_=\-\*])(?: ?\1)+\s*?/gm, "<hr />")
+        .replace(/^(\s*[^\|\s]+?\s*(?:\|\s*[^\|\s]+?\s*?)+)$/gm, "|$1|")
+        .replace(/^[\s\S]*$/, (string) => {
             while (true) {
-                let match = /(^.+?(?:\|.*?)+?$)/m.exec(string)
-                         || /(^\|.+?(?:\|.*?)+?$)/m.exec(string)
-                         || /(?:^\|(.*?)\|$)/m.exec(string)
+                let match = /(?:^\s*\|.*\|\s*$)/m.exec(string)
                 if (match)
                     string = string.replace(
                         new RegExp(
-                            "^(?:\|?.*?(?:\|.*?){" + match[0].split("|").length + "}\|\r?\n)*",
-                            "gm"
+                            "(?:^\s*\\|(?:.*?\\|){" + (match[0].split("|").length - 2) + "}\s*$\r?\n?)+",
+                            "m"
                         ),
                         (s) => 
                             "<table>"
-                          + s
-                                .split("\r\n")
-                                .map((row) =>
+                          + s.replace(/((?:^\s*\|.+\|\s*$\r?\n?)+?)^\s*(?:\|?\s*\:\-+\:\s*\|)+\s*$\r?\n?/gm, (_, rows) =>
+                                "<thead>"
+                              + rows.replace(/^.+$/gm, (row) =>
                                     "<tr>"
-                                  + row
-                                        .split("\|")
-                                        .join("")
+                                  + row.replace(/\|?(.+?)\|/gm, (_, column) =>
+                                        "<th>"
+                                      + column
+                                      + "</th>"
+                                    )
                                   + "</tr>"
                                 )
-                                .join("")
+                              + "</thead>\n"
+                            ).replace(/(?:^\s*\|.+\|\s*$\r?\n?)+/gm, (rows) =>
+                                "<tbody>"
+                              + rows.replace(/^.+$/gm, (row) =>
+                                    "<tr>"
+                                  + row.replace(/\|?(.+?)\|/g, (_, column) =>
+                                        "<td>"
+                                      + column
+                                      + "</td>"
+                                    )
+                                  + "</tr>"
+                                )
+                              + "</tbody>"
+                            )
                           + "</table>"
                     )
                 else
-                    return string
+                    break
             }
+
+            return string
         })
         .replace(/^\s*(#+)\s+(.+)$/gm, (match, $1, $2) => {
             let tagName = `h${$1.length}`
@@ -58,27 +74,29 @@ module.exports = (string) =>
               + `</${tagName}>`
             )
         })
-        .replace(/(?:^\s*[\+\-\*]\s+.*?\r?\n)+/gm, (match) => 
-            "<ul>"
-          + match
-                .split(/^\s*[\+\-\*]\s+/gm)
-                .slice(1)
-                .map((x) => {
-                    return `<li>${x}</li>`
-                })
-                .join("")
-          + "</ul>"
-        )
-        .replace(/(?:^\s*[0-9]\.\s+.*?\r?\n)+/gm, (match) =>
+        .replace(/(?:^\s*[\+\-\*]\s+.*$\r?\n?)+/gm, (match) => {
+            let spaces = /^(\s*).*$/m.exec(match)[1]
+
+            return (
+                "<ul>"
+              + match.replace(/^\s*[\+\-\*]\s+(.*)$/gm, (_, x) =>
+                    "<li>"
+                  + x
+                  + "</li>"
+                )
+              + "</ul>"
+            )
+        })
+        .replace(/(?:^\s*[0-9]\.\s+.*$\r?\n?)+/gm, (match) =>
             "<ol>"
-          + match
-                .split(/\s*[0-9].\s+/)
-                .slice(1)
-                .map((x) => `<li>${x}</li>`)
-                .join("")
+          + match.replace(/^\s*[0-9]\.\s+(.*)$/gm, (_, x) =>
+                "<li>"
+              + x
+              + "</li>"
+            )
           + "</ol>"
         )
-        .replace(/\*(.+?)\*/g, "<em>$1</em>")
         .replace(/\*{2}(.+?)\*{2}/g, "<strong>$1</strong>")
+        .replace(/\*(.+?)\*/g, "<em>$1</em>")
         .replace(/~{2}(.*?)~{2}/g, "<s>$1</s>")
-        .replace(/(?:\s\r?\n){2,}/g, "<br />\n")
+        .replace(/\s{2,}?$(\r?\n)/gm, "<br />$1")

@@ -1,7 +1,8 @@
-let getGroups  = require("neeco/api/group/getGroups")
+let getGroups = require("neeco/api/group/getGroups")
+let React     = require("react")
+let {Link}    = require("react-router")
+
 let classNames = require("neeco/ui/page/groups/Page/classNames")
-let React      = require("react")
-let {Link}     = require("react-router")
 
 module.exports = class extends React.Component {
     componentWillMount() {

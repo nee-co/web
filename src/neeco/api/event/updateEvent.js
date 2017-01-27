@@ -30,7 +30,7 @@ module.exports = async ({
         let response = await fetch(apiHost + "/events/" + id + (isPublic ? "/public" : "/private"), {
             method : "PUT",
             headers: {
-                authorization: "Bearer " + token
+                "Authorization": "Bearer " + token
             }
         })
     }    

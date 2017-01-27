@@ -1,9 +1,10 @@
 let searchEvents  = require("neeco/api/event/searchEvents")
-let EventListItem = require("neeco/ui/view/EventListItem")
-let List          = require("neeco/ui/view/List")
-let classNames    = require("neeco/ui/page/events/OwnedEvents/classNames")
+let EventListItem = require("neeco/ui/view/event/EventListItem")
 let React         = require("react")
+let List          = require("react-material/ui/view/List")
 let {Link}        = require("react-router")
+
+let classNames = require("neeco/ui/page/events/OwnedEvents/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {

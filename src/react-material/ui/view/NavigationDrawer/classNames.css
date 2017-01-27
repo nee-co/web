@@ -1,0 +1,38 @@
+.NavigationDrawer {
+    overflow    : auto;
+    border-right: 1px solid #DDD;
+    max-width   : 280px;
+    min-width   : max-content;
+    transition  : all .3s ease-out;
+}
+
+.Hidden {
+    overflow : hidden;
+    max-width: 0;
+}
+
+.Visible {
+    max-width: 280px;
+}
+
+.NavigationDrawer ul {
+    min-width: max-content;    
+}
+
+.NavigationDrawer li {
+    font-size  : 14px;
+    font-weight: bolder;
+    color      : rgba(0, 0, 0, .8);
+}
+
+.NavigationDrawer li > :nth-child(1) > :nth-child(1) {
+    font-size  : 20px;
+    font-weight: normal;
+    color      :rgba(0, 0, 0, .54);
+}
+
+.NavigationDrawer li > :nth-child(1) > :nth-child(1) {
+    font-size  : 20px;
+    font-weight: normal;
+    color      :rgba(0, 0, 0, .54);
+}

@@ -1,0 +1,33 @@
+.EventCard {
+    display         : flex;
+    background-color: #FFF;
+    flex-direction  : column;
+    align-items     : stretch;
+}
+
+.Image {
+    min-width          : 240px;
+    min-height         : 135px;
+    background-position: center;
+    background-size    : cover;
+}
+
+.InfoArea {
+    display       : flex;
+    flex-direction: column;
+    min-height    : 96px;
+    max-height    : 96px;
+}
+
+.PrimaryText {
+    display: inline-block;
+    margin : 0;
+    padding: 16px 8px 0 8px;
+}
+
+.SubText {
+    display  : inline-block;
+    margin   : 0;
+    padding  : 0 8px 8px 8px;
+    font-size: .875em;
+}

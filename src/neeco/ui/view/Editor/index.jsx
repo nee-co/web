@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("neeco/ui/view/Editor/classNames")
-let React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {

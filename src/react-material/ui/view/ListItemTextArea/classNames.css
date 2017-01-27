@@ -1,0 +1,17 @@
+.ListItemTextArea {
+    margin: 8px 16px;
+}
+
+.ListItemTextArea > * {
+    margin : 0;
+    padding: 0;
+}
+
+.ListItemTextArea > :nth-child(1) {
+    font-size: 16px;
+}
+
+.ListItemTextArea > :nth-child(2) {
+    color    : #777;
+    font-size: 14px;
+}

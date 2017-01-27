@@ -1,0 +1,48 @@
+.Markdown {
+    box-sizing: border-box;
+    padding   : 16px;
+    color     : #111;
+}
+
+.Markdown h2 {
+    color      : #F90;
+    font-weight: normal;
+}
+
+.Markdown table {
+    border         : 1px solid #CCC;
+    border-collapse: collapse;
+    border-radius  : 2px;
+}
+
+.Markdown thead ~ tbody tr:nth-child(1),
+.Markdown tr:nth-child(n+2) {
+    border-top: 1px solid #CCC;
+}
+
+.Markdown th,
+.Markdown td {
+    padding: 8px 16px;
+}
+
+.Markdown th:nth-child(n+2),
+.Markdown td:nth-child(n+2) {
+    border-left: 1px solid #CCC;
+}
+
+.Markdown a {
+    color: #09F;
+}
+
+.Markdown pre {
+    padding         : 1em;
+    border          : 1px solid #CCC;
+    border-radius   : 2px;
+    background-color: #EEE;
+}
+
+.Markdown :not(pre) > code {
+    border          : 1px solid #CCC;
+    border-radius   : 2px;
+    background-color: #EEE;
+}

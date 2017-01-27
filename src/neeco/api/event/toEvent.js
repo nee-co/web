@@ -5,9 +5,9 @@ module.exports = (event) => ({
     title      : event["title"],
     description: event["body"],
     image      : event["image"],
-    startDate  : event["start_date"],
-    isPublic   : event["isPublic"],
-    owner      : event["owner"],
+    startDate  : event["start_date"] || event["meta"]["body"],
+    isPublic   : event["is_public"],
+    owner      : event["owner"] && toUser(event["owner"]),
     entries    : event["entries"] && event["entries"].map(toUser),
     comments   : event["comments"] && event["comments"].map((x) => ({
         body    : x["body"],

@@ -1,10 +1,11 @@
 let updatePassword = require("neeco/api/user/updatePassword")
-let LinkButton     = require("neeco/ui/view/LinkButton")
-let FormButton     = require("neeco/ui/view/form/Button")
-let TextField      = require("neeco/ui/view/form/TextField")
-let classNames     = require("neeco/ui/page/settings/password/Page/classNames")
 let React          = require("react")
+let LinkButton     = require("react-material/ui/view/LinkButton")
+let FormButton     = require("react-material/ui/view/form/Button")
+let TextField      = require("react-material/ui/view/form/TextField")
 let {Link}         = require("react-router")
+
+let classNames = require("neeco/ui/page/settings/password/Page/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {

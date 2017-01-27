@@ -1,0 +1,20 @@
+.TabBar {
+    overflow: auto;
+    position: relative;
+}
+
+.TabBar > ul {
+    flex-direction: row;
+}
+
+.TabBar > ul > li {
+    display: flex;
+}
+
+.Indicator {
+    position  : absolute;
+    left      : 0;
+    bottom    : 0;
+    border-top: 2px solid #09F;
+    transition: left .3s ease-out;
+}

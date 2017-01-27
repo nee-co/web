@@ -31,12 +31,7 @@
     flex-grow: 1;
 }
 
-.Breadcrumbs {
-    flex-direction: row;
-    font-weight   : normal;
-}
-
-.Breadcrumbs li:nth-child(n+2):before {
+.BreadcrumbList li:nth-child(n+2):before {
     font-family: "FontAwesome";
     padding    : 0 16px;
     content    : "\F105";
@@ -48,15 +43,5 @@
 
 .PopupListItemA {
     display        : block;
-    padding        : 8px;
-    color          : inherit;
     font-size      : 12px;
-    text-decoration: none;
-    cursor         : pointer;
-    transition     : all .3s ease-out;
-}
-
-.PopupListItemA:hover {
-    background-color: rgba(0, 0, 0, .05);
-    text-decoration : none;
 }

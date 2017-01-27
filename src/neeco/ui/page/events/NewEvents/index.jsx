@@ -1,11 +1,12 @@
 let searchEvents  = require("neeco/api/event/searchEvents")
-let Shadow        = require("neeco/ui/effect/Shadow")
-let EventCardList = require("neeco/ui/view/EventCardList")
-let FormButton    = require("neeco/ui/view/form/Button")
-let Input         = require("neeco/ui/view/form/Input")
-let classNames    = require("neeco/ui/page/events/NewEvents/classNames")
+let EventCardList = require("neeco/ui/view/event/EventCardList")
 let React         = require("react")
+let Shadow        = require("react-material/ui/effect/Shadow")
+let FormButton    = require("react-material/ui/view/form/Button")
+let Input         = require("react-material/ui/view/form/Input")
 let {Link}        = require("react-router")
+
+let classNames = require("neeco/ui/page/events/NewEvents/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {

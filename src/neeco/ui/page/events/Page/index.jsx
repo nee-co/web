@@ -1,25 +1,26 @@
-let Shadow        = require("neeco/ui/effect/Shadow")
 let EntriedEvents = require("neeco/ui/page/events/EntriedEvents")
 let NewEvents     = require("neeco/ui/page/events/NewEvents")
 let OwnedEvents   = require("neeco/ui/page/events/OwnedEvents")
-let Card          = require("neeco/ui/view/Card")
-let LinkButton    = require("neeco/ui/view/LinkButton")
-let ViewPager     = require("neeco/ui/view/ViewPager")
-let Tab           = require("neeco/ui/view/Tab")
-let TabBar        = require("neeco/ui/view/TabBar")
-let classNames    = require("neeco/ui/page/events/Page/classNames")
 let React         = require("react")
+let Shadow        = require("react-material/ui/effect/Shadow")
+let Card          = require("react-material/ui/view/Card")
+let LinkButton    = require("react-material/ui/view/LinkButton")
+let ViewPager     = require("react-material/ui/view/ViewPager")
+let Tab           = require("react-material/ui/view/Tab")
+let TabBar        = require("react-material/ui/view/TabBar")
 let {Link}        = require("react-router")
+
+let classNames = require("neeco/ui/page/events/Page/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            tabIndex: 0
         })
     }
 
     render() {
         let {
+            location,
             token
         } = this.props
 
@@ -42,20 +43,42 @@ module.exports = class extends React.Component {
                         </LinkButton>
                     </div>
                     <TabBar
-                        onSelect={(index) => {
-                            this.setState({
-                                tabIndex: index
-                            })
-                        }}
-                        selectedIndex={this.state.tabIndex}
+                        location={location}
                     >
-                        <Tab>新着</Tab>
-                        <Tab>参加中</Tab>
-                        <Tab>管理中</Tab>
+                        <Tab
+                            to={{
+                                pathname: "/events",
+                                query   : {
+                                    "tab_index": "0"
+                                }
+                            }}
+                        >
+                            新着
+                        </Tab>
+                        <Tab
+                            to={{
+                                pathname: "/events",
+                                query   : {
+                                    "tab_index": "1"
+                                }
+                            }}
+                        >
+                            参加中
+                        </Tab>
+                        <Tab
+                            to={{
+                                pathname: "/events",
+                                query   : {
+                                    "tab_index": "2"
+                                }
+                            }}
+                        >
+                            管理中
+                        </Tab>
                     </TabBar>
                 </div>
                 <ViewPager
-                    selectedIndex={this.state.tabIndex}
+                    selectedIndex={location.query["tab_index"] || 0}
                 >
                     <NewEvents
                         token={token}

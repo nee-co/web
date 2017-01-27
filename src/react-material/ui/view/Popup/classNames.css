@@ -1,0 +1,16 @@
+.PopupContainer {
+    position: absolute;
+    overflow: hidden;
+}
+
+.Popup {
+    transition: all .3s ease-out;
+}
+
+.Popup.Visible {
+    transform: translateY(0);
+}
+
+.Popup.Hidden {
+    transform: translateY(-100%);
+}

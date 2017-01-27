@@ -3,20 +3,23 @@ let addUserToEvent      = require("neeco/api/event/addUserToEvent")
 let getEventByID        = require("neeco/api/event/getEventByID")
 let removeUserFromEvent = require("neeco/api/event/removeUserFromEvent")
 let updateEvent         = require("neeco/api/event/updateEvent")
-let sanitize            = require("neeco/encoding/html/sanitize")
-let toHTML              = require("neeco/encoding/html/toHTML")
-let Shadow              = require("neeco/ui/effect/Shadow")
-let Button              = require("neeco/ui/view/Button")
-let List                = require("neeco/ui/view/List")
-let ListItem            = require("neeco/ui/view/ListItem")
-let ListItemAvatar      = require("neeco/ui/view/ListItemAvatar")
-let Tab                 = require("neeco/ui/view/Tab")
-let TabBar              = require("neeco/ui/view/TabBar")
-let ViewPager           = require("neeco/ui/view/ViewPager")
-let FormButton          = require("neeco/ui/view/form/Button")
-let TextField           = require("neeco/ui/view/form/TextField")
-let classNames          = require("neeco/ui/page/event_detail/Page/classNames")
+let Markdown            = require("neeco/ui/view/Markdown")
 let React               = require("react")
+let Shadow              = require("react-material/ui/effect/Shadow")
+let Button              = require("react-material/ui/view/Button")
+let FlexibleSpace       = require("react-material/ui/view/FlexibleSpace")
+let Image               = require("react-material/ui/view/Image")
+let List                = require("react-material/ui/view/List")
+let ListItem            = require("react-material/ui/view/ListItem")
+let ListItemAvatar      = require("react-material/ui/view/ListItemAvatar")
+let ListItemTextArea    = require("react-material/ui/view/ListItemTextArea")
+let Tab                 = require("react-material/ui/view/Tab")
+let TabBar              = require("react-material/ui/view/TabBar")
+let ViewPager           = require("react-material/ui/view/ViewPager")
+let FormButton          = require("react-material/ui/view/form/Button")
+let TextField           = require("react-material/ui/view/form/TextField")
+
+let classNames = require("neeco/ui/page/event_detail/Page/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -54,12 +57,6 @@ module.exports = class extends React.Component {
 
         let isOwner   = this.state.event && this.state.event.owner.id == user.id
         let isEntried = this.state.event && this.state.event.entries.find((x) => x.id == user.id)
-        let selectedIndex = [
-            "/events/" + params["event_id"],
-            "/events/" + params["event_id"] + "/entries",
-            "/events/" + params["event_id"] + "/comments"
-        ]
-            .findIndex((x) => x == location.pathname)
 
         return (
             <article
@@ -74,7 +71,7 @@ module.exports = class extends React.Component {
                                 <h2>{this.state.event && this.state.event.title}</h2>
                                 {this.state.event && this.state.event.startDate}
                             </div>
-                            <img
+                            <Image
                                 src={this.state.event && this.state.event.image}
                                 alt={this.state.event && this.state.event.title}
                                 width="128"
@@ -134,7 +131,7 @@ module.exports = class extends React.Component {
                         }
                     </div>
                     <TabBar
-                        selectedIndex={selectedIndex}
+                        location={location}
                     >
                         <Tab
                             to={"/events/" + params["event_id"]}
@@ -154,13 +151,18 @@ module.exports = class extends React.Component {
                     </TabBar>
                 </Shadow>
                 <ViewPager
-                    selectedIndex={selectedIndex}
+                    selectedIndex={
+                        [
+                            "/events/" + params["event_id"],
+                            "/events/" + params["event_id"] + "/entries",
+                            "/events/" + params["event_id"] + "/comments"
+                        ]
+                            .findIndex((x) => x == location.pathname)
+                    }
                 >
-                    <div
+                    <Markdown
                         className={classNames.EventDescription}
-                        dangerouslySetInnerHTML={{
-                            __html: this.state.event && sanitize(toHTML(this.state.event.description))
-                        }}
+                        srcDoc={this.state.event && this.state.event.description}
                     />
                     <div>
                         <List>
@@ -168,12 +170,20 @@ module.exports = class extends React.Component {
                                 <ListItem
                                     key={x.id}
                                 >
-                                    {x.number + " " + x.name}
+                                    <ListItemAvatar
+                                        src={x.image}
+                                        alt={x.name}
+                                    />
+                                    <ListItemTextArea>
+                                        {x.name}
+                                    </ListItemTextArea>
                                 </ListItem>
                             )}
                         </List>
                     </div>
-                    <div>
+                    <div
+                        className={classNames.CommentPage}
+                    >
                         <List>
                             {this.state.event && Array.from(this.state.event.comments.entries()).map(([i, x]) =>
                                 <ListItem
@@ -181,8 +191,16 @@ module.exports = class extends React.Component {
                                 >
                                     <ListItemAvatar
                                         src={x.postedBy.image}
-                                        alt=""
+                                        alt={x.postedBy.name}
                                     />
+                                    <ListItemTextArea>
+                                        <p>
+                                            {x.postedBy.name}
+                                        </p>
+                                        <p>
+                                            {x.body}
+                                        </p>
+                                    </ListItemTextArea>
                                     <div>
                                         <p>
                                             {((
@@ -190,18 +208,16 @@ module.exports = class extends React.Component {
                                                 d = (Date.now() - date.getTime()) / 1000
                                             ) =>
                                                 d < 60    ? "now"
-                                            : d < 3600  ? Math.floor(d / 60) + " min"
-                                            : d < 86400 ? Math.floor(d / 3600) + " hour"
-                                            :             date.toLocaleString()
+                                              : d < 3600  ? Math.floor(d / 60) + " min"
+                                              : d < 86400 ? Math.floor(d / 3600) + " hour"
+                                              :             date.toLocaleString()
                                             )()}
-                                        </p>
-                                        <p>
-                                            {x.body}
                                         </p>
                                     </div>
                                 </ListItem>
                             )}
                         </List>
+                        <FlexibleSpace />
                         <form
                             onSubmit={async (e) => {
                                 e.preventDefault()

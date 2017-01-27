@@ -1,8 +1,9 @@
 let createToken = require("neeco/api/auth/createToken")
-let classNames  = require("neeco/ui/page/sign_in/Page/classNames")
-let FormButton  = require("neeco/ui/view/form/Button")
-let Input       = require("neeco/ui/view/form/Input")
 let React       = require("react")
+let FormButton  = require("react-material/ui/view/form/Button")
+let Input       = require("react-material/ui/view/form/Input")
+
+let classNames = require("neeco/ui/page/sign_in/Page/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -44,7 +45,7 @@ module.exports = class extends React.Component {
                             } catch (e) {
                                 let error = e instanceof Response ? "学籍番号またはパスワードが間違っています"
                                           :                         "不明なエラー"
-                                
+
                                 this.setState({
                                     error: error
                                 })
