@@ -1,10 +1,10 @@
 module.exports = async ({
     apiHost,
     token,
-    file
+    folder
 }) => {
     let response = await fetch(
-        apiHost + "/files/" + file.id,
+        apiHost + "/folders/" + folder.id,
         {
             method : "DELETE",
             headers: {

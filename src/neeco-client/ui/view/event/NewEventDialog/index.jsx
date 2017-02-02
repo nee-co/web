@@ -43,16 +43,15 @@ module.exports = class extends React.Component {
                     onSubmit={(e) => {
                         e.preventDefault()
 
-                        let formData = new FormData(e.target)
 
                         createEvent({
                             apiHost: config["neeco_api_host"],
                             token  : token,
                             event  : {
-                                title      : formData.getAll("title"),
-                                startDate  : formData.getAll("startDate"),
+                                title      : document.getElementsByName("title")[0].value,
+                                startDate  : document.getElementsByName("startDate")[0].value,
                                 description: "",
-                                image      : formData.getAll("image")
+                                image      : document.getElementsByName("image")[0].value
                             }
                         })
                     }}

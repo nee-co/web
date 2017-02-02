@@ -37,7 +37,7 @@ module.exports = (props) =>
         >
             <Route
                 path="/"
-                component={{
+                components={{
                     main : TopPage,
                     title: TopPageTitle
                 }}
@@ -51,21 +51,21 @@ module.exports = (props) =>
             />
             <Route
                 path="/events/:event_id"
-                component={{
+                components={{
                     main : EventDetailPage,
                     title: EventPageTitle
                 }}
             />
             <Route
                 path="/events/:event_id/comments"
-                component={{
+                components={{
                     main : EventDetailPage,
                     title: EventPageTitle
                 }}
             />
             <Route
                 path="/events/:event_id/entries"
-                component={{
+                components={{
                     main : EventDetailPage,
                     title: EventPageTitle
                 }}
@@ -79,28 +79,28 @@ module.exports = (props) =>
             />
             <Route
                 path="/folders/:folder_id"
-                component={{
+                components={{
                     main : FolderDetailPage,
                     title: FolderPageTitle
                 }}
             />
             <Route
                 path="/groups"
-                component={{
+                components={{
                     main : GroupPage,
                     title: GroupPageTitle
                 }}
             />
             <Route
                 path="/settings"
-                component={{
+                components={{
                     main : SettingsPage,
                     title: SettingsPageTitle
                 }}
             />
             <Route
                 path="/settings/password"
-                component={{
+                components={{
                     main : PasswordSettingsPage,
                     title: SettingsPageTitle
                 }}

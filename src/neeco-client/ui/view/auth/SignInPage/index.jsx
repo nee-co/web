@@ -30,18 +30,16 @@ module.exports = class extends React.Component {
                         onSubmit={async (e) => {
                             e.preventDefault()
 
-                            let formData = new FormData(e.target)
-
                             try {
                                 let token = await createToken({
                                     apiHost : config["neeco_api_host"],
-                                    userName: formData.getAll("id"),
-                                    password: formData.getAll("password")
+                                    userName: document.getElementsByName("id")[0].value,
+                                    password: document.getElementsByName("password")[0].value
                                 })
 
                                 onSignIn({
                                     token       : token,
-                                    staySignedIn: formData.getAll("staySignedIn")
+                                    staySignedIn: document.getElementsByName("staySignedIn")[0].value
                                 })
                             } catch (e) {
                                 console.log(e)

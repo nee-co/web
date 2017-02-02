@@ -226,8 +226,6 @@ module.exports = class extends React.Component {
                             onSubmit={async (e) => {
                                 e.preventDefault()
 
-                                let formData = new FormData(e.target)
-
                                 let responce = await createComment({
                                     apiHost: config["neeco_api_host"],
                                     token  : token,

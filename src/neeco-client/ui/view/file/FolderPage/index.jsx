@@ -21,7 +21,8 @@ module.exports = class extends React.Component {
             files              : [],
             newButtonIsSelected: false,
             selectedIDs        : [], 
-            compareFunction    : (x, y) => compare(x.name, y.name)
+            compareFunction    : (x, y) => compare(x.name, y.name),
+            lastClickTime      : 0
         })
     }
 
@@ -62,15 +63,17 @@ module.exports = class extends React.Component {
                                     key={x.id}
                                     file={x}
                                     onClick={(e) => {
+                                        if (Date.now() - this.state.lastClickTime < 500) {
+                                            browserHistory.push("/folders/" + x.id)
+                                        }
+
                                         this.setState({
                                             selectedIDs: (
                                                 this.state.selectedIDs.includes(x.id) ? this.state.selectedIDs.filter(id => id != x.id)
                                               :                                         this.state.selectedIDs.concat(x.id)
-                                            )
-                                        })
-                                    }}
-                                    onDoubleClick={(e) => {
-                                        browserHistory.push("/folders/" + x.id)
+                                            ),
+                                            lastClickTime: Date.now()
+                                        })                                
                                     }}
                                     selected={this.state.selectedIDs.includes(x.id)}
                                 />

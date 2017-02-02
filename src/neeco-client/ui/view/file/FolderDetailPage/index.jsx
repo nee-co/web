@@ -1,5 +1,7 @@
 let createFile       = require("neeco-client/api/file/createFile")
 let createFolder     = require("neeco-client/api/file/createFolder")
+let deleteFile       = require("neeco-client/api/file/deleteFile")
+let deleteFolder     = require("neeco-client/api/file/deleteFolder")
 let getFolderByID    = require("neeco-client/api/file/getFolderByID")
 let config           = require("neeco-client/config")
 let FileList         = require("neeco-client/ui/view/file/FileList")
@@ -33,7 +35,8 @@ module.exports = class extends React.Component {
             newFolderDialogIsVisible: false,
             selectedIDs             : [], 
             sortColumnNumber        : 0,
-            loadingFile             : undefined
+            loadingFile             : undefined,
+            lastClickTime           : 0
         })
     }
 
@@ -167,9 +170,28 @@ module.exports = class extends React.Component {
                         <FlexibleSpace />
                         {this.state.selectedIDs.length > 0 && (
                             <Button
-                                onClick={(e) => {
+                                onClick={async (e) => {
+                                    for (let id of this.state.selectedIDs)
+                                    for (let x  of [this.state.folder.children.find(x => x.id == id)])
+                                    if  (x.kind == "file")
+                                        await deleteFile({
+                                            token  : token,
+                                            apiHost: config["neeco_api_host"],
+                                            file   : x
+                                        })
+                                    else
+                                        await deleteFolder({
+                                            token  : token,
+                                            apiHost: config["neeco_api_host"],
+                                            folder : x
+                                        })
+
+                                    this.state.folder.children = this.state.folder.children.filter(
+                                        x => !this.state.selectedIDs.includes(x.id)
+                                    )
+
                                     this.setState({
-                                        selectedFile: undefined
+                                        selectedIDs: []
                                     })
                                 }}
                                 type="flat"
@@ -187,49 +209,48 @@ module.exports = class extends React.Component {
                                     key={x.id}
                                     file={x}
                                     onClick={(e) => {
-                                        this.setState({
-                                            selectedIDs: (
-                                                this.state.selectedIDs.includes(x.id) ? this.state.selectedIDs.filter(id => id != x.id)
-                                               :                                        this.state.selectedIDs.concat(x.id)
-                                            )
-                                        })
-                                    }}
-                                    onDoubleClick={(e) => {
-                                        if (x.kind == "folder") {
-                                            browserHistory.push("/folders/" + x.id)
-                                        } else if (x.kind == "file" && !this.state.loadingFile) {
-                                            let request = new XMLHttpRequest()
-                                            request.open(
-                                                "GET",
-                                                config["neeco_api_host"] + "/files/" + x.id
-                                            )
-                                            request.responseType = "blob"
-                                            request.setRequestHeader("Authorization", "Bearer " + token)
-                                            request.onprogress = (e) => {
-                                                this.setState({
-                                                    loading: {
-                                                        file  : x,
-                                                        loaded: e.loaded,
-                                                        size  : e.size
-                                                    }
-                                                })
+                                        if (Date.now() - this.state.lastClickTime < 500) {
+                                            if (x.kind == "folder") {
+                                                browserHistory.push("/folders/" + x.id)
+                                            } else if (x.kind == "file" && !this.state.loadingFile) {
+                                                let request = new XMLHttpRequest()
+                                                request.open(
+                                                    "GET",
+                                                    config["neeco_api_host"] + "/files/" + x.id
+                                                )
+                                                request.responseType = "blob"
+                                                request.setRequestHeader("Authorization", "Bearer " + token)
+                                                request.onprogress = (e) => {
+                                                    this.setState({
+                                                        loading: {
+                                                            file  : x,
+                                                            loaded: e.loaded,
+                                                            size  : e.size
+                                                        }
+                                                    })
+                                                }
+                                                request.onabort = (e) => {
+                                                    console.log("abort", e)
+                                                }
+                                                request.onload = (e) => {
+                                                    let a = document.createElement("a")
+                                                    a.href = URL.createObjectURL(e.target.response)
+                                                    a.target = "_blank";
+                                                    a.download = x.name;
+                                                    a.click()
+
+                                                    this.setState({
+                                                        loading: undefined
+                                                    })
+                                                }
+                                                request.send()
                                             }
-                                            request.onabort = (e) => {
-                                                console.log("abort", e)
-                                            }
-                                            request.onload = (e) => {
-                                                let a = document.createElement("a")
-                                                a.href = URL.createObjectURL(e.target.response)
-                                                a.target = "_blank";
-                                                a.download = x.name;
-                                                a.click()
-                                                window.a = a
-                                                this.setState({
-                                                    loading: undefined
-                                                })
-                                            }
-                                            request.send()
                                         }
+
+                                        this.setState({
+                                            lastClickTime: Date.now(),
+                                            selectedIDs  : [x.id]
+                                        })
                                     }}
                                     selected={this.state.selectedIDs.includes(x.id)}
                                 />
@@ -244,7 +265,7 @@ module.exports = class extends React.Component {
                             token  : token,
                             apiHost: config["neeco_api_host"],
                             folder : {
-                                name: formData.getAll("name")
+                                name: document.getElementsByName("name")[0].value
                             },
                             parent : this.state.folder
                         })

@@ -10,9 +10,9 @@ module.exports = (s) => {
         )
 
     for (let e of document.querySelectorAll("*"))
-    for (let a of e.attributes)
-    if  (/^on.+?$/.test(a.name))
-        e.removeAttribute(a.name)
+    for (let i of new Array(e.attributes.length).keys())
+    if  (/^on.+?$/.test(e.attributes[i].name))
+        e.removeAttribute(e.attributes[i].name)
 
     for (let name of ["action", "href", "src"])
     for (let e of document.querySelectorAll("*[" + name + "]"))

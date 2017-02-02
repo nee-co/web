@@ -51,13 +51,11 @@ module.exports = class extends React.Component {
                     onSubmit={async (e) => {
                         e.preventDefault()
 
-                        let formData = new FormData(e.target)
-
                         this.setState({
                             events: await getEvents({
                                 apiHost: config["neeco_api_host"],
                                 token  : token,
-                                query  : formData.getAll("query"),
+                                query  : document.getElementsByName("query")[0].value,
                                 limit  : 10
                             })
                         })
