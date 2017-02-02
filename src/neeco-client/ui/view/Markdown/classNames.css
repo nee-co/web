@@ -1,0 +1,48 @@
+.Host {
+    box-sizing: border-box;
+    padding   : 16px;
+    color     : #111;
+}
+
+.Host h2 {
+    color      : #F90;
+    font-weight: normal;
+}
+
+.Host table {
+    border         : 1px solid #CCC;
+    border-collapse: collapse;
+    border-radius  : 2px;
+}
+
+.Host thead ~ tbody tr:nth-child(1),
+.Host tr:nth-child(n+2) {
+    border-top: 1px solid #CCC;
+}
+
+.Host th,
+.Host td {
+    padding: 8px 16px;
+}
+
+.Host th:nth-child(n+2),
+.Host td:nth-child(n+2) {
+    border-left: 1px solid #CCC;
+}
+
+.Host a {
+    color: #09F;
+}
+
+.Host pre {
+    padding         : 1em;
+    border          : 1px solid #CCC;
+    border-radius   : 2px;
+    background-color: #EEE;
+}
+
+.Host :not(pre) > code {
+    border          : 1px solid #CCC;
+    border-radius   : 2px;
+    background-color: #EEE;
+}

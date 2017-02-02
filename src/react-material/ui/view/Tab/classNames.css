@@ -1,4 +1,4 @@
-.Tab {
+.Host {
     display    : inline-block;
     font-size  : 13px;
     font-weight: bolder;
@@ -6,13 +6,9 @@
     transition : all .3s ease-out;
 }
 
-.Tab > :nth-child(1) {
+.Host > :nth-child(1) {
     box-sizing   : border-box;
-    border-bottom: 2px solid transparent;
+    border-bottom: 1px solid transparent;
     min-width    : 72px;
     padding      : 0px 24px;
-}
-
-.Tab:hover > :nth-child(1) {
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2)
 }

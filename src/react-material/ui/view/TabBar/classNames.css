@@ -1,13 +1,14 @@
-.TabBar {
-    overflow: auto;
-    position: relative;
+.Host {
+    overflow     : auto;
+    position     : relative;
 }
 
-.TabBar > ul {
+.Host > ul {
     flex-direction: row;
+    border-bottom : 1px solid rgba(0, 0, 0, .2);
 }
 
-.TabBar > ul > li {
+.Host > ul > li {
     display: flex;
 }
 

@@ -24,7 +24,7 @@ module.exports = class extends React.Component {
         return (
             <Component
                 {...props}
-                className={[className, classNames.Container].join(" ")}
+                className={[className, classNames.Host].join(" ")}
                 onClick={(e) => {
                     onClick && onClick(e)
 
@@ -71,7 +71,7 @@ module.exports = class extends React.Component {
                         key={id}
                         onAnimationEnd={() => {
                             this.setState({
-                                ripples: this.state.ripples.filter((x) => x.id != id)
+                                ripples: this.state.ripples.filter(x => x.id != id)
                             })
                         }}
                         style={{

@@ -1,7 +1,8 @@
-let React      = require("react")
-let List       = require("react-material/ui/view/List")
+let React = require("react")
+let List  = require("react-material/ui/view/List")
+let match = require("react-material/util/match")
+
 let classNames = require("react-material/ui/view/TabBar/classNames")
-let match      = require("react-material/util/match")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -14,10 +15,11 @@ module.exports = class extends React.Component {
     render() {
         let {
             children,
+            className,
             location,
             selectedIndex = Math.max(
                 0,
-                React.Children.toArray(children).findIndex((x) => match({
+                React.Children.toArray(children).findIndex(x => match({
                     location: location,
                     locationDescriptor: x.props.to
                 }))
@@ -28,7 +30,7 @@ module.exports = class extends React.Component {
         return (
             <div
                 {...props}
-                className={classNames.TabBar}
+                className={[className, classNames.Host].join(" ")}
                 ref={(element) => {
                     if (element && selectedIndex >= 0) {
                         let parentRect = element.getBoundingClientRect()

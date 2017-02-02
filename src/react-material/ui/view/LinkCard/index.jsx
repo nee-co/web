@@ -1,7 +1,8 @@
-let Card       = require("react-material/ui/view/Card")
+let React  = require("react")
+let Card   = require("react-material/ui/view/Card")
+let {Link} = require("react-router")
+
 let classNames = require("react-material/ui/view/LinkCard/classNames")
-let React      = require("react")
-let {Link}     = require("react-router")
 
 module.exports = ({
     className,
@@ -9,6 +10,6 @@ module.exports = ({
 }) =>
     <Card
         {...props}
-        className={[className, classNames.LinkCard].join(" ")}
+        className={[className, classNames.Host].join(" ")}
         component={Link}
     />

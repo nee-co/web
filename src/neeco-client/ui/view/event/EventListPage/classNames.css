@@ -1,0 +1,26 @@
+.Host {
+    padding         : 16px;
+    background-color: rgba(250, 250, 250, 1);    
+}
+
+.Host > :nth-child(n+2) {
+    margin-top: 16px;
+}
+
+.SearchForm {
+    display       : flex;
+    flex-direction: row;
+}
+
+.SearchForm > :nth-child(n+2) {
+    margin-left: 8px;
+}
+
+.SearchForm input {
+    background-color: #FFF;
+}
+
+.SearchButton::after {
+    font-family: "FontAwesome";
+    content    : "\f002";
+}

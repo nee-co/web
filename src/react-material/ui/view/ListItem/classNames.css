@@ -1,7 +1,6 @@
-.ListItem {
+.Host {
     display       : flex;
     flex-direction: inherit;
-    font-size     : 16px;
 }
 
 .Link {
@@ -20,7 +19,7 @@
     background-color: rgba(0, 0, 0, .05);
 }
 
-.ListItem.Selected > .Link {
+.Host.Selected > .Link {
     background-color: rgba(0, 0, 0, .05);
     cursor          : default;
 }

@@ -1,0 +1,36 @@
+.Host {
+    display       : flex;
+    flex-direction: column;
+    align-items   : stretch;
+    width         : 100%;
+    min-width     : max-content;
+    height        : 100%;
+}
+
+.Host > :nth-child(1) {
+    z-index: 1;
+}
+
+.Host > :nth-child(1) > :nth-child(1) {
+    padding: 16px;    
+}
+
+.Host > :nth-child(1) > :nth-child(n+2) {
+    margin-top: 16px;
+}
+
+.Host > :nth-child(2) {
+    display  : flex;
+    overflow : auto;
+    flex-grow: 1;
+}
+
+.Host > :nth-child(2) > * {
+    width    : 100%;
+    min-width: max-content;
+}
+
+.Host > :nth-child(2) > :not(table) {
+    padding  : 16px;
+    flex-grow: 1;
+}

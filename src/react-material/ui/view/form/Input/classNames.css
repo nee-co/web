@@ -1,4 +1,4 @@
-.Input {
+.Host {
     padding-bottom  : 8px;
     border-width    : 0;
     border-bottom   : 1px solid #DDD;
@@ -10,7 +10,7 @@
     transition      : all .3s ease-out;
 }
 
-.Input:hover,
-.Input:focus {
+.Host:hover,
+.Host:focus {
     border-color: #09F;
 }

@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("react-material/ui/view/ToolbarTitle/classNames")
-let React      = require("react")
 
 module.exports = ({
     className,
@@ -8,6 +9,6 @@ module.exports = ({
     ...props
 }) =>
     <Component
-        className={[className, classNames.ToolbarTitle].join(" ")}
+        className={[className, classNames.Host].join(" ")}
         {...props}
     />

@@ -1,7 +1,7 @@
-let Shadow     = require("react-material/ui/effect/Shadow")
+let React  = require("react")
+let Shadow = require("react-material/ui/effect/Shadow")
+
 let classNames = require("react-material/ui/view/NavigationDrawer/classNames")
-let React      = require("react")
-let {Link}     = require("react-router")
 
 module.exports = ({
     className,
@@ -13,7 +13,7 @@ module.exports = ({
         className={
             [
                 className,
-                classNames.NavigationDrawer,
+                classNames.Host,
                 visible ? classNames.Visible
               :           classNames.Hidden
             ].join(" ")

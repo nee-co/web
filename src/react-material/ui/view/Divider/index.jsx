@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("react-material/ui/view/Divider/classNames")
-let React      = require("react")
 
 module.exports = ({
     className,
@@ -7,5 +8,5 @@ module.exports = ({
 }) =>
     <div
         {...props}
-        className={[className, classNames.Divider].join(" ")}
+        className={[className, classNames.Host].join(" ")}
     />

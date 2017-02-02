@@ -8,7 +8,7 @@ module.exports = ({
 }) =>
     <List
         {...props}
-        className={[className, classNames.BreadcrumbList].join(" ")}
+        className={[className, classNames.Host].join(" ")}
         component="ol"
         itemScope
         itemType="http://schema.org/BreadcrumbList"

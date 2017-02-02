@@ -26,7 +26,7 @@ module.exports = ({
         className={
             [
                 className,
-                classNames.Button,
+                classNames.Host,
                 dense ? classNames.Dense
               :         "",
                 types[type].className

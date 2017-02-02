@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("react-material/ui/view/form/TextField/classNames")
-let React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -32,7 +33,7 @@ module.exports = class extends React.Component {
             <div
                 className={
                     [
-                        classNames.TextField,
+                        classNames.Host,
                         this.state.empty === true  ? classNames.Empty
                       : this.state.empty === false ? undefined
                       : value                      ? undefined

@@ -1,15 +1,15 @@
-let HtmlWebpackPlugin = require("html-webpack-plugin")
-let {DefinePlugin}    = require("webpack")
+let {DefinePlugin} = require("webpack")
 
 module.exports = {
     entry: {
-        "js/main.js": [
+        "main.js": [
             "babel-polyfill",
             "whatwg-fetch",
-            "main"
+            "neeco-client/main"
         ],
-        "js/ServiceWorker.js": [
-            "neeco/ServiceWorker"
+        "ServiceWorker.js": [
+            "babel-polyfill",
+            "neeco-client/ServiceWorker"
         ]
     },
     module: {
@@ -35,8 +35,8 @@ module.exports = {
         ]
     },
     output: {
-        filename: "[name]",
-        path: "build",
+        filename  : "[name]",
+        path      : "build",
         publicPath: "/"
     },
     plugins: [
@@ -44,12 +44,9 @@ module.exports = {
             process: {
                 env: {
                     NODE_ENV      : JSON.stringify(process.env.NODE_ENV),
-                    NEECO_API_HOST: JSON.stringify(process.env.NEECO_API_HOST || "https://api.neec.ooo")
+                    NEECO_API_HOST: JSON.stringify(process.env.NEECO_API_HOST)
                 }
             }
-        }),
-        new HtmlWebpackPlugin({
-            template: "src/neeco/index.html"
         })
     ],
     resolve: {

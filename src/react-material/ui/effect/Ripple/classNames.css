@@ -1,5 +1,4 @@
-.Container {
-    display       : inline-block;
+.Host {
     overflow      : hidden;
     position      : relative;
     vertical-align: top;

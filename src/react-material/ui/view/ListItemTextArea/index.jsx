@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("react-material/ui/view/ListItemTextArea/classNames")
-let React      = require("react")
 
 module.exports = ({
     className,
@@ -9,5 +10,5 @@ module.exports = ({
 }) =>
     <Component
         {...props}
-        className={[className, classNames.ListItemTextArea].join(" ")}
+        className={[className, classNames.Host].join(" ")}
     />

@@ -1,8 +1,9 @@
-let React      = require("react")
-let Ripple     = require("react-material/ui/effect/Ripple")
+let React  = require("react")
+let Ripple = require("react-material/ui/effect/Ripple")
+let match  = require("react-material/util/match")
+let {Link} = require("react-router")
+
 let classNames = require("react-material/ui/view/ListItem/classNames")
-let match      = require("react-material/util/match")
-let {Link}     = require("react-router")
 
 module.exports = ({
     className,
@@ -21,7 +22,7 @@ module.exports = ({
         className={
             [
                 className,
-                classNames.ListItem,
+                classNames.Host,
                 selected ? classNames.Selected
               :            undefined
             ].join(" ")

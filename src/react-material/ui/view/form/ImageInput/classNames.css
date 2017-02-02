@@ -1,4 +1,4 @@
-.ImageInput {
+.Host {
     display       : flex;
     flex-direction: column;
     padding       : 16px 0 8px 0;
@@ -32,14 +32,14 @@
     box-shadow   : none;
 }
 
-.ImageInput.Invalid .LabelText {
+.Host.Invalid .LabelText {
     color: #F40;
 }
 
-.ImageInput.Focused .LabelText {
+.Host.Focused .LabelText {
     color: #09F;
 }
 
-.ImageInput.Disabled .LabelText {
+.Host.Disabled .LabelText {
     color: #DDD;
 }

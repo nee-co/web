@@ -1,5 +1,5 @@
-Nee-co WEB
-====
+# neeco-client
+WEB client for Nee-co
 
 ## How to build
     npm install

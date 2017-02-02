@@ -1,5 +1,5 @@
-let React      = require("react")
-let {render}   = require("react-dom")
+let React    = require("react")
+let {render} = require("react-dom")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -25,16 +25,22 @@ module.exports = class extends React.Component {
         let {
             component = "div",
             Component = component,
+            onRender,
             ...props
         } = this.props
 
         this.state.element && setTimeout(
-            () => render(
-                <Component
-                    {...props}
-                />,
-                this.state.element
-            ),
+            () => {
+                render(
+                    <Component
+                        {...props}
+                    />,
+                    this.state.element,
+                    () => {
+                        onRender && onRender(this.state.element.children[0])
+                    }
+                )
+            },
             0
         )
 

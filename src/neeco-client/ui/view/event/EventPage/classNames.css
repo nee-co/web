@@ -1,0 +1,30 @@
+.Host {
+    display       : flex;
+    flex-direction: column;
+    align-items   : stretch;
+    width         : 100%;
+    min-width     : max-content;
+    height        : 100%;
+}
+
+.Host > :nth-child(2) {
+    flex-grow: 1;
+}
+
+.Header {
+    min-width: max-content;
+}
+
+.Summary {
+    padding: 0 16px;
+}
+
+.Summary > :nth-child(n+2) {
+    margin-top: 16px;
+}
+
+.NewEventButton {
+    align-self      : flex-end;
+    border-color    : #F90;
+    background-color: #F90;
+}

@@ -1,6 +1,7 @@
-let Divider    = require("react-material/ui/view/Divider")
+let React   = require("react")
+let Divider = require("react-material/ui/view/Divider")
+
 let classNames = require("react-material/ui/view/List/classNames")
-let React      = require("react")
 
 module.exports = ({
     children,
@@ -34,7 +35,7 @@ module.exports = ({
         <Component
             {...props}
             children={listItems}
-            className={[className, classNames.List].join(" ")}
+            className={[className, classNames.Host].join(" ")}
         />
     )
 }

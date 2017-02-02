@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("react-material/ui/view/ViewPager/classNames")
-let React      = require("react")
 
 module.exports = ({
     children,
@@ -8,7 +9,7 @@ module.exports = ({
     ...props
 }) =>
     <div
-        className={[className, classNames.ViewPager].join(" ")}
+        className={[className, classNames.Host].join(" ")}
     >
         <div
             style={{

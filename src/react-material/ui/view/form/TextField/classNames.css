@@ -1,4 +1,4 @@
-.TextField {
+.Host {
     display       : flex;
     flex-direction: column;
     margin        : 16px 0 8px 0;
@@ -47,32 +47,32 @@
     font-size    : 0.8em;
 }
 
-.TextField.Invalid .InputText {
+.Host.Invalid .InputText {
     border-color: #F40;
 }
 
-.TextField.Focused .InputText {
+.Host.Focused .InputText {
     border-color: #09F;
 }
 
-.TextField.Disabled .InputText {
+.Host.Disabled .InputText {
     border-color: #DDD;
     border-style: dotted;
 }
 
-.TextField.Invalid .LabelText {
+.Host.Invalid .LabelText {
     color: #F40;
 }
 
-.TextField.Focused .LabelText {
+.Host.Focused .LabelText {
     color: #09F;
 }
 
-.TextField.Disabled .LabelText {
+.Host.Disabled .LabelText {
     color: #DDD;
 }
 
-.TextField:not(.Empty)   .LabelText,
-.TextField.Empty.Focused .LabelText {
+.Host:not(.Empty)   .LabelText,
+.Host.Empty.Focused .LabelText {
     transform: translate(-50%) scale(0.75) translate(50%);
 }

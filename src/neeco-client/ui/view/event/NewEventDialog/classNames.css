@@ -1,0 +1,15 @@
+.Host {
+    background-color: #FFF;
+}
+
+.Host form {
+    display         : flex;
+    flex-direction  : row;
+    flex-wrap       : wrap;
+    align-items     : stretch;
+}
+
+.Host form > :nth-child(1) {
+    display       : flex;
+    flex-direction: column;
+}

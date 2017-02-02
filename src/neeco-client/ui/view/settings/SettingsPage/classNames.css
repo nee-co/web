@@ -1,0 +1,26 @@
+.Host {
+    display       : flex;
+    flex-direction: column;
+    padding       : 16px;
+}
+
+.Host form {
+    display         : flex;
+    flex-direction  : column;
+    margin-top      : 16px;
+    padding         : 8px;
+}
+
+.Host label {
+    margin-bottom: 8px;
+}
+
+.UserImage {
+    display            : block;
+    width              : 128px;
+    height             : 128px;
+    border-radius      : 50%;
+    background-position: center;
+    background-size    : 100% auto;
+    background-repeat  : no-repeat;
+}

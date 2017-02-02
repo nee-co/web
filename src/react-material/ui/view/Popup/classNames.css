@@ -1,16 +1,12 @@
-.PopupContainer {
-    position: absolute;
-    overflow: hidden;
-}
-
-.Popup {
+.Host {
+    position  : absolute;
+    overflow  : hidden;
     transition: all .3s ease-out;
 }
 
-.Popup.Visible {
-    transform: translateY(0);
-}
-
-.Popup.Hidden {
-    transform: translateY(-100%);
+.Host > :nth-child(1) {
+    overflow        : auto;
+    min-width       : max-content;
+    min-height      : max-content;
+    background-color: #FFF;
 }

@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("react-material/ui/view/form/TextArea/classNames")
-let React      = require("react")
 
 module.exports = ({
     className,
@@ -7,5 +8,5 @@ module.exports = ({
 }) =>
     <textarea
         {...props}
-        className={[className, classNames.textarea].join(" ")}
+        className={[className, classNames.Host].join(" ")}
     />

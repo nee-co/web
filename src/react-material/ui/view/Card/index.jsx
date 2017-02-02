@@ -9,7 +9,7 @@ module.exports = ({
 }) =>
     <Shadow
         {...props}
-        className={[className, classNames.Card].join(" ")}
+        className={[className, classNames.Host].join(" ")}
         component={component}
         elevation={2}
     />

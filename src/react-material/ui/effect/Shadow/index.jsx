@@ -29,7 +29,7 @@ module.exports = ({
 }) =>
     <Component
         {...props}
-        className={[className, classNames.Shadow].join(" ")}
+        className={[className, classNames.Host].join(" ")}
         style={
             Object.assign(
                 {

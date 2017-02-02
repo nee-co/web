@@ -1,9 +1,9 @@
-.ViewPager {
+.Host {
     overflow: hidden;
     position: relative;
 }
 
-.ViewPager > * {
+.Host > * {
     display       : flex;
     position      : absolute;
     flex-direction: row;
@@ -13,7 +13,7 @@
     transition    : all .3s ease-out;
 }
 
-.ViewPager > * > * {
+.Host > * > * {
     overflow : auto;
     min-width: 100%;
 }

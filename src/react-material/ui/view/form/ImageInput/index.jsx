@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("react-material/ui/view/form/ImageInput/classNames")
-let React      = require("react")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -28,7 +29,7 @@ module.exports = class extends React.Component {
             <div
                 className={
                     [
-                        classNames.ImageInput,
+                        classNames.Host,
                         this.state.imageURL ? undefined
                       :                       classNames.Empty,
                         disabled ? classNames.Disabled

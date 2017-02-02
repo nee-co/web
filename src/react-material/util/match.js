@@ -10,6 +10,6 @@ module.exports = ({
 
     return (
         pathname == location.pathname
-     && Object.keys(query).every((i) => query[i] == location.query[i])
+     && Object.keys(query).every(i => query[i] == location.query[i])
     )
 }

@@ -1,6 +1,7 @@
-let Image      = require("react-material/ui/view/Image")
+let React = require("react")
+let Image = require("react-material/ui/view/Image")
+
 let classNames = require("react-material/ui/view/ListItemIcon/classNames")
-let React      = require("react")
 
 module.exports = ({
     className,
@@ -10,5 +11,5 @@ module.exports = ({
 }) =>
     <Component
         {...props}
-        className={[className, classNames.ListItemIcon].join(" ")}
+        className={[className, classNames.Host].join(" ")}
     />

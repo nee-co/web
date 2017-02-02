@@ -1,5 +1,6 @@
+let React = require("react")
+
 let classNames = require("react-material/ui/view/Image/classNames")
-let React      = require("react")
 
 module.exports = ({
     className,
@@ -9,7 +10,7 @@ module.exports = ({
     ...props
 }) => 
     <div
-        className={[className, classNames.Image].join(" ")}
+        className={[className, classNames.Host].join(" ")}
         style={{
             backgroundImage: "url(" + src + ")",
             height         : height + "px",
