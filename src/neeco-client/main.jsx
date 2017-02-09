@@ -7,7 +7,7 @@ render(<Router />, document.querySelector(".root"))
 ;(async () => {
     try {
         let registration = await navigator.serviceWorker.register(
-            "/js/ServiceWorker.js"
+            "/ServiceWorker.js"
         )
 
         console.log("ServiceWorker registration successful with scope: ", registration.scope)

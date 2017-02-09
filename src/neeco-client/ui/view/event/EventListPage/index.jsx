@@ -1,11 +1,12 @@
-let getEvents     = require("neeco-client/api/event/getEvents")
-let config        = require("neeco-client/config")
-let EventCardList = require("neeco-client/ui/view/event/EventCardList")
-let React         = require("react")
-let Shadow        = require("react-material/ui/effect/Shadow")
-let Button        = require("react-material/ui/view/Button")
-let Input         = require("react-material/ui/view/form/Input")
-let {Link}        = require("react-router")
+let getEvents       = require("neeco-client/api/event/getEvents")
+let config          = require("neeco-client/config")
+let FontAwesomeIcon = require("neeco-client/ui/view/FontAwesomeIcon")
+let EventCardList   = require("neeco-client/ui/view/event/EventCardList")
+let React           = require("react")
+let Shadow          = require("react-material/ui/effect/Shadow")
+let Button          = require("react-material/ui/view/Button")
+let TextField       = require("react-material/ui/view/form/TextField")
+let {Link}          = require("react-router")
 
 let classNames = require("neeco-client/ui/view/event/EventListPage/classNames")
 
@@ -48,28 +49,24 @@ module.exports = class extends React.Component {
             >
                 <form
                     className={classNames.SearchForm}
-                    onSubmit={async (e) => {
+                    onSubmit={async e => {
                         e.preventDefault()
 
+                        let form = e.target
+
                         this.setState({
-                            events: await getEvents({
+                            eventsPage: await getEvents({
                                 apiHost: config["neeco_api_host"],
                                 token  : token,
-                                query  : document.getElementsByName("query")[0].value,
+                                query  : form.elements["query"].value,
                                 limit  : 10
                             })
                         })
                     }}
                 >
-                    <label>
-                        <Input
-                            name="query"
-                            type="text"
-                        />
-                    </label>
-                    <Button
-                        className={classNames.SearchButton}
-                        component="button"
+                    <TextField
+                        name="query"
+                        placeholder="検索"
                     />
                 </form>
                 <EventCardList

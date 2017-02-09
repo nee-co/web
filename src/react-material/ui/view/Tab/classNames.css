@@ -3,7 +3,6 @@
     font-size  : 13px;
     font-weight: bolder;
     text-align : center;
-    transition : all .3s ease-out;
 }
 
 .Host > :nth-child(1) {
@@ -11,4 +10,8 @@
     border-bottom: 1px solid transparent;
     min-width    : 72px;
     padding      : 0px 24px;
+}
+
+.Host.Selected {
+    color: #09F;
 }

@@ -1,7 +1,7 @@
 let toCharacterReference = require("neeco-client/encoding/xml/toCharacterReference")
 
-module.exports = window.x = (string) =>
-    string
+module.exports = x =>
+    x
         .replace(
             /(`+)\s*?\r?\n((?:.+?\r?\n)*?)\s*\1/g,
             (match, $1, $2) =>
@@ -21,7 +21,7 @@ module.exports = window.x = (string) =>
         .replace(/\[(.*?)\]\((.*?)\)/g, "<a href=\"$2\">$1</a>")
         .replace(/^\s*([_=\-\*])(?: ?\1)+\s*?/gm, "<hr />")
         .replace(/^(\s*[^\|\s]+?\s*(?:\|\s*[^\|\s]+?\s*?)+)$/gm, "|$1|")
-        .replace(/^[\s\S]*$/, (string) => {
+        .replace(/^[\s\S]*$/, string => {
             while (true) {
                 let match = /(?:^\s*\|.*\|\s*$)/m.exec(string)
                 if (match)
@@ -30,11 +30,11 @@ module.exports = window.x = (string) =>
                             "(?:^\s*\\|(?:.*?\\|){" + (match[0].split("|").length - 2) + "}\s*$\r?\n?)+",
                             "m"
                         ),
-                        (s) => 
+                        s => 
                             "<table>"
                           + s.replace(/((?:^\s*\|.+\|\s*$\r?\n?)+?)^\s*(?:\|?\s*\:\-+\:\s*\|)+\s*$\r?\n?/gm, (_, rows) =>
                                 "<thead>"
-                              + rows.replace(/^.+$/gm, (row) =>
+                              + rows.replace(/^.+$/gm, row =>
                                     "<tr>"
                                   + row.replace(/\|?(.+?)\|/gm, (_, column) =>
                                         "<th>"
@@ -44,9 +44,9 @@ module.exports = window.x = (string) =>
                                   + "</tr>"
                                 )
                               + "</thead>\n"
-                            ).replace(/(?:^\s*\|.+\|\s*$\r?\n?)+/gm, (rows) =>
+                            ).replace(/(?:^\s*\|.+\|\s*$\r?\n?)+/gm, rows =>
                                 "<tbody>"
-                              + rows.replace(/^.+$/gm, (row) =>
+                              + rows.replace(/^.+$/gm, row =>
                                     "<tr>"
                                   + row.replace(/\|?(.+?)\|/g, (_, column) =>
                                         "<td>"
@@ -74,7 +74,7 @@ module.exports = window.x = (string) =>
               + `</${tagName}>`
             )
         })
-        .replace(/(?:^\s*[\+\-\*]\s+.*$\r?\n?)+/gm, (match) => {
+        .replace(/(?:^\s*[\+\-\*]\s+.*$\r?\n?)+/gm, match => {
             let spaces = /^(\s*).*$/m.exec(match)[1]
 
             return (
@@ -87,7 +87,7 @@ module.exports = window.x = (string) =>
               + "</ul>"
             )
         })
-        .replace(/(?:^\s*[0-9]\.\s+.*$\r?\n?)+/gm, (match) =>
+        .replace(/(?:^\s*[0-9]\.\s+.*$\r?\n?)+/gm, match =>
             "<ol>"
           + match.replace(/^\s*[0-9]\.\s+(.*)$/gm, (_, x) =>
                 "<li>"

@@ -13,12 +13,10 @@ module.exports = ({
         {...props}
         className={[className, classNames.Host].join(" ")}
     >
-        {
-            events.map((x) =>
-                <EventCard
-                    event={x}
-                    key={x.id}
-                />
-            )
-        }
+        {events.map(x =>
+            <EventCard
+                event={x}
+                key={x.id}
+            />
+        )}
     </List>

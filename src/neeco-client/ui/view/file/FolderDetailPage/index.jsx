@@ -4,6 +4,7 @@ let deleteFile       = require("neeco-client/api/file/deleteFile")
 let deleteFolder     = require("neeco-client/api/file/deleteFolder")
 let getFolderByID    = require("neeco-client/api/file/getFolderByID")
 let config           = require("neeco-client/config")
+let MaterialIcon     = require("neeco-client/ui/view/MaterialIcon")
 let FileList         = require("neeco-client/ui/view/file/FileList")
 let FileListItem     = require("neeco-client/ui/view/file/FileListItem")
 let NewFolderDialog  = require("neeco-client/ui/view/file/NewFolderDialog")
@@ -12,6 +13,7 @@ let Shadow           = require("react-material/ui/effect/Shadow")
 let BreadcrumbList   = require("react-material/ui/view/BreadcrumbList") 
 let Button           = require("react-material/ui/view/Button")
 let FlexibleSpace    = require("react-material/ui/view/FlexibleSpace")
+let IconToggle       = require("react-material/ui/view/IconToggle")
 let List             = require("react-material/ui/view/List")
 let ListItem         = require("react-material/ui/view/ListItem")
 let ListItemTextArea = require("react-material/ui/view/ListItemTextArea")
@@ -88,25 +90,35 @@ module.exports = class extends React.Component {
                 className={classNames.Host}
             >
                 <Shadow>
-                    <h2>
-                        <nav>
-                            <BreadcrumbList>
+                    <nav>
+                        <BreadcrumbList
+                            className={classNames.Parents}
+                        >
+                            <ListItem
+                                to="/folders"
+                            >
+                                /
+                            </ListItem>
+                            {this.state.folder && this.state.folder.parents.map(x =>
                                 <ListItem
-                                    to="/folders"
+                                    key={x.id}
+                                    to={"/folders/" + x.id}
                                 >
-                                    /
+                                    {x.name}
                                 </ListItem>
-                                <ListItem>
-                                    {this.state.folder && this.state.folder.name}
-                                </ListItem>
-                            </BreadcrumbList>
-                        </nav>
-                    </h2>
-                    <div>
+                            )}
+                            <ListItem>
+                                {this.state.folder && this.state.folder.name}
+                            </ListItem>
+                        </BreadcrumbList>
+                    </nav>
+                    <div
+                        className={classNames.Buttons}
+                    >
                         <div>
                             <Button
                                 type="flat"
-                                onClick={(e) => {
+                                onClick={e => {
                                     this.setState({
                                         newFileMenuIsVisible: true
                                     })
@@ -123,9 +135,9 @@ module.exports = class extends React.Component {
                                 }}
                             >
                                 <ListItem
-                                    onClick={(file) => {
+                                    onClick={e => {
                                         this.setState({
-                                            newFileMenuIsVisible: false,
+                                            newFileMenuIsVisible    : false,
                                             newFolderDialogIsVisible: true
                                         })
                                     }}
@@ -135,10 +147,10 @@ module.exports = class extends React.Component {
                                     </ListItemTextArea>
                                 </ListItem>
                                 <ListItem
-                                    onClick={(e) => {
+                                    onClick={e => {
                                         let input = document.createElement("input")
                                         input.setAttribute("type", "file")
-                                        input.onchange = async (e) => {
+                                        input.onchange = async e => {
                                             let f = await createFile({
                                                 token  : token,
                                                 apiHost: config["neeco_api_host"],
@@ -169,8 +181,10 @@ module.exports = class extends React.Component {
                         </div>
                         <FlexibleSpace />
                         {this.state.selectedIDs.length > 0 && (
-                            <Button
-                                onClick={async (e) => {
+                            <IconToggle
+                                children={"delete"}
+                                component={MaterialIcon}
+                                onClick={async e => {
                                     for (let id of this.state.selectedIDs)
                                     for (let x  of [this.state.folder.children.find(x => x.id == id)])
                                     if  (x.kind == "file")
@@ -194,21 +208,18 @@ module.exports = class extends React.Component {
                                         selectedIDs: []
                                     })
                                 }}
-                                type="flat"
-                            >
-                                削除
-                            </Button>
+                            />
                         )}
                     </div>
                 </Shadow>
                 <div>
                     {this.state.folder && (
                         <FileList>
-                            {this.state.folder.children.map((x) =>
+                            {this.state.folder.children.map(x =>
                                 <FileListItem
                                     key={x.id}
                                     file={x}
-                                    onClick={(e) => {
+                                    onClick={e => {
                                         if (Date.now() - this.state.lastClickTime < 500) {
                                             if (x.kind == "folder") {
                                                 browserHistory.push("/folders/" + x.id)
@@ -220,7 +231,7 @@ module.exports = class extends React.Component {
                                                 )
                                                 request.responseType = "blob"
                                                 request.setRequestHeader("Authorization", "Bearer " + token)
-                                                request.onprogress = (e) => {
+                                                request.onprogress = e => {
                                                     this.setState({
                                                         loading: {
                                                             file  : x,
@@ -229,10 +240,10 @@ module.exports = class extends React.Component {
                                                         }
                                                     })
                                                 }
-                                                request.onabort = (e) => {
-                                                    console.log("abort", e)
+                                                request.onabort = e => {
+                                                    console.log(e)
                                                 }
-                                                request.onload = (e) => {
+                                                request.onload = e => {
                                                     let a = document.createElement("a")
                                                     a.href = URL.createObjectURL(e.target.response)
                                                     a.target = "_blank";
@@ -259,13 +270,17 @@ module.exports = class extends React.Component {
                     )}
                 </div>
                 <NewFolderDialog
-                    visible={this.state.newFolderDialogIsVisible}
-                    onCreate={async (formData) => {
+                    onCancel={() => {
+                        this.setState({
+                            newFolderDialogIsVisible: false
+                        })
+                    }}
+                    onDone={async ({name}) => {
                         let f = await createFolder({
                             token  : token,
                             apiHost: config["neeco_api_host"],
                             folder : {
-                                name: document.getElementsByName("name")[0].value
+                                name: name
                             },
                             parent : this.state.folder
                         })
@@ -277,11 +292,7 @@ module.exports = class extends React.Component {
                             newFolderDialogIsVisible: false
                         })
                     }}
-                    onCancel={() => {
-                        this.setState({
-                            newFolderDialogIsVisible: false
-                        })
-                    }}
+                    visible={this.state.newFolderDialogIsVisible}                    
                 />
             </section>
         )

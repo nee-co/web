@@ -29,7 +29,7 @@
     position     : absolute;
     margin-bottom: 8px;
     font-size    : 16px;
-    color        : #777;
+    color        : rgba(0, 0, 0, .38);    
     transform    : translateY(calc(100%));
     transition   : all .3s ease-out;
 }
@@ -47,17 +47,24 @@
     font-size    : 0.8em;
 }
 
+.Host.Empty .InputText:hover {
+    color: rgba(0, 0, 0, .54);
+}
+
 .Host.Invalid .InputText {
     border-color: #F40;
+    color       : rgba(0, 0, 0, 1);
 }
 
 .Host.Focused .InputText {
     border-color: #09F;
+    color       : inherit;
 }
 
 .Host.Disabled .InputText {
     border-color: #DDD;
     border-style: dotted;
+    color       : rgba(0, 0, 0, .38);
 }
 
 .Host.Invalid .LabelText {
@@ -69,7 +76,6 @@
 }
 
 .Host.Disabled .LabelText {
-    color: #DDD;
 }
 
 .Host:not(.Empty)   .LabelText,

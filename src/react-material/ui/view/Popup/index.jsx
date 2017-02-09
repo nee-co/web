@@ -7,7 +7,7 @@ let classNames = require("react-material/ui/view/Popup/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            onClick: (e) => {
+            onClick: e => {
                 if (!ReactDOM.findDOMNode(this).contains(e.target))
                     this.props.onCancel && this.props.onCancel()
             },
@@ -17,27 +17,48 @@ module.exports = class extends React.Component {
 
     componentDidMount() {
         if (this.props.visible) {
-            setTimeout(() => window.addEventListener("click", this.state.onClick, false), 1)
+            let rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
+
+            this.setState({
+                size: [
+                    rect.width,
+                    rect.height
+                ]
+            })
+
+            setTimeout(
+                () => window.addEventListener("click", this.state.onClick, false),
+                1
+            )
         }
-
-        let e = ReactDOM.findDOMNode(this).children[0]
-
-        let rect = e.getBoundingClientRect()
-
-        this.setState({
-            size: [
-                rect.width,
-                rect.height
-            ]
-        })
     }
 
     componentWillReceiveProps({
         visible
     }) {
-        if (this.props.visible != visible) {
+        if (visible != this.props.visible) {
             if (visible) {
-                setTimeout(() => window.addEventListener("click", this.state.onClick, false), 1)
+                let element = ReactDOM.findDOMNode(this)
+                element.style.width = "auto"
+                element.style.height = "auto"
+
+                let rect = element.getBoundingClientRect()
+
+                element.style.width = 0
+                element.style.height = 0
+                element.getBoundingClientRect()
+
+                this.setState({
+                    size: [
+                        rect.width,
+                        rect.height
+                    ]
+                })
+
+                setTimeout(
+                    () => window.addEventListener("click", this.state.onClick, false),
+                    1
+                )
             } else {
                 window.removeEventListener("click", this.state.onClick, false)
             }
@@ -51,12 +72,11 @@ module.exports = class extends React.Component {
 
     render() {
         let {
-            children,
             className,
-            component = "div",
-            elevation,
-            visible,
+            elevation = 8,
             onCancel,
+            style,
+            visible,
             ...props
         } = this.props
 
@@ -67,23 +87,21 @@ module.exports = class extends React.Component {
                     [
                         className,
                         classNames.Host,
-                        visible ? undefined
+                        visible ? classNames.Visible
                       :           classNames.Hidden
                     ].join(" ")
                 }
-                component={component}
-                elevation={8}
-                style={{
-                    width : visible && this.state.size ? this.state.size[0] + "px"
-                          :                              0,
-                    height: visible && this.state.size ? this.state.size[1] + "px"
-                          :                              0,
-                }}
-            >
-                <div
-                    children={children}
-                />
-            </Shadow>
+                elevation={elevation}
+                style={Object.assign(
+                    {
+                        width : visible && this.state.size ? this.state.size[0] + "px"
+                              :                              0,
+                        height: visible && this.state.size ? this.state.size[1] + "px"
+                              :                              0,
+                    },
+                    style
+                )}
+            />
         )
     }
 }

@@ -1,8 +1,4 @@
-module.exports = (a) => {
-    let b = ""
-
-    for (let i in a)
-        b += encodeURIComponent(i) + "=" + encodeURIComponent(a[i]) + "&"
-
-    return b.slice(0, -1)
-}
+module.exports = a =>
+    Array.from(Object.entries(a))
+        .map(([i, x]) => encodeURIComponent(i) + "=" + encodeURIComponent(x))
+        .join("&")

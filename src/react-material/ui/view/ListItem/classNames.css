@@ -5,7 +5,6 @@
 
 .Link {
     display        : flex;
-    flex-direction : row;
     flex-grow      : 1;
     align-items    : center;
     min-height     : 48px;

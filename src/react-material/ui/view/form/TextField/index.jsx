@@ -18,6 +18,12 @@ module.exports = class extends React.Component {
             helperText,
             hintText,
             labelText,
+            multiLine,
+            component = (
+                multiLine ? "textarea"
+              :             "input"
+            ),
+            Component = component,
             name,
             id = name,
             onBlur,
@@ -64,7 +70,7 @@ module.exports = class extends React.Component {
                         {labelText}
                     </span>
                 </label>
-                <input
+                <Component
                     {...props}
                     className={[className, classNames.InputText].join(" ")}
                     id={id}
@@ -76,7 +82,7 @@ module.exports = class extends React.Component {
                       :                      placeholder
                     )}
                     required={required}
-                    onBlur={(e) => {
+                    onBlur={e => {
                         onBlur && onBlur(e)
 
                         this.setState({
@@ -85,7 +91,7 @@ module.exports = class extends React.Component {
                             invalid: !e.target.validity.valid
                         })
                     }}
-                    onFocus={(e) => {
+                    onFocus={e => {
                         onFocus && onFocus(e)
 
                         this.setState({

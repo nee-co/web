@@ -1,12 +1,24 @@
-.Host {
-    position  : absolute;
-    overflow  : hidden;
-    transition: all .3s ease-out;
+@keyframes visible {
+    0% {
+        overflow: hidden;
+    }
+
+    100% {
+        overflow: hidden;
+    }
 }
 
-.Host > :nth-child(1) {
-    overflow        : auto;
-    min-width       : max-content;
-    min-height      : max-content;
+.Host {
+    position        : absolute;
     background-color: #FFF;
+    transition      : all .3s ease-out;
+}
+
+.Host.Hidden {
+    overflow: hidden;
+}
+
+.Host.Visible {
+    overflow : visible;
+    animation: visible ease-out .3s backwards;
 }

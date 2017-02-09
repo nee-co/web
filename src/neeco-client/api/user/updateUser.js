@@ -1,4 +1,5 @@
 let toFormData = require("neeco-client/encoding/toFormData")
+let toURIQuery = require("neeco-client/encoding/toURIQuery")
 
 module.exports = async ({
     apiHost,
@@ -14,9 +15,10 @@ module.exports = async ({
             {
                 method : "PATCH",
                 headers: {
-                    "Authorization": "Bearer " + token
+                    "Authorization": "Bearer " + token,
+                    "Content-Type" : "application/x-www-form-urlencoded"
                 },
-                body   : toFormData({
+                body   : toURIQuery({
                     "current_password": user.currentPassword,
                     "new_password"    : user.password
                 })

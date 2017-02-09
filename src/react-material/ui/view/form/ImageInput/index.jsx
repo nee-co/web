@@ -13,6 +13,7 @@ module.exports = class extends React.Component {
 
     render() {
         let {
+            className,
             disabled,
             hintText,
             labelText,
@@ -29,6 +30,7 @@ module.exports = class extends React.Component {
             <div
                 className={
                     [
+                        className,
                         classNames.Host,
                         this.state.imageURL ? undefined
                       :                       classNames.Empty,
@@ -62,7 +64,7 @@ module.exports = class extends React.Component {
                     className={classNames.Input}
                     id={id || name}
                     name={name}
-                    onChange={(e) => {
+                    onChange={e => {
                         onChange && onChange(e)
 
                         let file = e.target.files[0]
@@ -74,7 +76,7 @@ module.exports = class extends React.Component {
                             imageURL: file && URL.createObjectURL(file)
                         })
                     }}
-                    onBlur={(e) => {
+                    onBlur={e => {
                         onBlur && onBlur(e)
 
                         this.setState({
@@ -82,7 +84,7 @@ module.exports = class extends React.Component {
                             invalid: !e.target.validity.valid
                         })
                     }}
-                    onFocus={(e) => {
+                    onFocus={e => {
                         onFocus && onFocus(e)
 
                         this.setState({

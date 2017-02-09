@@ -58,20 +58,17 @@ module.exports = class extends React.Component {
                 <div>
                     {this.state.files.length > 0 && (
                         <FileList>
-                            {this.state.files.map((x) => 
+                            {this.state.files.map(x => 
                                 <FileListItem
                                     key={x.id}
                                     file={x}
-                                    onClick={(e) => {
+                                    onClick={e => {
                                         if (Date.now() - this.state.lastClickTime < 500) {
                                             browserHistory.push("/folders/" + x.id)
                                         }
 
                                         this.setState({
-                                            selectedIDs: (
-                                                this.state.selectedIDs.includes(x.id) ? this.state.selectedIDs.filter(id => id != x.id)
-                                              :                                         this.state.selectedIDs.concat(x.id)
-                                            ),
+                                            selectedIDs  : [x.id],
                                             lastClickTime: Date.now()
                                         })                                
                                     }}
@@ -81,7 +78,7 @@ module.exports = class extends React.Component {
                         </FileList>
                     )}
                     {this.state.files.length == 0 && <div>このフォルダは空です</div>}
-                </div>        
+                </div>
             </section>
         )
     }

@@ -1,8 +1,0 @@
-.Host {
-    font-size: inherit;
-}
-
-.Host > :nth-child(1) {
-    min-width   : max-content;
-    margin-right: 16px;
-}

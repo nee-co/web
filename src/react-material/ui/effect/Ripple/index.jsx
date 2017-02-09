@@ -15,7 +15,6 @@ module.exports = class extends React.Component {
             className,
             component = "div",
             Component = component,
-            disabled,
             fixed,
             onClick,
             ...props
@@ -25,11 +24,8 @@ module.exports = class extends React.Component {
             <Component
                 {...props}
                 className={[className, classNames.Host].join(" ")}
-                onClick={(e) => {
+                onClick={e => {
                     onClick && onClick(e)
-
-                    if (disabled)
-                        return
                     
                     let rect = e.currentTarget.getBoundingClientRect()
 

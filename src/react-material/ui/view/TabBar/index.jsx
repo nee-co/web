@@ -31,10 +31,10 @@ module.exports = class extends React.Component {
             <div
                 {...props}
                 className={[className, classNames.Host].join(" ")}
-                ref={(element) => {
-                    if (element && selectedIndex >= 0) {
-                        let parentRect = element.getBoundingClientRect()
-                        let rect = element
+                ref={x => {
+                    if (x && selectedIndex >= 0) {
+                        let parentRect = x.getBoundingClientRect()
+                        let rect = x
                             .children[0]
                             .children[selectedIndex]
                             .getBoundingClientRect()
@@ -48,9 +48,16 @@ module.exports = class extends React.Component {
                     }
                 }}
             >
-                <List
-                    children={children}
-                />
+                <List>
+                    {Array.from(React.Children.toArray(children).entries()).map(([i, x]) => 
+                        React.cloneElement(
+                            x,
+                            {
+                                selected: i == selectedIndex
+                            }
+                        )
+                    )}
+                </List>
                 <div
                     className={classNames.Indicator}
                     style={{

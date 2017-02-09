@@ -1,36 +1,37 @@
 .Host {
     display       : flex;
     flex-direction: column;
-    align-items   : stretch;
-    width         : 100%;
-    min-width     : max-content;
-    height        : 100%;
+    max-width     : 100%;
+    max-height    : 100%;
+    min-width     : 100%;
+    min-height    : 100%;
 }
 
 .Host > :nth-child(1) {
     z-index: 1;
 }
 
-.Host > :nth-child(1) > :nth-child(1) {
-    padding: 16px;    
-}
-
-.Host > :nth-child(1) > :nth-child(n+2) {
-    display  : flex;
-    margin-top: 16px;
-}
-
 .Host > :nth-child(2) {
+    flex-grow: 1;
     overflow : auto;
-    flex-grow: 1;
 }
 
-.Host > :nth-child(2) > * {
-    width    : 100%;
-    min-width: max-content;
+.Parents > * {
+    margin-left: 8px;    
 }
 
-.Host > :nth-child(2) > :not(table) {
-    padding  : 16px;
-    flex-grow: 1;
+.Parents > * > :nth-child(1) {
+    padding: 0 8px;
+}
+
+.Parents > :nth-child(n+2)::before {
+    display     : flex;
+    align-items : center;
+    margin-right: 8px;
+    content     : ">";
+}
+
+.Buttons {
+    display    : flex;
+    align-items: center;
 }

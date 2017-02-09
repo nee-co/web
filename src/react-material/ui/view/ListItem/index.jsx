@@ -32,7 +32,6 @@ module.exports = ({
             children={children}
             className={classNames.Link}
             component={Link}
-            disabled={selected}
             onClick={onListItemClick}
             to={to}
         />

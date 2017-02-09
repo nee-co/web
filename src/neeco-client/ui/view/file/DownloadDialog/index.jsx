@@ -59,7 +59,7 @@ module.exports = class extends React.Component {
                     {
                         this.state.files && (
                             <FileList>
-                                {this.state.files.map((f) =>
+                                {this.state.files.map(f =>
                                     <FileListItem
                                         key={f.id}
                                         file={f}

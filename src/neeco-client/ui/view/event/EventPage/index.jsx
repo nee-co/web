@@ -1,3 +1,5 @@
+let createEvent    = require("neeco-client/api/event/createEvent")
+let config         = require("neeco-client/config")
 let NewEventDialog = require("neeco-client/ui/view/event/NewEventDialog")
 let EntriedEvents  = require("neeco-client/ui/view/event/EntriedEventListPage")
 let NewEvents      = require("neeco-client/ui/view/event/EventListPage")
@@ -36,14 +38,13 @@ module.exports = class extends React.Component {
                 >
                     <div className={classNames.Summary}>
                         <Button
-                            className={classNames.NewEventButton}
                             component={Link}
-                            onClick={(e) => {
+                            onClick={e => {
                                 this.setState({
                                     newEventDialogIsVisible: true
                                 })
                             }}
-                            type="raised"
+                            type="flat"
                         >
                             イベント作成
                         </Button>
@@ -97,7 +98,22 @@ module.exports = class extends React.Component {
                     />
                 </ViewPager>
                 <NewEventDialog
-                    onCancel={(e) => {
+                    onCancel={e => {
+                        this.setState({
+                            newEventDialogIsVisible: false
+                        })
+                    }}
+                    onDone={async ({event}) => {
+                        try {
+                            await createEvent({
+                                apiHost: config["neeco_api_host"],
+                                token  : token,
+                                event  : event
+                            })
+                        } catch (e) {
+                            console.log(e)
+                        }
+
                         this.setState({
                             newEventDialogIsVisible: false
                         })

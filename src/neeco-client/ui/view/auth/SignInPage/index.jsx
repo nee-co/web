@@ -2,7 +2,7 @@ let createToken = require("neeco-client/api/auth/createToken")
 let config      = require("neeco-client/config")
 let React       = require("react")
 let Button      = require("react-material/ui/view/Button")
-let Input       = require("react-material/ui/view/form/Input")
+let TextField   = require("react-material/ui/view/form/TextField")
 
 let classNames = require("neeco-client/ui/view/auth/SignInPage/classNames")
 
@@ -27,19 +27,21 @@ module.exports = class extends React.Component {
                     className={classNames.SignInCard}
                 >
                     <form
-                        onSubmit={async (e) => {
+                        onSubmit={async e => {
                             e.preventDefault()
+
+                            let form = e.target
 
                             try {
                                 let token = await createToken({
                                     apiHost : config["neeco_api_host"],
-                                    userName: document.getElementsByName("id")[0].value,
-                                    password: document.getElementsByName("password")[0].value
+                                    userName: form.elements["id"].value,
+                                    password: form.elements["password"].value
                                 })
 
                                 onSignIn({
                                     token       : token,
-                                    staySignedIn: document.getElementsByName("staySignedIn")[0].value
+                                    staySignedIn: form.elements["staySignedIn"].value
                                 })
                             } catch (e) {
                                 console.log(e)
@@ -53,22 +55,18 @@ module.exports = class extends React.Component {
                             }
                         }}
                     >
-                        <label>
-                            <Input
-                                name="id"
-                                placeholder="学籍番号"
-                                required
-                                type="text"
-                            />
-                        </label>
-                        <label>
-                            <Input
-                                name="password"
-                                placeholder="パスワード"
-                                required
-                                type="password"
-                            />
-                        </label>
+                        <TextField
+                            name="id"
+                            placeholder="学籍番号"
+                            required
+                            type="text"
+                        />
+                        <TextField
+                            name="password"
+                            placeholder="パスワード"
+                            required
+                            type="password"
+                        />
                         <label>
                             <input
                                 name="staySignedIn"

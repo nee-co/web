@@ -1,27 +1,16 @@
 .Host {
-    overflow    : auto;
-    border-right: 1px solid #DDD;
-    max-width   : 280px;
-    min-width   : max-content;
-    font-family : "Roboto", sans-serif;
-    font-weight : bolder;
-    transition  : all .3s ease-out;
-}
-
-.Host.Hidden {
-    overflow : hidden;
-    max-width: 0;
-}
-
-.Host.Visible {
-    max-width: 280px;
-}
-
-.Host ul {
-    min-width: max-content;    
+    overflow        : auto;
+    max-width       : 280px;
+    min-width       : max-content;
+    border-right    : 1px solid #DDD;
+    background-color: #FFF;
+    font-family     : "Roboto", sans-serif;
+    font-weight     : bolder;
+    transition      : all .3s ease-out;
 }
 
 .Host li {
+    min-width  : max-content;
     font-size  : 14px;
     font-weight: bolder;
     color      : rgba(0, 0, 0, .8);

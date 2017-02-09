@@ -25,7 +25,6 @@ module.exports = class extends React.Component {
         let {
             component = "div",
             Component = component,
-            onRender,
             ...props
         } = this.props
 
@@ -35,10 +34,7 @@ module.exports = class extends React.Component {
                     <Component
                         {...props}
                     />,
-                    this.state.element,
-                    () => {
-                        onRender && onRender(this.state.element.children[0])
-                    }
+                    this.state.element
                 )
             },
             0

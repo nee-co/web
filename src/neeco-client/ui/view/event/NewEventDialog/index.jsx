@@ -1,5 +1,3 @@
-let createEvent  = require("neeco-client/api/event/createEvent")
-let config       = require("neeco-client/config")
 let Editor       = require("neeco-client/ui/view/Editor")
 let React        = require("react")
 let Button       = require("react-material/ui/view/Button")
@@ -12,92 +10,75 @@ let TextField    = require("react-material/ui/view/form/TextField")
 
 let classNames = require("neeco-client/ui/view/event/NewEventDialog/classNames")
 
-module.exports = class extends React.Component {
-    componentWillMount() {
-        this.setState({
-            error      : null,
-            description: "",
-            imageURL   : undefined
-        })
-    }
+module.exports = ({
+    token,
+    onCancel,
+    onDone,
+    ...props
+}) =>
+    <Dialog
+        className={classNames.Host}
+        onCancel={onCancel}
+        {...props}
+    >
+        <DialogHeader>  
+            イベント作成
+        </DialogHeader>
+        <DialogBody
+            id="new_event_form"
+            component="form"
+            onSubmit={e => {
+                e.preventDefault()
 
-    render() {
-        let {
-            token,
-            onCancel,
-            ...props
-        } = this.props
+                let form = e.target
 
-        return (
-            <Dialog
-                className={classNames.Host}
-                onCancel={onCancel}
-                {...props}
+                onDone({
+                    event: {
+                        title      : form.elements["title"].value,
+                        startDate  : form.elements["startDate"].value,
+                        description: "test",
+                        image      : form.elements["image"].files
+                    }
+                })
+            }}
+        >
+            <TextField
+                labelText={"タイトル"}
+                name="title"
+                required
+            />
+            <TextField
+                labelText={"日時"}
+                name="startDate"
+                required
+                type="date"
+                defaultValue={
+                    new Date().toISOString().slice(0, 10)
+                }
+            />
+            <ImageInput
+                labelText={"イベント画像"}
+                name="image"
+            />
+        </DialogBody>
+        <DialogFooter>
+            <Button
+                onClick={onCancel}
+                type="flat"
             >
-                <DialogHeader>  
-                    イベントの新規作成
-                </DialogHeader>
-                <DialogBody
-                    component="form"
-                    id="new_event_form"
-                    onSubmit={(e) => {
-                        e.preventDefault()
+                キャンセル
+            </Button>
+            <Button
+                component="button"
+                form="new_event_form"
+                type="flat"
+            >
+                作成
+            </Button>
+        </DialogFooter>
+    </Dialog>
 
-
-                        createEvent({
-                            apiHost: config["neeco_api_host"],
-                            token  : token,
-                            event  : {
-                                title      : document.getElementsByName("title")[0].value,
-                                startDate  : document.getElementsByName("startDate")[0].value,
-                                description: "",
-                                image      : document.getElementsByName("image")[0].value
-                            }
-                        })
-                    }}
-                >
-                    <div>
-                        <TextField
-                            labelText={"タイトル"}
-                            name="title"
-                            required
-                        />
-                        <TextField
-                            labelText={"日時"}
-                            name="startDate"
-                            required
-                            type="date"
-                            defaultValue={
-                                new Date().toISOString().slice(0, 10)
-                            }
-                        />
-                    </div>
-                    <ImageInput
-                        labelText={"イベント画像"}
-                        name="image"
-                    />
-                </DialogBody>
-                <DialogFooter>
-                    <Button
-                        onClick={onCancel}
-                        type="flat"
-                    >
-                        キャンセル
-                    </Button>
-                    <Button
-                        form="new_event_form"
-                        component="button"
-                        type="flat"
-                    >
-                        作成
-                    </Button>
-                </DialogFooter>
-            </Dialog>
-        )
-    }
-}
-
-let TimeSelect = (props) =>
+let TimeSelect = props =>
     <select
         {...props}
     >
@@ -105,8 +86,18 @@ let TimeSelect = (props) =>
             Array.from(Array(24).keys())
                 .map(x => ("0" + x).slice(-2))
                 .map(x => [
-                    <option key={x}      value={x + ":00:00"}>{x + ":00"}</option>,
-                    <option key={x + 24} value={x + ":30:00"}>{x + ":30"}</option>
+                    <option
+                        key={x}
+                        value={x + ":00:00"}
+                    >
+                        {x + ":00"}
+                    </option>,
+                    <option
+                        key={x + 24}
+                        value={x + ":30:00"}
+                    >
+                        {x + ":30"}
+                    </option>
                 ])
                 .reduce((x, y) => x.concat(y))
         }

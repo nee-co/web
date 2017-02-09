@@ -1,10 +1,10 @@
 let toCollege = require("neeco-client/api/user/toCollege")
 
-module.exports = (user) => ({
-    id     : user["id"],
-    number : user["number"],
-    name   : user["name"],
-    note   : user["note"],
-    image  : user["image"],
-    college: user["college"] && toCollege(user["college"])
+module.exports = x => ({
+    id     : x["id"],
+    number : x["number"],
+    name   : x["name"],
+    note   : x["note"],
+    image  : x["image"],
+    college: x["college"] && toCollege(x["college"])
 })

@@ -23,7 +23,8 @@ module.exports = async ({
     return toFile(Object.assign(
         {
             "type"    : "folder",
-            "elements": x["elements"]
+            "elements": x["elements"],
+            "parents" : x["parents"].slice(0, -1)
         },
         x["current_folder"]
     ))

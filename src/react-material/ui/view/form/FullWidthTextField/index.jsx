@@ -75,7 +75,7 @@ module.exports = class extends React.Component {
                       :                      placeholder
                     )}
                     required={required}
-                    onBlur={(e) => {
+                    onBlur={e => {
                         onBlur && onBlur(e)
 
                         this.setState({
@@ -84,7 +84,7 @@ module.exports = class extends React.Component {
                             invalid: !e.target.validity.valid
                         })
                     }}
-                    onFocus={(e) => {
+                    onFocus={e => {
                         onFocus && onFocus(e)
 
                         this.setState({

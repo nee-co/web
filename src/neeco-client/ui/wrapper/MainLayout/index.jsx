@@ -1,4 +1,3 @@
-let DefaultTitle     = require("neeco-client/ui/view/DefaultTitle")
 let FontAwesomeIcon  = require("neeco-client/ui/view/FontAwesomeIcon")
 let Logo             = require("neeco-client/ui/view/Logo")
 let React            = require("react")
@@ -12,6 +11,7 @@ let ListItemIcon     = require("react-material/ui/view/ListItemIcon")
 let ListItemTextArea = require("react-material/ui/view/ListItemTextArea")
 let NavigationDrawer = require("react-material/ui/view/NavigationDrawer")
 let Toolbar          = require("react-material/ui/view/Toolbar")
+let ToolbarTitle     = require("react-material/ui/view/ToolbarTitle")
 
 let classNames = require("neeco-client/ui/wrapper/MainLayout/classNames")
 
@@ -50,14 +50,27 @@ module.exports = class extends React.Component {
                             })
                         }}
                     />
-                    {
-                        title ? React.cloneElement(title, {component: "h1"})
-                       :        (
-                            <DefaultTitle
-                                component="h1"
-                            />
-                        )
-                    }
+                    <ToolbarTitle
+                        className={classNames.Title}
+                        component="h1"
+                    >
+                        <Logo
+                            className={classNames.Logo}
+                        />
+                        {
+                            [
+                                ["/",                  ""],
+                                ["/events",            "イベント"],
+                                ["/folders",           "ドライブ"],
+                                ["/groups",            "グループ"],
+                                ["/settings",          "設定"],
+                                ["/settings/password", "パスワード設定"]
+                            ]
+                                .sort((x, y) => x[0] < y[0])
+                                .find(x => new RegExp("^" + x[0]).test(location.pathname))
+                                [1]
+                        }
+                    </ToolbarTitle>
                     <FlexibleSpace />
                     <Button
                         onClick={onSignOut}
@@ -69,8 +82,21 @@ module.exports = class extends React.Component {
                     className={classNames.Contents}
                 >
                     <NavigationDrawer
-                        visible={this.state.drawerIsVisible}
+                        className={classNames.Sidebar}
                         elevation={0}
+                        visible={
+                          (
+                              typeof window == "undefined" ? this.state.drawerIsVisible
+                            : window.innerWidth < 640      ? !this.state.drawerIsVisible
+                            :                                this.state.drawerIsVisible
+                          )
+                        }
+                        onClick={e => {
+                            if (window.innerWidth < 640)
+                                this.setState({
+                                    drawerIsVisible: true
+                                })
+                        }}
                     >
                         <List
                             location={location}

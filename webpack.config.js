@@ -1,3 +1,4 @@
+let path           = require("path")
 let {DefinePlugin} = require("webpack")
 
 module.exports = {
@@ -13,30 +14,53 @@ module.exports = {
         ]
     },
     module: {
-        loaders: [
+        rules: [
             {
-                loader: "style!css?modules&importLoaders=1",
-                test: /\.css$/
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules      : true,
+                            importLoaders: 1
+                        }
+                    },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            plugins: () => [
+                                require("autoprefixer")
+                            ]
+                        }
+                    }
+                ]
             },
             {
                 exclude: /node_modules/,
-                loader: "babel",
-                query: {
-                    plugins: [
-                        "transform-object-rest-spread"
-                    ],
-                    presets: [
-                        "latest",
-                        "react"
-                    ]
-                },
-                test: /\.jsx?$/
+                test: /\.jsx?$/,
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            plugins: [
+                                "transform-object-rest-spread"
+                            ],
+                            presets: [
+                                "latest",
+                                "react"
+                            ]
+                        }
+                    }
+                ]
             }
         ]
     },
     output: {
         filename  : "[name]",
-        path      : "build",
+        path      : path.resolve(__dirname, "build"),
         publicPath: "/"
     },
     plugins: [
@@ -50,7 +74,7 @@ module.exports = {
         })
     ],
     resolve: {
-        extensions: ["", ".css", ".js", ".jsx"],
-        modulesDirectories: ["src", "node_modules"]
+        extensions: [".css", ".js", ".jsx"],
+        modules: ["src", "node_modules"]
     }
 }

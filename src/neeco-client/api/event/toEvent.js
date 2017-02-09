@@ -1,7 +1,7 @@
 let toComment = require("neeco-client/api/event/toComment")
 let toUser    = require("neeco-client/api/user/toUser")
 
-module.exports = (x) => ({
+module.exports = x => ({
     id         : x["id"],
     title      : x["title"],
     description: x["body"],

@@ -46,10 +46,12 @@ module.exports = class extends React.Component {
                 className={[className, classNames.Host].join(" ")}
             >
                 <List>
-                    {
-                        this.state.eventsPage
-                     && this.state.eventsPage.data.map((x) => <EventListItem key={x.id} event={x} />)
-                    }
+                    {this.state.eventsPage && this.state.eventsPage.data.map(x =>
+                        <EventListItem
+                            key={x.id}
+                            event={x}
+                        />
+                    )}
                 </List>
             </section>
         )

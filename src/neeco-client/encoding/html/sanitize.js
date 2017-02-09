@@ -1,4 +1,4 @@
-module.exports = (s) => {
+module.exports = s => {
     let parser = new DOMParser()
     let document = parser.parseFromString(s, "text/html")
 

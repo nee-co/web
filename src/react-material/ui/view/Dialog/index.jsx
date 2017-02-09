@@ -1,22 +1,43 @@
-let React  = require("react")
-let Root   = require("react-material/ui/control/Root")
-let Shadow = require("react-material/ui/effect/Shadow")
+let React    = require("react")
+let ReactDOM = require("react-dom")
+let Root     = require("react-material/ui/control/Root")
+let Shadow   = require("react-material/ui/effect/Shadow")
 
 let classNames = require("react-material/ui/view/Dialog/classNames")
 
-module.exports = class extends React.Component {
+module.exports = props =>
+    <Root>
+        <Dialog
+            {...props}
+        />
+    </Root>
+
+let Dialog = class extends React.Component {
     componentWillMount() {
         this.setState({
-            onClick: (e) => {
-                if (!this.e.contains(e.target))
+            onClick: e => {
+                if (!ReactDOM.findDOMNode(this).contains(e.target))
                     this.props.onCancel && this.props.onCancel()
-            }
+            },
+            size   : undefined
         })
     }
 
     componentDidMount() {
         if (this.props.visible)
-            setTimeout(() => window.addEventListener("click", this.state.onClick, false), 1)
+            setTimeout(
+                () => window.addEventListener("click", this.state.onClick, false),
+                1
+            )
+
+        let rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
+ 
+        this.setState({
+            size: [
+                rect.width,
+                rect.height
+            ]
+        })
     }
 
     componentWillReceiveProps({
@@ -24,7 +45,10 @@ module.exports = class extends React.Component {
     }) {
         if (this.props.visible != visible) {
             if (visible)
-                setTimeout(() => window.addEventListener("click", this.state.onClick, false), 1)
+                setTimeout(
+                    () => window.addEventListener("click", this.state.onClick, false),
+                    1
+                )
             else
                 window.removeEventListener("click", this.state.onClick, false)
         }
@@ -37,6 +61,7 @@ module.exports = class extends React.Component {
 
     render() {
         let {
+            children,
             className,
             visible,
             onCancel,
@@ -44,29 +69,33 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <Root
+            <Shadow
+                children={(
+                    visible         ? children
+                  : this.state.size ? undefined
+                  :                   children
+                )}
                 className={
                     [
                         className,
                         classNames.Host,
-                        visible ? undefined
-                      :           classNames.Hidden
+                        this.state.visible ? classNames.Visible
+                      : this.state.size    ? classNames.Hidden
+                      :                      undefined
                     ].join(" ")
                 }
-                component={Shadow}
                 elevation={24}
-                onRender={(e) => {
-                    if (e) {
-                        let rect = e.getBoundingClientRect()
-
-                        e.style.left = "calc(50vw - " + rect.width  + "px / 2)"
-                        e.style.transform = (
-                            visible ? "translateY(calc(50vh - " + rect.height + "px / 2))"
-                          :           ""
-                        )
-
-                        this.e = e
-                    }
+                style={{
+                    left     : this.state.size ? "calc(50vw - " + this.state.size[0]  + "px / 2)"
+                             :                   undefined,
+                    width    : this.state.size ? this.state.size[0]
+                             :                   undefined,
+                    height   : this.state.size ? this.state.size[1]
+                             :                   undefined,                    
+                    transform: (
+                        this.state.size && visible ? "translateY(calc(50vh - " + this.state.size[1] + "px / 2))"
+                      :                              "translateY(100vh)"
+                    )
                 }}
                 {...props}
             />

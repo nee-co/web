@@ -10,8 +10,8 @@ let classNames = require("neeco-client/ui/view/file/NewFolderDialog/classNames")
 
 module.exports = ({
     className,
-    onCreate,
     onCancel,
+    onDone,
     ...props
 }) =>
     <Dialog
@@ -27,10 +27,14 @@ module.exports = ({
         <DialogBody>
             <form
                 id="new_folder_form"
-                onSubmit={async (e) => {
+                onSubmit={async e => {
                     e.preventDefault()
 
-                    onCreate(new FormData(e.target))
+                    let form = e.target
+
+                    onDone({
+                        name: form.elements["name"].value
+                    })
                 }}
             >
                 <TextField

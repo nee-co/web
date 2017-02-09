@@ -4,9 +4,11 @@ let classNames = require("neeco-client/ui/view/MaterialIcon/classNames")
 
 module.exports = ({
     className,
+    component = "span",
+    Component = component,
     ...props
 }) =>
-    <span
+    <Component
         className={[className, classNames.Host].join(" ")}
         {...props}
     />

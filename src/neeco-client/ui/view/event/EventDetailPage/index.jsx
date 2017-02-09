@@ -29,13 +29,11 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        this.componentWillReceiveProps(this.props)
-    }
+        let {
+            token,
+            params
+        } = this.props
 
-    componentWillReceiveProps({
-        token,
-        params
-    }) {
         ;(async () => {
             let event = await getEventByID({
                 apiHost: config["neeco_api_host"],
@@ -66,59 +64,64 @@ module.exports = class extends React.Component {
                     className={classNames.Header}
                 >
                     <div>
-                        {
-                            isOwner && this.state.event && this.state.event ? (
-                                <Button
-                                    onClick={async () => {
-                                        let responce = await updateEvent({
-                                            apiHost : config["neeco_api_host"],
-                                            token   : token,
-                                            event   : {
-                                                id      : this.state.event.id,
-                                                isPublic: true
-                                            }
-                                        })
+                        {isOwner && (
+                            <Button
+                                onClick={async () => {
+                                    let responce = await updateEvent({
+                                        apiHost : config["neeco_api_host"],
+                                        token   : token,
+                                        event   : {
+                                            id      : this.state.event.id,
+                                            isPublic: !this.state.event.isPublic
+                                        }
+                                    })
+                                    this.state.event.isPublic = !this.state.event.isPublic
 
-                                        this.componentWillReceiveProps(this.props)
-                                    }}
-                                    type="raised"
-                                >
-                                    公開する
-                                </Button>
-                            )
-                          : isEntried ? (
-                                <Button
-                                    onClick={async () => {
+                                    this.forceUpdate()
+                                }}
+                                type="raised"
+                            >
+                                {
+                                    this.state.event && this.state.event.isPublic ? "非公開"
+                                  :                                                 "公開"
+                                }
+                            </Button>
+                        )}
+                        {!isOwner && (
+                            <Button
+                                onClick={async () => {
+                                    if (isEntried) {
                                         let responce = await removeUserFromEvent({
                                             apiHost: config["neeco_api_host"],
                                             token  : token,
                                             event  : this.state.event
                                         })
 
-                                        this.componentWillReceiveProps(this.props)
-                                    }}
-                                    type="raised"
-                                >
-                                    キャンセル
-                                </Button>
-                            )
-                          :             (
-                                <Button
-                                    onClick={async () => {
+                                        this.state.event.entries = this.state.event.entries.filter(
+                                            x => x.id != user.id
+                                        )
+
+                                        this.forceUpdate()
+                                    } else {
                                         let responce = await addUserToEvent({
                                             apiHost: config["neeco_api_host"],
                                             token  : token,
                                             event  : this.state.event
                                         })
 
-                                        this.componentWillReceiveProps(this.props)
-                                    }}
-                                    type="raised"
-                                >
-                                    参加
-                                </Button>
-                            )
-                        }
+                                        this.state.event.entries.push(user)
+
+                                        this.forceUpdate()
+                                    }
+                                }}
+                                type="raised"
+                            >
+                                {
+                                    isEntried ? "キャンセル"
+                                  :             "参加"
+                                }
+                            </Button>
+                        )}
                     </div>
                     <TabBar
                         location={location}
@@ -153,7 +156,9 @@ module.exports = class extends React.Component {
                     <div>
                         <div className={classNames.HeaderInfo}>
                             <div>
-                                <h2>{this.state.event && this.state.event.title}</h2>
+                                <h2>
+                                    {this.state.event && this.state.event.title}
+                                </h2>
                                 {this.state.event && this.state.event.startDate}
                             </div>
                             <Image
@@ -170,7 +175,7 @@ module.exports = class extends React.Component {
                     </div>
                     <div>
                         <List>
-                            {this.state.event && this.state.event.entries.map((x) =>
+                            {this.state.event && this.state.event.entries.map(x =>
                                 <ListItem
                                     key={x.id}
                                 >
@@ -194,8 +199,8 @@ module.exports = class extends React.Component {
                                     key={i}
                                 >
                                     <ListItemAvatar
-                                        src={x.postedBy.image}
                                         alt={x.postedBy.name}
+                                        src={x.postedBy.image}
                                     />
                                     <ListItemTextArea>
                                         <p>
@@ -223,19 +228,21 @@ module.exports = class extends React.Component {
                         </List>
                         <FlexibleSpace />
                         <form
-                            onSubmit={async (e) => {
+                            onSubmit={async e => {
                                 e.preventDefault()
+
+                                let form = e.target
 
                                 let responce = await createComment({
                                     apiHost: config["neeco_api_host"],
                                     token  : token,
                                     event  : this.state.event,
                                     comment: {
-                                        body: formData.get("comment")
+                                        body: form.elements["comment"].value
                                     }
                                 })
 
-                                this.componentWillReceiveProps(this.props)
+                                this.componentDidMount()
                             }}
                         >
                             <TextField
@@ -254,4 +261,3 @@ module.exports = class extends React.Component {
         )
     }
 }
-
