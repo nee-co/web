@@ -11,7 +11,6 @@ let TextField    = require("react-material/ui/view/form/TextField")
 let classNames = require("neeco-client/ui/view/event/NewEventDialog/classNames")
 
 module.exports = ({
-    token,
     onCancel,
     onDone,
     ...props
@@ -21,7 +20,7 @@ module.exports = ({
         onCancel={onCancel}
         {...props}
     >
-        <DialogHeader>  
+        <DialogHeader>
             イベント作成
         </DialogHeader>
         <DialogBody

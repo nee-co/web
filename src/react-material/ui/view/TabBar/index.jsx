@@ -11,7 +11,7 @@ module.exports = class extends React.Component {
             width: 0
         })
     }
-    
+
     render() {
         let {
             children,
@@ -49,7 +49,7 @@ module.exports = class extends React.Component {
                 }}
             >
                 <List>
-                    {Array.from(React.Children.toArray(children).entries()).map(([i, x]) => 
+                    {Array.from(React.Children.toArray(children).entries()).map(([i, x]) =>
                         React.cloneElement(
                             x,
                             {

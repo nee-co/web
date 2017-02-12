@@ -1,3 +1,5 @@
+let apply            = require("neeco-client/apply")
+let Error            = require("neeco-client/ui/view/Error")
 let FontAwesomeIcon  = require("neeco-client/ui/view/FontAwesomeIcon")
 let Logo             = require("neeco-client/ui/view/Logo")
 let React            = require("react")
@@ -10,6 +12,7 @@ let ListItem         = require("react-material/ui/view/ListItem")
 let ListItemIcon     = require("react-material/ui/view/ListItemIcon")
 let ListItemTextArea = require("react-material/ui/view/ListItemTextArea")
 let NavigationDrawer = require("react-material/ui/view/NavigationDrawer")
+let Snackbar         = require("react-material/ui/view/Snackbar")
 let Toolbar          = require("react-material/ui/view/Toolbar")
 let ToolbarTitle     = require("react-material/ui/view/ToolbarTitle")
 
@@ -18,6 +21,7 @@ let classNames = require("neeco-client/ui/wrapper/MainLayout/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
+            errors         : [],
             drawerIsVisible: true,
             notifications  : []
         })
@@ -27,10 +31,8 @@ module.exports = class extends React.Component {
         let {
             children,
             location,
-            main,
             onSignOut,
-            title,
-            user,
+            store,
             ...props
         } = this.props
 
@@ -86,9 +88,9 @@ module.exports = class extends React.Component {
                         elevation={0}
                         visible={
                           (
-                              typeof window == "undefined" ? this.state.drawerIsVisible
-                            : window.innerWidth < 640      ? !this.state.drawerIsVisible
-                            :                                this.state.drawerIsVisible
+                              typeof(window) == "undefined" ? this.state.drawerIsVisible
+                            : window.innerWidth < 640       ? !this.state.drawerIsVisible
+                            :                                 this.state.drawerIsVisible
                           )
                         }
                         onClick={e => {
@@ -103,10 +105,10 @@ module.exports = class extends React.Component {
                         >
                             <ListItem>
                                 <ListItemIcon
-                                    src={user && user.image}
+                                    src={apply(store, "user").image}
                                 />
                                 <ListItemTextArea>
-                                    {user && user.number}
+                                    {apply(store, "user").number}
                                 </ListItemTextArea>
                             </ListItem>
                             <ListItem
@@ -177,14 +179,36 @@ module.exports = class extends React.Component {
                         </List>
                     </NavigationDrawer>
                     <main
-                        children={React.cloneElement(main || children, {
-                            location: location,
-                            user    : user,
-                            ...props
-                        })}
+                        children={React.cloneElement(
+                            children,
+                            {
+                                onError: e => this.setState({
+                                    errors: this.state.errors.concat({
+                                        error: e,
+                                        key  : Date.now()
+                                    })
+                                }),
+                                store  : store
+                            }
+                        )}
                         className={classNames.Main}
                     />
                 </div>
+                {this.state.errors.map(x =>
+                    <Snackbar
+                        key={x.key}
+                        duration={3000}
+                        onHidden={() => {
+                            this.setState({
+                                errors: this.state.errors.filter(y => y != x)
+                            })
+                        }}
+                    >
+                        <Error
+                            error={x.error}
+                        />
+                    </Snackbar>
+                )}
             </div>
         )
     }

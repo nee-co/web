@@ -1,14 +1,13 @@
 let deleteToken    = require("neeco-client/api/auth/deleteToken")
 let getUserByToken = require("neeco-client/api/user/getUserByToken")
+let apply          = require("neeco-client/apply")
 let config         = require("neeco-client/config")
 let React          = require("react")
-let {withRouter}   = require("react-router")
 
-module.exports = withRouter(class extends React.Component {
+module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            token: null,
-            user : null
+            store: undefined
         })
     }
 
@@ -18,32 +17,27 @@ module.exports = withRouter(class extends React.Component {
             router
         } = this.props
 
-        let token = sessionStorage.getItem("token")
-                 || localStorage.getItem("token")
+        let store = (
+            sessionStorage.getItem("token") ? sessionStorage
+          : localStorage.getItem("token")   ? localStorage
+          :                                   undefined
+        )
 
-        if (token) {
-            this.setState({
-                token: token
-            })
-
-            ;(async () => {
-                this.setState({
-                    user: await getUserByToken({
-                        apiHost: config["neeco_api_host"],
-                        token  : token
-                    })
-                })
-            })()
-
+        if (store) {
             if (location.pathname == "/sign_in")
                 router.push("/")
-        } else {
-            router.push({
-                pathname: "/sign_in",
-                state   : {
-                    nextLocation: location
-                }
+
+            this.setState({
+                store: store
             })
+        } else {
+            if (location.pathname != "/sign_in")
+                router.push({
+                    pathname: "/sign_in",
+                    state   : {
+                        nextLocation: location
+                    }
+                })
         }
     }
 
@@ -55,52 +49,69 @@ module.exports = withRouter(class extends React.Component {
             ...props
         } = this.props
 
-        if (this.state.token)
-            return React.cloneElement(children, {
-                token    : this.state.token,
-                user     : this.state.user,
-                onSignOut: async () => {
-                    sessionStorage.removeItem("token")
-                    localStorage.removeItem("token")
-
-                    try {
-                        await deleteToken({
-                            apiHost: config["neeco_api_host"],
-                            token  : this.state.token
-                        })
-                    } catch (e) {
-                    }
-
-                    this.setState({
-                        token: null
-                    })
-
-                    router.push({
-                        pathname: "/sign_in",
-                        state   : {
-                            nextLocation: location
+        if (this.state.store)
+            return React.cloneElement(
+                children,
+                {
+                    onSignOut: async () => {
+                        try {
+                            await deleteToken({
+                                apiHost: config["neeco_api_host"],
+                                token  : apply(this.state.store, "token")
+                            })
+                        } catch (e) {
+                            console.log(e)
                         }
-                    })
-                },
-                ...props
-            })
-        else
-            return React.cloneElement(children, {
-                onSignIn: async ({
-                    token,
-                    staySignedIn
-                }) => {
-                    sessionStorage.setItem("token", token)
 
-                    if (staySignedIn)
-                        localStorage.setItem("token", token)
+                        this.state.store.removeItem("token")
+                        this.state.store.removeItem("user")
 
-                    this.setState({
-                        token: token
-                    })
+                        this.setState({
+                            store: undefined
+                        })
 
-                    router.push(location.state.nextLocation || "/")
+                        router.push({
+                            pathname: "/sign_in",
+                            state   : {
+                                nextLocation: location
+                            }
+                        })
+                    },
+                    store: this.state.store
                 }
-            })
+            )
+        else if (location.pathname == "/sign_in")
+            return React.cloneElement(
+                children,
+                {
+                    onSignIn: async ({
+                        token,
+                        staySignedIn
+                    }) => {
+                        let store = staySignedIn ? localStorage
+                                  :                sessionStorage
+
+                        try {
+                            let user = await getUserByToken({
+                                apiHost: config["neeco_api_host"],
+                                token  : token
+                            })
+
+                            store.setItem("token", JSON.stringify(token))
+                            store.setItem("user", JSON.stringify(user))
+
+                            this.setState({
+                                store: store
+                            })
+
+                            router.push(location.state.nextLocation || "/")
+                        } catch (e) {
+                            console.log(e)
+                        }
+                    }
+                }
+            )
+        else
+            return null
     }
-})
+}

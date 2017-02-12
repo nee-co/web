@@ -1,7 +1,9 @@
 let createToken = require("neeco-client/api/auth/createToken")
 let config      = require("neeco-client/config")
+let Error       = require("neeco-client/ui/view/Error")
 let React       = require("react")
 let Button      = require("react-material/ui/view/Button")
+let Snackbar    = require("react-material/ui/view/Snackbar")
 let TextField   = require("react-material/ui/view/form/TextField")
 
 let classNames = require("neeco-client/ui/view/auth/SignInPage/classNames")
@@ -9,7 +11,7 @@ let classNames = require("neeco-client/ui/view/auth/SignInPage/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            error: null
+            errors: []
         })
     }
 
@@ -41,16 +43,14 @@ module.exports = class extends React.Component {
 
                                 onSignIn({
                                     token       : token,
-                                    staySignedIn: form.elements["staySignedIn"].value
+                                    staySignedIn: form.elements["staySignedIn"].checked
                                 })
                             } catch (e) {
-                                console.log(e)
-
-                                let error = e instanceof Response ? "学籍番号またはパスワードが間違っています"
-                                          :                         "不明なエラー"
-
                                 this.setState({
-                                    error: error
+                                    errors: this.state.errors.concat({
+                                        error: e,
+                                        key  : Date.now()
+                                    })
                                 })
                             }
                         }}
@@ -86,12 +86,22 @@ module.exports = class extends React.Component {
                             サインイン
                         </Button>
                     </form>
-                    <p
-                        className={classNames.Error}
-                    >
-                        {this.state.error}
-                    </p>
                 </div>
+                {this.state.errors.map(x =>
+                    <Snackbar
+                        key={x.key}
+                        duration={3000}
+                        onHidden={() => {
+                            this.setState({
+                                errors: this.state.errors.filter(y => y != x)
+                            })
+                        }}
+                    >
+                        <Error
+                            error={x.error}
+                        />
+                    </Snackbar>
+                )}
             </section>
         )
     }

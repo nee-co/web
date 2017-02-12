@@ -92,15 +92,13 @@ module.exports = class extends React.Component {
                     ].join(" ")
                 }
                 elevation={elevation}
-                style={Object.assign(
-                    {
-                        width : visible && this.state.size ? this.state.size[0] + "px"
-                              :                              0,
-                        height: visible && this.state.size ? this.state.size[1] + "px"
-                              :                              0,
-                    },
-                    style
-                )}
+                style={{
+                    width : visible && this.state.size ? this.state.size[0] + "px"
+                          :                              0,
+                    height: visible && this.state.size ? this.state.size[1] + "px"
+                          :                              0,
+                    ...style
+                }}
             />
         )
     }

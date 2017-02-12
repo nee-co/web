@@ -1,4 +1,5 @@
 let getEvents     = require("neeco-client/api/event/getEvents")
+let apply         = require("neeco-client/apply")
 let config        = require("neeco-client/config")
 let EventListItem = require("neeco-client/ui/view/event/EventListItem")
 let React         = require("react")
@@ -16,27 +17,32 @@ module.exports = class extends React.Component {
 
     componentDidMount() {
         let {
-            token
+            onError,
+            store
         } = this.props
 
         ;(async () => {
-            this.setState({
-                eventsPage: await getEvents({
-                    apiHost: config["neeco_api_host"],
-                    token  : token,
-                    query  : "",
-                    owned  : true,
-                    limit  : 10,
-                    offset : 0
+            try {
+                this.setState({
+                    eventsPage: await getEvents({
+                        apiHost: config["neeco_api_host"],
+                        token  : apply(store, "token"),
+                        query  : "",
+                        owned  : true,
+                        limit  : 10,
+                        offset : 0
+                    })
                 })
-            })
+            } catch (e) {
+                onError(e)
+            }
         })()
     }
 
     render() {
         let {
             className,
-            token,
+            store,
             ...props
         } = this.props
 

@@ -1,0 +1,12 @@
+.Host {
+    display : inline-block;
+    position: relative;
+}
+
+.Host.Opend {
+}
+
+.Host.Closed {
+    overflow        : hidden;
+    background-color: inherit;
+}

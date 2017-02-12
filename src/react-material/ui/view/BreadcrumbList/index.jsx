@@ -1,6 +1,7 @@
-let List       = require("react-material/ui/view/List")
+let List  = require("react-material/ui/view/List")
+let React = require("react")
+
 let classNames = require("react-material/ui/view/BreadcrumbList/classNames")
-let React      = require("react")
 
 module.exports = ({
     className,

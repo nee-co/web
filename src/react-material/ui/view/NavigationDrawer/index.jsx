@@ -43,14 +43,12 @@ module.exports = class extends React.Component {
                 }
                 component={"nav"}
                 position="right"
-                style={Object.assign(
-                    {
-                        marginLeft: visible         ? 0
-                                  : this.state.size ? "-" + this.state.size[0] + "px"
-                                  :                   undefined
-                    },
-                    style
-                )}
+                style={{
+                    marginLeft: visible         ? 0
+                              : this.state.size ? "-" + this.state.size[0] + "px"
+                              :                   undefined,
+                    ...style
+                }}
             />
         )
     }

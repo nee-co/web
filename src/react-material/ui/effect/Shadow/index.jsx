@@ -30,15 +30,11 @@ module.exports = ({
     <Component
         {...props}
         className={[className, classNames.Host].join(" ")}
-        style={
-            Object.assign(
-                {
-                    boxShadow: toBoxShadow({
-                        elevation: elevation,
-                        position : position
-                    })
-                },
-                style
-            )
-        }
+        style={{
+            boxShadow: toBoxShadow({
+                elevation: elevation,
+                position : position
+            }),
+            ...style
+        }}
     />

@@ -5,24 +5,24 @@ let classNames = require("react-material/ui/view/ViewPager/classNames")
 module.exports = ({
     children,
     className,
+    component = "div",
+    Component = component,
     selectedIndex,
     ...props
 }) =>
-    <div
+    <Component
         className={[className, classNames.Host].join(" ")}
     >
-        {Array.from(React.Children.toArray(children).entries()).map(([i, x]) => 
+        {Array.from(React.Children.toArray(children).entries()).map(([i, x]) =>
             React.cloneElement(
                 x,
                 {
-                    style: Object.assign(
-                        {
-                            left     : "calc(-100% * " + i + ")",
-                            transform: "translateX(calc(100% * " + (i - selectedIndex) + "))"
-                        },
-                        x.props.style
-                    )
+                    style: {
+                        left     : "calc(-100% * " + i + ")",
+                        transform: "translateX(calc(100% * " + (i - selectedIndex) + "))",
+                        ...x.props.style
+                    }
                 }
             )
         )}
-    </div>
+    </Component>

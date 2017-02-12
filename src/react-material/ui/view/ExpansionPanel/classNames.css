@@ -1,0 +1,25 @@
+.Host {
+
+}
+
+.Host > :nth-child(1) {
+    display   : flex;
+    min-height: 64px;
+}
+
+.Host > :nth-child(1) > :nth-child(n+2) {
+    margin-left: 16px;
+}
+
+.Host.Selected {
+    margin: 16px 0;
+}
+
+.Host.Selected > :nth-child(1) {
+    padding: 0 24px; 
+}
+
+.Host.Selected .Label {
+    display    : flex;
+    align-items: center;
+}

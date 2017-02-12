@@ -5,8 +5,8 @@ module.exports = ({
     let {
         pathname = "",
         query = {}
-    } = typeof(locationDescriptor) == "object" ? locationDescriptor
-      :                                          {pathname: locationDescriptor};
+    } = locationDescriptor instanceof Object ? locationDescriptor
+      :                                        {pathname: locationDescriptor};
 
     return (
         pathname == location.pathname

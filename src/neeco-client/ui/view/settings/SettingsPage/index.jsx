@@ -1,4 +1,5 @@
 let updateUser         = require("neeco-client/api/user/updateUser")
+let apply              = require("neeco-client/apply")
 let config             = require("neeco-client/config")
 let PasswordEditDialog = require("neeco-client/ui/view/settings/PasswordEditDialog")
 let React              = require("react")
@@ -11,15 +12,15 @@ let classNames = require("neeco-client/ui/view/settings/SettingsPage/classNames"
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            error: null,
+            error: undefined,
             passwordEditDialogIsVisible: false
         })
     }
 
     render() {
         let {
-            token,
-            user
+            onError,
+            store
         } = this.props
 
         return (
@@ -29,7 +30,7 @@ module.exports = class extends React.Component {
                 <div
                     className={classNames.UserImage}
                     style={{
-                        backgroundImage: user && "url(" + user.image + ")"
+                        backgroundImage: "url(" + apply(store, "user").image + ")"
                     }}
                 />
                 <form
@@ -42,18 +43,18 @@ module.exports = class extends React.Component {
                         disabled
                         labelText="学籍番号"
                         name="number"
-                        defaultValue={user && user.number}
+                        defaultValue={apply(store, "user").number}
                     />
                     <TextField
                         disabled
                         labelText="氏名"
                         name="name"
-                        defaultValue={user && user.name}
+                        defaultValue={apply(store, "user").name}
                     />
                     <TextField
                         labelText="自己紹介"
                         name="note"
-                        defaultValue={user && user.note}
+                        defaultValue={apply(store, "user").note}
                         multiLine
                     />
                 </form>
@@ -76,8 +77,8 @@ module.exports = class extends React.Component {
                         try {
                             await updateUser({
                                 apiHost: config["neeco_api_host"],
-                                token  : token,
-                                user   : { 
+                                token  : apply(store, "token"),
+                                user   : {
                                     password       : password,
                                     currentPassword: currentPassword
                                 }
@@ -87,7 +88,7 @@ module.exports = class extends React.Component {
                                 passwordEditDialogIsVisible: false
                             })
                         } catch(e) {
-                            console.log(e)
+                            onError(e)
                         }
                     }}
                     visible={this.state.passwordEditDialogIsVisible}

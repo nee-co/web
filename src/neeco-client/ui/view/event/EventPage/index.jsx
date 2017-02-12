@@ -1,4 +1,5 @@
 let createEvent    = require("neeco-client/api/event/createEvent")
+let apply          = require("neeco-client/apply")
 let config         = require("neeco-client/config")
 let NewEventDialog = require("neeco-client/ui/view/event/NewEventDialog")
 let EntriedEvents  = require("neeco-client/ui/view/event/EntriedEventListPage")
@@ -25,7 +26,9 @@ module.exports = class extends React.Component {
     render() {
         let {
             location,
-            token
+            onError,
+            router,
+            store
         } = this.props
 
         return (
@@ -36,7 +39,7 @@ module.exports = class extends React.Component {
                 <div
                     className={classNames.Header}
                 >
-                    <div className={classNames.Summary}>
+                    <div>
                         <Button
                             component={Link}
                             onClick={e => {
@@ -88,13 +91,15 @@ module.exports = class extends React.Component {
                     selectedIndex={location.query["tab_index"] || 0}
                 >
                     <NewEvents
-                        token={token}
+                        store={store}
+                        location={location}
+                        router={router}
                     />
                     <EntriedEvents
-                        token={token}
+                        store={store}
                     />
                     <OwnedEvents
-                        token={token}
+                        store={store}
                     />
                 </ViewPager>
                 <NewEventDialog
@@ -107,11 +112,11 @@ module.exports = class extends React.Component {
                         try {
                             await createEvent({
                                 apiHost: config["neeco_api_host"],
-                                token  : token,
+                                token  : apply(store, "token"),
                                 event  : event
                             })
                         } catch (e) {
-                            console.log(e)
+                            onError(e)
                         }
 
                         this.setState({

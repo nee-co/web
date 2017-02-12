@@ -15,12 +15,8 @@
     min-width: max-content;
 }
 
-.Summary {
-    padding: 0 16px;
-}
-
-.Summary > :nth-child(n+2) {
-    margin-top: 16px;
+.Header > :nth-child(1) {
+    padding: 8px;
 }
 
 .NewEventButton {

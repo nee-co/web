@@ -25,5 +25,8 @@ module.exports = async ({
     if (! response.ok)
         throw response
 
-    return toFile(Object.assign({type: "folder"}, await response.json()))
+    return toFile({
+        type: "folder",
+        ... await response.json()
+    })
 }

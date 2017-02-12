@@ -3,11 +3,13 @@ let createComment       = require("neeco-client/api/event/createComment")
 let getEventByID        = require("neeco-client/api/event/getEventByID")
 let removeUserFromEvent = require("neeco-client/api/event/removeUserFromEvent")
 let updateEvent         = require("neeco-client/api/event/updateEvent")
+let apply               = require("neeco-client/apply")
 let config              = require("neeco-client/config")
 let Markdown            = require("neeco-client/ui/view/Markdown")
 let React               = require("react")
 let Shadow              = require("react-material/ui/effect/Shadow")
 let Button              = require("react-material/ui/view/Button")
+let DropDownButton      = require("react-material/ui/view/DropDownButton")
 let FlexibleSpace       = require("react-material/ui/view/FlexibleSpace")
 let Image               = require("react-material/ui/view/Image")
 let List                = require("react-material/ui/view/List")
@@ -30,31 +32,37 @@ module.exports = class extends React.Component {
 
     componentDidMount() {
         let {
-            token,
-            params
+            onError,
+            params,
+            store
         } = this.props
 
         ;(async () => {
-            let event = await getEventByID({
-                apiHost: config["neeco_api_host"],
-                token  : token,
-                id     : params["event_id"]
-            })
+            try {
+                let event = await getEventByID({
+                    apiHost: config["neeco_api_host"],
+                    token  : apply(store, "token"),
+                    id     : params["event_id"]
+                })
 
-            this.setState({event: event})
+                this.setState({event: event})
+            } catch (e) {
+                onError(e)
+            }
         })()
     }
 
     render() {
         let {
             location,
+            onError,
             params,
-            token,
-            user
+            store,
         } = this.props
 
-        let isOwner   = this.state.event && this.state.event.owner.id == user.id
-        let isEntried = this.state.event && this.state.event.entries.find(x => x.id == user.id)
+        let isEntried = this.state.event && this.state.event.entries.find(x => x.id == apply(store, "user").id)
+        let isOwner   = this.state.event && this.state.event.owner.id == apply(store, "user").id
+        let isPublic  = this.state.event && this.state.event.isPublic
 
         return (
             <article
@@ -65,62 +73,80 @@ module.exports = class extends React.Component {
                 >
                     <div>
                         {isOwner && (
-                            <Button
-                                onClick={async () => {
-                                    let responce = await updateEvent({
-                                        apiHost : config["neeco_api_host"],
-                                        token   : token,
-                                        event   : {
-                                            id      : this.state.event.id,
-                                            isPublic: !this.state.event.isPublic
-                                        }
-                                    })
-                                    this.state.event.isPublic = !this.state.event.isPublic
-
-                                    this.forceUpdate()
-                                }}
-                                type="raised"
-                            >
-                                {
-                                    this.state.event && this.state.event.isPublic ? "非公開"
-                                  :                                                 "公開"
-                                }
-                            </Button>
-                        )}
-                        {!isOwner && (
-                            <Button
-                                onClick={async () => {
-                                    if (isEntried) {
-                                        let responce = await removeUserFromEvent({
-                                            apiHost: config["neeco_api_host"],
-                                            token  : token,
-                                            event  : this.state.event
+                            <DropDownButton
+                                onChange={async () => {
+                                    try {
+                                        let responce = await updateEvent({
+                                            apiHost : config["neeco_api_host"],
+                                            token   : apply(store, "token"),
+                                            event   : {
+                                                id      : this.state.event.id,
+                                                isPublic: !isPublic
+                                            }
                                         })
-
-                                        this.state.event.entries = this.state.event.entries.filter(
-                                            x => x.id != user.id
-                                        )
+                                        this.state.event.isPublic = !isPublic
 
                                         this.forceUpdate()
-                                    } else {
-                                        let responce = await addUserToEvent({
-                                            apiHost: config["neeco_api_host"],
-                                            token  : token,
-                                            event  : this.state.event
-                                        })
-
-                                        this.state.event.entries.push(user)
-
-                                        this.forceUpdate()
+                                    } catch (e) {
+                                        onError(e)
                                     }
                                 }}
-                                type="raised"
                             >
-                                {
-                                    isEntried ? "キャンセル"
-                                  :             "参加"
-                                }
-                            </Button>
+                                <ListItem
+                                    selected={isPublic}
+                                >
+                                    公開
+                                </ListItem>
+                                <ListItem
+                                    selected={!isPublic}
+                                >
+                                    非公開
+                                </ListItem>
+                            </DropDownButton>
+                        )}
+                        {!isOwner && (
+                            <DropDownButton
+                                onChange={async () => {
+                                    try {
+                                        if (isEntried) {
+                                            let responce = await addUserToEvent({
+                                                apiHost: config["neeco_api_host"],
+                                                token  : apply(store, "token"),
+                                                event  : this.state.event
+                                            })
+
+                                            this.state.event.entries = this.state.event.entries.filter(
+                                                x => x.id != apply(store, "user").id
+                                            )
+
+                                            this.forceUpdate()
+                                        } else {
+                                            let responce = await removeUserFromEvent({
+                                                apiHost: config["neeco_api_host"],
+                                                token  : apply(store, "token"),
+                                                event  : this.state.event
+                                            })
+
+                                            this.state.event.entries.push(apply(store, "user"))
+
+                                            this.forceUpdate()
+                                        }
+                                    } catch (e) {
+                                        onError(e)
+                                    }
+                                }}
+                            >
+                                <ListItem
+                                    selected={isEntried}
+                                >
+                                    参加
+                                </ListItem>
+                                <ListItem
+                                    selected={!isEntried}
+                                >
+                                    参加キャンセル
+                                </ListItem>
+                            </DropDownButton>
                         )}
                     </div>
                     <TabBar
@@ -233,16 +259,20 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                let responce = await createComment({
-                                    apiHost: config["neeco_api_host"],
-                                    token  : token,
-                                    event  : this.state.event,
-                                    comment: {
-                                        body: form.elements["comment"].value
-                                    }
-                                })
+                                try {
+                                    let responce = await createComment({
+                                        apiHost: config["neeco_api_host"],
+                                        token  : apply(store, "token"),
+                                        event  : this.state.event,
+                                        comment: {
+                                            body: form.elements["comment"].value
+                                        }
+                                    })
 
-                                this.componentDidMount()
+                                    this.componentDidMount()
+                                } catch (e) {
+                                    onError(e)
+                                }
                             }}
                         >
                             <TextField

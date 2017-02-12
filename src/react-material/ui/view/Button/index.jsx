@@ -1,6 +1,7 @@
-let Ripple     = require("react-material/ui/effect/Ripple")
+let React  = require("react")
+let Ripple = require("react-material/ui/effect/Ripple")
+
 let classNames = require("react-material/ui/view/Button/classNames")
-let React      = require("react")
 
 let types = {
     fab: {
@@ -18,6 +19,7 @@ module.exports = ({
     className,
     component = "span",
     dense,
+    disabled,
     type = "flat",
     ...props
 }) =>
@@ -27,11 +29,14 @@ module.exports = ({
             [
                 className,
                 classNames.Host,
+                disabled ? classNames.Disabled
+              :            undefined,
                 dense ? classNames.Dense
               :         "",
                 types[type].className
             ].join(" ")
         }
         component={component}
+        disabled={disabled}
         fixed={type == "fab"}
     />

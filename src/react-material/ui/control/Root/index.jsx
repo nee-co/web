@@ -1,5 +1,6 @@
-let React    = require("react")
-let {render} = require("react-dom")
+let React                    = require("react")
+let {render}                 = require("react-dom")
+let {unmountComponentAtNode} = require("react-dom")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -18,6 +19,8 @@ module.exports = class extends React.Component {
     }
 
     componentWillUnmount() {
+        unmountComponentAtNode(this.state.element)
+
         document.body.removeChild(this.state.element)
     }
 
@@ -29,14 +32,12 @@ module.exports = class extends React.Component {
         } = this.props
 
         this.state.element && setTimeout(
-            () => {
-                render(
-                    <Component
-                        {...props}
-                    />,
-                    this.state.element
-                )
-            },
+            () => render(
+                <Component
+                    {...props}
+                />,
+                this.state.element
+            ),
             0
         )
 

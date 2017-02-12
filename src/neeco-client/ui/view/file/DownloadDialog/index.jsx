@@ -1,4 +1,5 @@
 let getFolders   = require("neeco-client/api/file/getFolders")
+let apply        = require("neeco-client/apply")
 let config       = require("neeco-client/config")
 let FileList     = require("neeco-client/ui/view/file/FileList")
 let FileListItem = require("neeco-client/ui/view/file/FileListItem")
@@ -28,24 +29,28 @@ module.exports = class extends React.Component {
     }
 
     componentWillReceiveProps({
-        token
+        onError,
+        store
     }) {
         ;(async () => {
-            let files = await getFolders({
-                apiHost: config["neeco_api_host"],
-                token  : token
-            })
+            try {
+                let files = await getFolders({
+                    apiHost: config["neeco_api_host"],
+                    token  : apply(store, "token")
+                })
 
-            this.setState({
-                files: files.sort(this.state.compareFunction)
-            })
+                this.setState({
+                    files: files.sort(this.state.compareFunction)
+                })
+            } catch (e) {
+                onError(e)
+            }
         })()
     }
 
     render() {
         let {
-            token,
-            user
+            store
         } = this.props
 
         return (
@@ -68,7 +73,7 @@ module.exports = class extends React.Component {
                            </FileList>
                         )
                     }
-                </div>                
+                </div>
             </section>
         )
     }

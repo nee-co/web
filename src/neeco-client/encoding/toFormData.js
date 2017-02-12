@@ -3,7 +3,7 @@ module.exports = a => {
 
     for (let i in a)
     if (
-        Array.isArray(a[i])
+        a[i] instanceof Array
      || a[i] instanceof FileList
     ) {
         for (let x of a[i])

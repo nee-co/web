@@ -20,12 +20,10 @@ module.exports = async ({
 
     let x = await response.json()
 
-    return toFile(Object.assign(
-        {
-            "type"    : "folder",
-            "elements": x["elements"],
-            "parents" : x["parents"].slice(0, -1)
-        },
-        x["current_folder"]
-    ))
+    return toFile({
+        "type"    : "folder",
+        "elements": x["elements"],
+        "parents" : x["parents"].slice(0, -1),
+        ...x["current_folder"]
+    })
 }
