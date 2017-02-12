@@ -19,11 +19,4 @@
 .Host li > :nth-child(1) > :nth-child(1) {
     font-size  : 20px;
     font-weight: normal;
-    color      :rgba(0, 0, 0, .54);
-}
-
-.Host li > :nth-child(1) > :nth-child(1) {
-    font-size  : 20px;
-    font-weight: normal;
-    color      :rgba(0, 0, 0, .54);
 }

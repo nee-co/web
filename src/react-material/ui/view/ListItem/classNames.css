@@ -19,6 +19,6 @@
 }
 
 .Host.Selected > .Link {
-    background-color: rgba(0, 0, 0, .05);
-    cursor          : default;
+    color : #09F;
+    cursor: default;
 }

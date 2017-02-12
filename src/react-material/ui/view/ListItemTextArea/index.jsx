@@ -6,6 +6,7 @@ module.exports = ({
     className,
     component = "div",
     Component = component,
+    selected,
     ...props
 }) =>
     <Component

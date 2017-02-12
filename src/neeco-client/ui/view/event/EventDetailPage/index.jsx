@@ -39,13 +39,13 @@ module.exports = class extends React.Component {
 
         ;(async () => {
             try {
-                let event = await getEventByID({
-                    apiHost: config["neeco_api_host"],
-                    token  : apply(store, "token"),
-                    id     : params["event_id"]
+                this.setState({
+                    event: await getEventByID({
+                        apiHost: config["neeco_api_host"],
+                        token  : apply(store, "token"),
+                        id     : params["event_id"]
+                    })
                 })
-
-                this.setState({event: event})
             } catch (e) {
                 onError(e)
             }
@@ -60,7 +60,7 @@ module.exports = class extends React.Component {
             store,
         } = this.props
 
-        let isEntried = this.state.event && this.state.event.entries.find(x => x.id == apply(store, "user").id)
+        let isEntried = this.state.event && this.state.event.entries.some(x => x.id == apply(store, "user").id)
         let isOwner   = this.state.event && this.state.event.owner.id == apply(store, "user").id
         let isPublic  = this.state.event && this.state.event.isPublic
 
@@ -109,7 +109,7 @@ module.exports = class extends React.Component {
                                 onChange={async () => {
                                     try {
                                         if (isEntried) {
-                                            let responce = await addUserToEvent({
+                                            let responce = await removeUserFromEvent({
                                                 apiHost: config["neeco_api_host"],
                                                 token  : apply(store, "token"),
                                                 event  : this.state.event
@@ -118,19 +118,17 @@ module.exports = class extends React.Component {
                                             this.state.event.entries = this.state.event.entries.filter(
                                                 x => x.id != apply(store, "user").id
                                             )
-
-                                            this.forceUpdate()
                                         } else {
-                                            let responce = await removeUserFromEvent({
+                                            let responce = await addUserToEvent({
                                                 apiHost: config["neeco_api_host"],
                                                 token  : apply(store, "token"),
                                                 event  : this.state.event
                                             })
 
                                             this.state.event.entries.push(apply(store, "user"))
-
-                                            this.forceUpdate()
                                         }
+
+                                        this.forceUpdate()
                                     } catch (e) {
                                         onError(e)
                                     }
@@ -144,7 +142,7 @@ module.exports = class extends React.Component {
                                 <ListItem
                                     selected={!isEntried}
                                 >
-                                    参加キャンセル
+                                    未参加
                                 </ListItem>
                             </DropDownButton>
                         )}

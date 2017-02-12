@@ -12,7 +12,7 @@ module.exports = ({
     onListItemClick,
     to,
     selected = location && match({
-        location: location,
+        location          : location,
         locationDescriptor: to
     }),
     ...props
@@ -29,7 +29,18 @@ module.exports = ({
         }
     >
         <Ripple
-            children={children}
+            children={
+                React.Children.toArray(children).map(x => 
+                    typeof(x) == "string" ? x
+                  : typeof(x) == "number" ? x
+                  :                         React.cloneElement(
+                        x,
+                        {
+                            selected: selected,
+                        }
+                    )
+                )
+            }
             className={classNames.Link}
             component={Link}
             onClick={onListItemClick}

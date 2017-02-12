@@ -16,52 +16,37 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.visible) {
-            let rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
+        let {
+            visible
+        } = this.props
 
-            this.setState({
-                size: [
-                    rect.width,
-                    rect.height
-                ]
-            })
-
+        if (visible)
             setTimeout(
                 () => window.addEventListener("click", this.state.onClick, false),
                 1
             )
-        }
+
+        let rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
+
+        this.setState({
+            size: [
+                rect.width,
+                rect.height
+            ]
+        })
     }
 
     componentWillReceiveProps({
         visible
     }) {
         if (visible != this.props.visible) {
-            if (visible) {
-                let element = ReactDOM.findDOMNode(this)
-                element.style.width = "auto"
-                element.style.height = "auto"
-
-                let rect = element.getBoundingClientRect()
-
-                element.style.width = 0
-                element.style.height = 0
-                element.getBoundingClientRect()
-
-                this.setState({
-                    size: [
-                        rect.width,
-                        rect.height
-                    ]
-                })
-
+            if (visible)
                 setTimeout(
                     () => window.addEventListener("click", this.state.onClick, false),
                     1
                 )
-            } else {
+            else
                 window.removeEventListener("click", this.state.onClick, false)
-            }
         }
     }
 
@@ -87,16 +72,19 @@ module.exports = class extends React.Component {
                     [
                         className,
                         classNames.Host,
-                        visible ? classNames.Visible
-                      :           classNames.Hidden
+                        visible         ? classNames.Visible
+                      : this.state.size ? classNames.Hidden
+                      :                   undefined
                     ].join(" ")
                 }
                 elevation={elevation}
                 style={{
-                    width : visible && this.state.size ? this.state.size[0] + "px"
-                          :                              0,
-                    height: visible && this.state.size ? this.state.size[1] + "px"
-                          :                              0,
+                    width : !this.state.size ? undefined
+                          : visible          ? this.state.size[0] + "px"
+                          :                    undefined,
+                    height: !this.state.size ? undefined
+                          : visible          ? this.state.size[1] + "px"
+                          :                    undefined,
                     ...style
                 }}
             />

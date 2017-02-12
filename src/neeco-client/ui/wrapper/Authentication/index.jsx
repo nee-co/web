@@ -18,9 +18,9 @@ module.exports = class extends React.Component {
         } = this.props
 
         let store = (
-            sessionStorage.getItem("token") ? sessionStorage
-          : localStorage.getItem("token")   ? localStorage
-          :                                   undefined
+            apply(sessionStorage, "token") ? sessionStorage
+          : apply(localStorage, "token")   ? localStorage
+          :                                  undefined
         )
 
         if (store) {

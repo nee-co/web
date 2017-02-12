@@ -24,7 +24,11 @@ let Dialog = class extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.visible)
+        let {
+            visible
+        } = this.props
+
+        if (visible)
             setTimeout(
                 () => window.addEventListener("click", this.state.onClick, false),
                 1
@@ -64,6 +68,7 @@ let Dialog = class extends React.Component {
             children,
             className,
             onCancel,
+            style,
             visible,
             ...props
         } = this.props
@@ -88,14 +93,19 @@ let Dialog = class extends React.Component {
                 style={{
                     left     : this.state.size ? "calc(50vw - " + this.state.size[0]  + "px / 2)"
                              :                   undefined,
-                    minWidth : this.state.size ? this.state.size[0] + "px"
+                    width    : this.state.size ? this.state.size[0] + "px"
                              :                   undefined,
-                    minHeight: this.state.size ? this.state.size[1] + "px"
+                    height   : this.state.size ? this.state.size[1] + "px"
                              :                   undefined,
                     transform: (
-                        this.state.size && visible ? "translateY(calc(50vh - " + this.state.size[1] + "px / 2))"
+                        this.state.size && visible ? (
+                            "translateY("
+                          + (window.innerHeight / 2 - this.state.size[1] / 2)
+                          + "px)"
+                        )
                       :                              "translateY(100vh)"
-                    )
+                    ),
+                    ...style
                 }}
                 {...props}
             />

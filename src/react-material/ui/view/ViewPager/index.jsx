@@ -18,8 +18,8 @@ module.exports = ({
                 x,
                 {
                     style: {
-                        left     : "calc(-100% * " + i + ")",
-                        transform: "translateX(calc(100% * " + (i - selectedIndex) + "))",
+                        left     : -100 * i + "%",
+                        transform: "translateX(" + 100 * (i - selectedIndex) + "%)",
                         ...x.props.style
                     }
                 }

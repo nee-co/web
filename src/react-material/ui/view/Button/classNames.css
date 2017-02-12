@@ -34,12 +34,17 @@
     color           : #09F;
 }
 
-.Host.Flat.Disabled {
-    color: rgba(0, 0, 0, .26);
+.Host.Flat:hover {
+    background-color: rgba(153, 153, 153, .4);
 }
 
 .Host.Flat:active {
-    background-color: rgba(153, 153, 153, .4)
+    background-color: rgba(153, 153, 153, .4);
+}
+
+.Host.Flat.Disabled {
+    background-color: transparent;
+    color           : rgba(0, 0, 0, .26);
 }
 
 .Host.Raised {

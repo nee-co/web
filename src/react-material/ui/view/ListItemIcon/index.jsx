@@ -7,9 +7,17 @@ module.exports = ({
     className,
     component = Image,
     Component = component,
+    selected,
     ...props
 }) =>
     <Component
         {...props}
-        className={[className, classNames.Host].join(" ")}
+        className={
+            [
+                className,
+                classNames.Host,
+                selected ? classNames.Selected
+              :            undefined
+            ].join(" ")
+        }
     />

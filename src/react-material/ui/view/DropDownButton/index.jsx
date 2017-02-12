@@ -6,7 +6,7 @@ let classNames = require("react-material/ui/view/DropDownButton/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         let {
-            children,
+            children
         } = this.props
 
         this.setState({
@@ -15,11 +15,9 @@ module.exports = class extends React.Component {
         })
     }
 
-    componentWillReceiveProps() {
-        let {
-            children,
-        } = this.props
-
+    componentWillReceiveProps({
+        children
+    }) {
         this.setState({
             selectedIndex: React.Children.toArray(children).findIndex(x => x.props.selected)
         })
@@ -35,6 +33,7 @@ module.exports = class extends React.Component {
 
         return (
             <div
+                {...props}
                 className={
                     [
                         className,
@@ -44,18 +43,36 @@ module.exports = class extends React.Component {
                     ].join(" ")
                 }
             >
-                {
-                    React.Children.toArray(children)[this.state.selectedIndex].props.children
-                }
+                <div
+                    onClick={(e) => {
+                        this.setState({
+                            opened: true
+                        })
+                    }}
+                >
+                    {React.Children.toArray(children)[this.state.selectedIndex].props.children}
+                </div>
                 <Menu
-                    {...props}
+                    onCancel={() => {
+                        this.setState({
+                            opened: false
+                        })
+                    }}
+                    visible={this.state.opened}
                 >
                     {React.Children.toArray(children).map(x =>
                         React.cloneElement(
                             x,
                             {
                                 onClick: (e) => {
-                                    onChange && onChange()
+                                    x.props.onClick && x.props.onClick()
+
+                                    this.setState({
+                                        opened: false
+                                    })
+
+                                    if (!x.props.selected)
+                                        onChange && onChange()
                                 }
                             }
                         )
