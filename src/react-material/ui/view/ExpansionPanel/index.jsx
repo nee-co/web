@@ -42,7 +42,8 @@ module.exports = class extends React.Component {
                     [
                         className,
                         classNames.Host,
-                        selected ? classNames.Selected
+                        disabled ? undefined
+                      : selected ? classNames.Selected
                       :            undefined
                     ].join(" ")
                 }
