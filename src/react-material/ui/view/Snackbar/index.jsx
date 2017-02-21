@@ -37,7 +37,6 @@ let Snackbar = class extends React.Component {
 
         return (
             <Component
-                {...props}
                 className={
                     [
                         className,
@@ -64,6 +63,7 @@ let Snackbar = class extends React.Component {
                     else
                         onHidden && onHidden()
                 }}
+                {...props}
             >
                 {children}
             </Component>

@@ -4,12 +4,11 @@ let React      = require("react")
 
 module.exports = ({
     className,
-    component = "div",
     ...props
 }) =>
     <Shadow
-        {...props}
         className={[className, classNames.Host].join(" ")}
-        component={component}
-        elevation={2}
+        component="div"
+        elevation="2"
+        {...props}
     />

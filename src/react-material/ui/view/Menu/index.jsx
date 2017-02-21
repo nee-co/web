@@ -9,7 +9,7 @@ module.exports = ({
     ...props
 }) =>
     <Popup
-        {...props}
         className={[className, classNames.Host].join(" ")}
         component={List}
+        {...props}
     />

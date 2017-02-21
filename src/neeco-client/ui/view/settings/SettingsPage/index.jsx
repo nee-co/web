@@ -1,19 +1,48 @@
 let updateUser         = require("neeco-client/api/user/updateUser")
 let apply              = require("neeco-client/apply")
 let config             = require("neeco-client/config")
-let PasswordEditDialog = require("neeco-client/ui/view/settings/PasswordEditDialog")
 let React              = require("react")
 let Button             = require("react-material/ui/view/Button")
+let ExpansionPanel     = require("react-material/ui/view/ExpansionPanel")
+let ExpansionPanelList = require("react-material/ui/view/ExpansionPanelList")
+let LinearLayout       = require("react-material/ui/view/LinearLayout")
+let FlexibleSpace      = require("react-material/ui/view/FlexibleSpace")
 let TextField          = require("react-material/ui/view/form/TextField")
 let {Link}             = require("react-router")
 
 let classNames = require("neeco-client/ui/view/settings/SettingsPage/classNames")
 
+let onInput = e => {
+    let form = e.target.form
+
+    let password = form.elements["password"].value
+    let confirmPasswordInput = form.elements["confirm_password"]
+
+    if (confirmPasswordInput.value == password)
+        confirmPasswordInput.setCustomValidity("")
+    else
+        confirmPasswordInput.setCustomValidity("再入力されたパスワードが一致しません。")
+}
+
+let Buttons = x =>
+    <LinearLayout
+        orientation="horizontal"
+        {...x}
+    >
+        <FlexibleSpace />
+        <Button>
+            キャンセル
+        </Button>
+        <Button
+            component="button"
+        >
+            完了
+        </Button>
+    </LinearLayout>
+
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            error: undefined,
-            passwordEditDialogIsVisible: false
         })
     }
 
@@ -27,72 +56,101 @@ module.exports = class extends React.Component {
             <section
                 className={classNames.Host}
             >
-                <div
-                    className={classNames.UserImage}
-                    style={{
-                        backgroundImage: "url(" + apply(store, "user").image + ")"
-                    }}
-                />
-                <form
-                    onSubmit={e => {
-                        e.preventDefault()
-
-                    }}
-                >
-                    <TextField
+                <ExpansionPanelList>
+                    <ExpansionPanel
                         disabled
                         labelText="学籍番号"
-                        name="number"
                         defaultValue={apply(store, "user").number}
                     />
-                    <TextField
+                    <ExpansionPanel
                         disabled
                         labelText="氏名"
-                        name="name"
                         defaultValue={apply(store, "user").name}
                     />
-                    <TextField
+                    <ExpansionPanel
+                        labelText="画像"
+                    >
+                        <div
+                            className={classNames.UserImage}
+                            style={{
+                                backgroundImage: "url(" + apply(store, "user").image + ")"
+                            }}
+                        />
+                        <Buttons />
+                    </ExpansionPanel>
+                    <ExpansionPanel
                         labelText="自己紹介"
-                        name="note"
                         defaultValue={apply(store, "user").note}
-                        multiLine
-                    />
-                </form>
-                <Button
-                    onClick={e => {
-                        this.setState({
-                            passwordEditDialogIsVisible: true
-                        })
-                    }}
-                >
-                    パスワードの変更
-                </Button>
-                <PasswordEditDialog
-                    onCancel={() => {
-                        this.setState({
-                            passwordEditDialogIsVisible: false
-                        })
-                    }}
-                    onDone={async ({password, currentPassword}) => {
-                        try {
-                            await updateUser({
-                                apiHost: config["neeco_api_host"],
-                                token  : apply(store, "token"),
-                                user   : {
-                                    password       : password,
-                                    currentPassword: currentPassword
-                                }
-                            })
+                    >
+                        <form
+                            onSubmit={e => {
+                                e.preventDefault()
 
-                            this.setState({
-                                passwordEditDialogIsVisible: false
-                            })
-                        } catch(e) {
-                            onError(e)
-                        }
-                    }}
-                    visible={this.state.passwordEditDialogIsVisible}
-                />
+                                updateUser({
+
+                                    token: token
+                                })
+                            }}
+                        >
+                            <textarea
+                                name="note"
+                                cols="30"
+                                rows="10"
+                            />
+                        </form>
+                        <Buttons />
+                    </ExpansionPanel>
+                    <ExpansionPanel
+                        labelText="パスワード"
+                    >
+                        <form
+                            onSubmit={async (e) => {
+                                e.preventDefault()
+
+                                let form = e.target
+
+                                try {
+                                    await updateUser({
+                                        apiHost: config["neeco_api_host"],
+                                        token  : apply(store, "token"),
+                                        user   : {
+                                            password       : form.elements["password"].value,
+                                            currentPassword: form.elements["current_password"].value
+                                        }
+                                    })
+
+                                    this.setState({
+                                        passwordEditDialogIsVisible: false
+                                    })
+                                } catch(e) {
+                                    onError(e)
+                                }
+                            }}
+                        >
+                            <TextField
+                                labelText={"現在のパスワード"}
+                                name="current_password"
+                                required
+                                type="password"
+                            />
+                            <TextField
+                                labelText={"新しいパスワード"}
+                                name="password"
+                                onInput={onInput}
+                                required
+                                type="password"
+                            />
+                            <TextField
+                                labelText={"パスワードの再入力"}
+                                name="confirm_password"
+                                onInput={onInput}
+                                required
+                                type="password"
+                            />
+                            <Buttons />
+                        </form>
+                    </ExpansionPanel>
+                </ExpansionPanelList>
             </section>
         )
     }

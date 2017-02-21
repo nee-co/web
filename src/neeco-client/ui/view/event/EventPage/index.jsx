@@ -91,14 +91,17 @@ module.exports = class extends React.Component {
                     selectedIndex={location.query["tab_index"] || 0}
                 >
                     <NewEvents
-                        store={store}
                         location={location}
+                        onError={onError}
                         router={router}
+                        store={store}
                     />
                     <EntriedEvents
+                        onError={onError}
                         store={store}
                     />
                     <OwnedEvents
+                        onError={onError}
                         store={store}
                     />
                 </ViewPager>

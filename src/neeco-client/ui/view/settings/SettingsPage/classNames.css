@@ -1,5 +1,6 @@
 .Host {
-    padding: 16px;
+    padding         : 16px;
+    background-color: #EEE;
 }
 
 .UserImage {

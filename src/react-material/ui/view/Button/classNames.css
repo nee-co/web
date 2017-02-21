@@ -35,7 +35,7 @@
 }
 
 .Host.Flat:hover {
-    background-color: rgba(153, 153, 153, .4);
+    background-color: rgba(0, 0, 0, .05);
 }
 
 .Host.Flat:active {

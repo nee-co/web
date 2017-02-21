@@ -1,40 +1,82 @@
-let React = require("react")
+let React        = require("react")
+let ReactDOM     = require("react-dom")
+let Shadow       = require("react-material/ui/effect/Shadow")
+let MaterialIcon = require("react-material/ui/view/MaterialIcon")
 
-let classNames = require("react-material/ui/view/Divider/classNames")
+let classNames = require("react-material/ui/view/ExpansionPanel/classNames")
 
 module.exports = class extends React.Component {
+    componentWillMount() {
+        this.setState({
+            selectedIndex: undefined,
+            contentSize  : undefined
+        })
+    }
+
+    componentDidMount() {
+        let rect = ReactDOM.findDOMNode(this).children[1].getBoundingClientRect()
+
+        this.setState({
+            contentSize: [
+                rect.width,
+                rect.height
+            ]
+        })
+    }
+
     render() {
         let {
+            children,
             className,
+            defaultValue,
+            disabled,
             labelText,
             selected,
             ...props
         } = this.props
 
         return (
-            <li
+            <Shadow
                 {...props}
                 className={
                     [
                         className,
                         classNames.Host,
-                        selected ? classNames.Selected
+                        disabled ? undefined
+                      : selected ? classNames.Selected
                       :            undefined
                     ].join(" ")
                 }
+                component="li"
+                elevation="2"
             >
                 <div>
-                    <div className={classNames.Label}>
+                    <div>
                         {labelText}
                     </div>
                     <div>
-                        
+                        {defaultValue}
                     </div>
-                    <div>
-                        
-                    </div>
+                    <MaterialIcon>
+                        {disabled || (
+                            selected ? "arrow_drop_up"
+                          :            "arrow_drop_down"
+                        )}
+                    </MaterialIcon>
                 </div>
-            </li>
+                <div
+                    children={(
+                        selected               ? children
+                      : this.state.contentSize ? undefined
+                      :                          children
+                    )}
+                    style={{
+                        height: !this.state.contentSize ? undefined
+                              : selected                ? this.state.contentSize[1] + "px"
+                              :                           "0",
+                    }}
+                />
+            </Shadow>
         )
     }
 }

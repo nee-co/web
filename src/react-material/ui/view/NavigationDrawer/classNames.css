@@ -2,11 +2,20 @@
     overflow        : auto;
     max-width       : 280px;
     min-width       : max-content;
-    border-right    : 1px solid #DDD;
     background-color: #FFF;
     font-family     : "Roboto", sans-serif;
     font-weight     : bolder;
     transition      : all .3s ease-out;
+}
+
+.Host.Floating {
+    position: fixed;
+    top     : 0;
+    height  : 100%;
+}
+
+.Host:not(.Floating) {
+    border-right: 1px solid #DDD;    
 }
 
 .Host li {

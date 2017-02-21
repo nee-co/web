@@ -22,19 +22,20 @@ module.exports = ({
     className,
     component = "div",
     Component = component,
-    elevation = 2,
+    elevation = "2",
     position = "bottom",
     style,
     ...props
 }) =>
     <Component
-        {...props}
         className={[className, classNames.Host].join(" ")}
         style={{
             boxShadow: toBoxShadow({
                 elevation: elevation,
                 position : position
             }),
+            zIndex: elevation,
             ...style
         }}
+        {...props}
     />

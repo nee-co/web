@@ -59,7 +59,6 @@ module.exports = class extends React.Component {
                     />
                 </label>
                 <input
-                    {...props}
                     accept="image/*"
                     className={classNames.Input}
                     id={id || name}
@@ -92,6 +91,7 @@ module.exports = class extends React.Component {
                         })
                     }}
                     type="file"
+                    {...props}
                 />
             </div>
         )

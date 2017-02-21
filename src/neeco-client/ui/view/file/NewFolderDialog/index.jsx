@@ -17,7 +17,17 @@ module.exports = ({
     <Dialog
         {...props}
         className={[className, classNames.Host].join(" ")}
+        component="form"
         onCancel={onCancel}
+        onSubmit={async e => {
+            e.preventDefault()
+
+            let form = e.target
+
+            onDone({
+                name: form.elements["name"].value
+            })
+        }}
     >
         <DialogHeader>
             <h4>
@@ -25,24 +35,11 @@ module.exports = ({
             </h4>
         </DialogHeader>
         <DialogBody>
-            <form
-                id="new_folder_form"
-                onSubmit={async e => {
-                    e.preventDefault()
-
-                    let form = e.target
-
-                    onDone({
-                        name: form.elements["name"].value
-                    })
-                }}
-            >
-                <TextField
-                    labelText={"フォルダ名"}
-                    name="name"
-                    required
-                />
-            </form>
+            <TextField
+                labelText={"フォルダ名"}
+                name="name"
+                required
+            />
         </DialogBody>
         <DialogFooter>
             <Button
@@ -52,7 +49,6 @@ module.exports = ({
             </Button>
             <Button
                 component="button"
-                form="new_folder_form"
             >
                 作成
             </Button>

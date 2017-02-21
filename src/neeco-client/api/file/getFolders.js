@@ -1,4 +1,4 @@
-let toFile = require("neeco-client/api/file/toFile")
+let toFileList = require("neeco-client/api/file/toFileList")
 
 module.exports = async ({
     apiHost,
@@ -19,7 +19,5 @@ module.exports = async ({
     if (! response.ok)
         throw response
 
-    let {folders} = await response.json()
-
-    return folders.map(toFile)
+    return toFileList(await response.json())
 }

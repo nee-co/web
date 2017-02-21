@@ -71,7 +71,6 @@ module.exports = class extends React.Component {
                     </span>
                 </label>
                 <Component
-                    {...props}
                     className={[className, classNames.InputText].join(" ")}
                     id={id}
                     name={name}
@@ -100,6 +99,7 @@ module.exports = class extends React.Component {
                     }}
                     value={value}
                     defaultValue={defaultValue}
+                    {...props}
                 />
                 <span
                     className={classNames.HelperText}

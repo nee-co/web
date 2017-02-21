@@ -18,7 +18,6 @@ module.exports = ({
     ...props
 }) =>
     <li
-        {...props}
         className={
             [
                 className,
@@ -27,6 +26,7 @@ module.exports = ({
               :            undefined
             ].join(" ")
         }
+        {...props}
     >
         <Ripple
             children={

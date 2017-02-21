@@ -8,15 +8,6 @@
     max-height    : 100%;
 }
 
-.Host > :nth-child(1) {
-    z-index  : 1;
-    min-width: max-content;
-}
-
-.Host > :nth-child(2) {
-    z-index: 0;
-}
-
 .Toggle {
     display      : inline-block;
     overflow     : hidden;
@@ -46,25 +37,7 @@
     flex-grow: 1;
 }
 
-.Contents > :nth-child(1) {
-    z-index: 1;
-}
-
-.Contents > :nth-child(2) {
-    z-index: 0;
-}
-
-.Sidebar {
-}
-
 .Main {
     flex-grow: 1;
     overflow : auto;
-}
-
-@media (max-width: 600px) {
-    .Sidebar {
-        position: absolute;
-        height  : 100%;
-    }
 }

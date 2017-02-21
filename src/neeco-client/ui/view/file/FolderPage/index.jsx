@@ -17,7 +17,6 @@ let compare = (x, y) =>
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            error              : null,
             files              : [],
             newButtonIsSelected: false,
             selectedIDs        : [],

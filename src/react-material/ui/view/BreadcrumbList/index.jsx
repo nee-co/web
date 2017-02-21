@@ -8,9 +8,10 @@ module.exports = ({
     ...props
 }) =>
     <List
-        {...props}
         className={[className, classNames.Host].join(" ")}
         component="ol"
         itemScope
         itemType="http://schema.org/BreadcrumbList"
+        orientation="horizontal"
+        {...props}
     />
