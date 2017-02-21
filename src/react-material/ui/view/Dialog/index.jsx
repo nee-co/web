@@ -14,10 +14,14 @@ module.exports = props =>
 
 let Dialog = class extends React.Component {
     componentWillMount() {
+        let {
+            onCancel
+        } = this.props
+
         this.setState({
             onClick: e => {
                 if (!ReactDOM.findDOMNode(this).contains(e.target))
-                    this.props.onCancel && this.props.onCancel()
+                    onCancel && onCancel()
             },
             size   : undefined
         })
@@ -89,7 +93,7 @@ let Dialog = class extends React.Component {
                       :                      undefined
                     ].join(" ")
                 }
-                elevation={24}
+                elevation="24"
                 style={{
                     left     : this.state.size ? "calc(50vw - " + this.state.size[0]  + "px / 2)"
                              :                   undefined,

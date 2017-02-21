@@ -1,5 +1,4 @@
 .Host {
-    display        : flex;
-    justify-content: flex-end;
     padding        : 8px;
+    justify-content: flex-end;
 }

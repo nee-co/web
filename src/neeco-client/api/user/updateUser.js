@@ -1,3 +1,4 @@
+let toUser     = require("neeco-client/api/user/toUser")
 let toFormData = require("neeco-client/encoding/toFormData")
 let toURIQuery = require("neeco-client/encoding/toURIQuery")
 
@@ -7,9 +8,9 @@ module.exports = async ({
     user,
 }) => {
     let baseURl = user.id === undefined ? apiHost + "/user"
-                :                         apiHost + "/users/" + id
+                :                         apiHost + "/users/" + user.id
 
-    if (password !== undefined) {
+    if (user.password !== undefined) {
         let response = await fetch(
             baseURl + "/password",
             {
@@ -29,16 +30,16 @@ module.exports = async ({
             throw response
     }
 
-    if (image !== undefined) {
+    if (user.image !== undefined) {
         let response = await fetch(
             baseURl + "/image",
             {
-                method : "PATCH",
+                method : "POST",
                 headers: {
                     "Authorization": "Bearer " + token
                 },
                 body   : toFormData({
-                    "image": image
+                    "image": user.image
                 })
             }
         )
@@ -47,7 +48,7 @@ module.exports = async ({
             throw response
     }
 
-    if (note !== undefined) {
+    if (user.note !== undefined) {
         let response = await fetch(
             baseURl + "/note",
             {
@@ -56,7 +57,7 @@ module.exports = async ({
                     "Authorization": "Bearer " + token
                 },
                 body   : toFormData({
-                    "note": note
+                    "note": user.note
                 })
             }
         )
@@ -65,5 +66,14 @@ module.exports = async ({
             throw response
     }
 
-    return
+    let response = await fetch(
+        baseURl,
+        {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        }
+    )
+
+    return toUser(await response.json())
 }

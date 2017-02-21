@@ -9,7 +9,7 @@ module.exports = ({
     ...props
 }) =>
     <Card
-        {...props}
         className={[className, classNames.Host].join(" ")}
         component={Link}
+        {...props}
     />

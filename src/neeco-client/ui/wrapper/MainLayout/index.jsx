@@ -32,6 +32,7 @@ module.exports = class extends React.Component {
             children,
             location,
             onSignOut,
+            onUpdateUser,
             store,
             ...props
         } = this.props
@@ -84,8 +85,13 @@ module.exports = class extends React.Component {
                     className={classNames.Contents}
                 >
                     <NavigationDrawer
-                        className={classNames.Sidebar}
-                        elevation={0}
+                        elevation={
+                          (
+                              typeof(window) == "undefined" ? 0
+                            : window.innerWidth < 640       ? undefined
+                            :                                 0
+                          )
+                        }
                         visible={
                           (
                               typeof(window) == "undefined" ? this.state.drawerIsVisible
@@ -93,10 +99,13 @@ module.exports = class extends React.Component {
                             :                                 this.state.drawerIsVisible
                           )
                         }
+                        onCancel={() => this.setState({
+                            drawerIsVisible: !this.state.drawerIsVisible
+                        })}
                         onClick={e => {
                             if (window.innerWidth < 640)
                                 this.setState({
-                                    drawerIsVisible: true
+                                    drawerIsVisible: !this.state.drawerIsVisible
                                 })
                         }}
                     >
@@ -182,13 +191,18 @@ module.exports = class extends React.Component {
                         children={React.cloneElement(
                             children,
                             {
-                                onError: e => this.setState({
-                                    errors: this.state.errors.concat({
-                                        error: e,
-                                        key  : Date.now()
+                                onError     : e => {
+                                    console.log(e)
+
+                                    this.setState({
+                                        errors: this.state.errors.concat({
+                                            error: e,
+                                            key  : Date.now()
+                                        })
                                     })
-                                }),
-                                store  : store
+                                },
+                                onUpdateUser: onUpdateUser,
+                                store       : store
                             }
                         )}
                         className={classNames.Main}

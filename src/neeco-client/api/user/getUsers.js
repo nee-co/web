@@ -1,4 +1,4 @@
-let toUser = require("neeco-client/api/user/toUser")
+let toUserList = require("neeco-client/api/user/toUserList")
 
 module.exports = async ({
     apiHost,
@@ -25,7 +25,5 @@ module.exports = async ({
     if (! response.ok)
         throw response
 
-    let {users} = await response.json()
-
-    return users.map(toUser)
+    return toUserList(await response.json())
 }

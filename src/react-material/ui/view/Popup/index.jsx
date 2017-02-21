@@ -6,10 +6,14 @@ let classNames = require("react-material/ui/view/Popup/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
+        let {
+            onCancel
+        } = this.props
+
         this.setState({
             onClick: e => {
                 if (!ReactDOM.findDOMNode(this).contains(e.target))
-                    this.props.onCancel && this.props.onCancel()
+                    onCancel && onCancel()
             },
             size: undefined
         })
@@ -37,6 +41,7 @@ module.exports = class extends React.Component {
     }
 
     componentWillReceiveProps({
+        children,
         visible
     }) {
         if (visible != this.props.visible) {
@@ -58,7 +63,6 @@ module.exports = class extends React.Component {
     render() {
         let {
             className,
-            elevation = 8,
             onCancel,
             style,
             visible,
@@ -67,7 +71,6 @@ module.exports = class extends React.Component {
 
         return (
             <Shadow
-                {...props}
                 className={
                     [
                         className,
@@ -77,7 +80,7 @@ module.exports = class extends React.Component {
                       :                   undefined
                     ].join(" ")
                 }
-                elevation={elevation}
+                elevation="8"
                 style={{
                     width : !this.state.size ? undefined
                           : visible          ? this.state.size[0] + "px"
@@ -87,6 +90,7 @@ module.exports = class extends React.Component {
                           :                    undefined,
                     ...style
                 }}
+                {...props}
             />
         )
     }

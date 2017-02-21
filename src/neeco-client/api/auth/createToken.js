@@ -6,8 +6,8 @@ module.exports = async ({
     userName,
     password,
 }) => {
-    let response = await fetch(
-        token ? new Request(
+    let response = await (
+        token ? fetch(
             apiHost + "/token/refresh",
             {
                 method : "GET",
@@ -16,7 +16,7 @@ module.exports = async ({
                 }
             }
         )
-      :         new Request(
+      :         fetch(
             apiHost + "/token",
             {
                 method: "POST",

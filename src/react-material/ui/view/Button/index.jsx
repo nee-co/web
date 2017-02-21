@@ -17,14 +17,12 @@ let types = {
 
 module.exports = ({
     className,
-    component = "span",
     dense,
     disabled,
     type = "flat",
     ...props
 }) =>
     <Ripple
-        {...props}
         className={
             [
                 className,
@@ -36,7 +34,8 @@ module.exports = ({
                 types[type].className
             ].join(" ")
         }
-        component={component}
+        component="span"
         disabled={disabled}
         fixed={type == "fab"}
+        {...props}
     />

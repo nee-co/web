@@ -77,6 +77,11 @@ module.exports = class extends React.Component {
                             }
                         })
                     },
+                    onUpdateUser: ({user}) => {
+                        this.state.store.setItem("user", JSON.stringify(user))
+
+                        this.forceUpdate()
+                    },
                     store: this.state.store
                 }
             )

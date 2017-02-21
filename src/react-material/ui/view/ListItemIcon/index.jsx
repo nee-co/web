@@ -11,7 +11,6 @@ module.exports = ({
     ...props
 }) =>
     <Component
-        {...props}
         className={
             [
                 className,
@@ -20,4 +19,5 @@ module.exports = ({
               :            undefined
             ].join(" ")
         }
+        {...props}
     />

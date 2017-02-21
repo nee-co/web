@@ -1,5 +1,5 @@
-let toEventsPage = require("neeco-client/api/event/toEventsPage")
-let toURIQuery   = require("neeco-client/encoding/toURIQuery")
+let toEventList = require("neeco-client/api/event/toEventList")
+let toURIQuery  = require("neeco-client/encoding/toURIQuery")
 
 module.exports = async ({
     apiHost,
@@ -35,7 +35,5 @@ module.exports = async ({
     if (! response.ok)
         throw response
 
-    let data = await response.json()
-
-    return toEventsPage(data)
+    return toEventList(await response.json())
 }

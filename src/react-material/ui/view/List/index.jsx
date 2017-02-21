@@ -1,13 +1,12 @@
-let React   = require("react")
-let Divider = require("react-material/ui/view/Divider")
+let React        = require("react")
+let Divider      = require("react-material/ui/view/Divider")
+let LinearLayout = require("react-material/ui/view/LinearLayout")
 
 let classNames = require("react-material/ui/view/List/classNames")
 
 module.exports = ({
     children,
     className,
-    component = "ul",
-    Component = component,
     location,
     ...props
 }) => {
@@ -32,10 +31,11 @@ module.exports = ({
         })
 
     return (
-        <Component
-            {...props}
+        <LinearLayout
             children={listItems}
             className={[className, classNames.Host].join(" ")}
+            component="ul"
+            {...props}
         />
     )
 }

@@ -29,7 +29,6 @@ module.exports = class extends React.Component {
 
         return (
             <div
-                {...props}
                 className={[className, classNames.Host].join(" ")}
                 ref={x => {
                     if (x && selectedIndex >= 0) {
@@ -47,8 +46,11 @@ module.exports = class extends React.Component {
                         }
                     }
                 }}
+                {...props}
             >
-                <List>
+                <List
+                    orientation="horizontal"
+                >
                     {Array.from(React.Children.toArray(children).entries()).map(([i, x]) =>
                         React.cloneElement(
                             x,
@@ -61,8 +63,7 @@ module.exports = class extends React.Component {
                 <div
                     className={classNames.Indicator}
                     style={{
-                        left : this.state.left  + "px",
-                        width: this.state.width + "px"
+                        transform: "translateX(" + this.state.left + "px) scaleX(" + this.state.width + ")"
                     }}
                 />
             </div>

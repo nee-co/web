@@ -11,6 +11,6 @@ module.exports = ({
     ...props
 }) =>
     <Component
-        {...props}
         className={[className, classNames.Host].join(" ")}
+        {...props}
     />

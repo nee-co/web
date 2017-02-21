@@ -1,13 +1,6 @@
 .Host {
-    padding: 16px;
-}
-
-.UserImage {
-    display            : block;
-    width              : 128px;
-    height             : 128px;
-    border-radius      : 50%;
-    background-position: center;
-    background-size    : 100% auto;
-    background-repeat  : no-repeat;
+    box-sizing      : border-box;
+    height          : 100%;
+    padding         : 16px;
+    background-color: #EEE;
 }

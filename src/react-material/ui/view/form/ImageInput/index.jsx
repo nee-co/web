@@ -4,9 +4,13 @@ let classNames = require("react-material/ui/view/form/ImageInput/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
+        let {
+            defaultImageURL
+        } = this.props
+
         this.setState({
             focused : false,
-            imageURL: undefined,
+            imageURL: defaultImageURL,
             invalid : false
         })
     }
@@ -14,6 +18,7 @@ module.exports = class extends React.Component {
     render() {
         let {
             className,
+            defaultImageURL,
             disabled,
             hintText,
             labelText,
@@ -45,7 +50,7 @@ module.exports = class extends React.Component {
             >
                 <label
                     className={classNames.Label}
-                    htmlFor={id || name}
+                    htmlFor={id}
                 >
                     <span
                         className={classNames.LabelText}
@@ -59,10 +64,9 @@ module.exports = class extends React.Component {
                     />
                 </label>
                 <input
-                    {...props}
                     accept="image/*"
                     className={classNames.Input}
-                    id={id || name}
+                    id={id}
                     name={name}
                     onChange={e => {
                         onChange && onChange(e)
@@ -92,6 +96,7 @@ module.exports = class extends React.Component {
                         })
                     }}
                     type="file"
+                    {...props}
                 />
             </div>
         )

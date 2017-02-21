@@ -22,7 +22,6 @@ module.exports = class extends React.Component {
 
         return (
             <Component
-                {...props}
                 className={[className, classNames.Host].join(" ")}
                 onClick={e => {
                     onClick && onClick(e)
@@ -59,6 +58,7 @@ module.exports = class extends React.Component {
                         })
                     }
                 }}
+                {...props}
             >
                 {children}
                 {this.state.ripples.map(({id, position, opacity, radius}) =>

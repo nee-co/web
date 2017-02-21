@@ -17,30 +17,28 @@ module.exports = ({
 }) =>
     <Dialog
         className={classNames.Host}
+        component="form"
         onCancel={onCancel}
+        onSubmit={e => {
+            e.preventDefault()
+
+            let form = e.target
+
+            onDone({
+                event: {
+                    title      : form.elements["title"].value,
+                    startDate  : form.elements["startDate"].value,
+                    description: "test",
+                    image      : form.elements["image"].files
+                }
+            })
+        }}
         {...props}
     >
         <DialogHeader>
             イベント作成
         </DialogHeader>
-        <DialogBody
-            id="new_event_form"
-            component="form"
-            onSubmit={e => {
-                e.preventDefault()
-
-                let form = e.target
-
-                onDone({
-                    event: {
-                        title      : form.elements["title"].value,
-                        startDate  : form.elements["startDate"].value,
-                        description: "test",
-                        image      : form.elements["image"].files
-                    }
-                })
-            }}
-        >
+        <DialogBody>
             <TextField
                 labelText={"タイトル"}
                 name="title"
@@ -51,9 +49,7 @@ module.exports = ({
                 name="startDate"
                 required
                 type="date"
-                defaultValue={
-                    new Date().toISOString().slice(0, 10)
-                }
+                defaultValue={new Date().toISOString().slice(0, 10)}
             />
             <ImageInput
                 labelText={"イベント画像"}
@@ -63,14 +59,11 @@ module.exports = ({
         <DialogFooter>
             <Button
                 onClick={onCancel}
-                type="flat"
             >
                 キャンセル
             </Button>
             <Button
                 component="button"
-                form="new_event_form"
-                type="flat"
             >
                 作成
             </Button>

@@ -14,7 +14,7 @@ let classNames = require("neeco-client/ui/view/event/EventListPage/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            eventsPage: undefined
+            events: undefined
         })
     }
 
@@ -28,7 +28,7 @@ module.exports = class extends React.Component {
         ;(async () => {
             try {
                 this.setState({
-                    eventsPage: await getEvents({
+                    events: await getEvents({
                         apiHost: config["neeco_api_host"],
                         token  : apply(store, "token"),
                         query  : location.query["q"] || "",
@@ -51,7 +51,7 @@ module.exports = class extends React.Component {
             ;(async () => {
                 try {
                     this.setState({
-                        eventsPage: await getEvents({
+                        events: await getEvents({
                             apiHost: config["neeco_api_host"],
                             token  : apply(store, "token"),
                             query  : location.query["q"] || "",
@@ -102,10 +102,7 @@ module.exports = class extends React.Component {
                     />
                 </form>
                 <EventCardList
-                    events={
-                        this.state.eventsPage ? this.state.eventsPage.data
-                      :                         []
-                    }
+                    events={this.state.events || []}
                 />
             </section>
         )

@@ -8,7 +8,8 @@
 }
 
 .Host > :nth-child(1) {
-    z-index: 1;
+    position: relative;
+    z-index : 1;
 }
 
 .Host > :nth-child(2) {

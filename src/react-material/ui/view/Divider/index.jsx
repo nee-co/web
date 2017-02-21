@@ -7,6 +7,6 @@ module.exports = ({
     ...props
 }) =>
     <div
-        {...props}
         className={[className, classNames.Host].join(" ")}
+        {...props}
     />
