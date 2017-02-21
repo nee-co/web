@@ -6,14 +6,14 @@ let classNames = require("react-material/ui/view/NavigationDrawer/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
-        let {
-            elevation,
-            onCancel
-        } = this.props
-
         this.setState({
             onClick: e => {
-                if (elevation > 0 && !ReactDOM.findDOMNode(this).contains(e.target))
+                let {
+                    elevation = "16",
+                    onCancel
+                } = this.props
+
+                if (parseInt(elevation) > 0 && !ReactDOM.findDOMNode(this).contains(e.target))
                     onCancel && onCancel()
             },
             size   : undefined
@@ -87,7 +87,7 @@ module.exports = class extends React.Component {
                 position="right"
                 style={{
                     marginLeft: visible         ? 0
-                              : this.state.size ? "-" + (this.state.size[0] + 16) + "px"
+                              : this.state.size ? -(this.state.size[0] + parseInt(elevation)) + "px"
                               :                   undefined,
                     ...style
                 }}

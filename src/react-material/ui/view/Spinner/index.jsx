@@ -1,20 +1,17 @@
 let React    = require("react")
-let ListItem = require("react-material/ui/view/ListItem")
 
-let classNames = require("react-material/ui/view/Tab/classNames")
+let classNames = require("react-material/ui/view/Spinner/classNames")
 
 module.exports = ({
     className,
-    selected,
+    on,
     ...props
 }) =>
-    <ListItem
+    <div
         className={
             [
                 className,
                 classNames.Host,
-                selected ? classNames.Selected
-            :            undefined
             ].join(" ")
         }
         {...props}

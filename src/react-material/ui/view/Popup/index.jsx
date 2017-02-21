@@ -6,12 +6,12 @@ let classNames = require("react-material/ui/view/Popup/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
-        let {
-            onCancel
-        } = this.props
-
         this.setState({
             onClick: e => {
+                let {
+                    onCancel
+                } = this.props
+
                 if (!ReactDOM.findDOMNode(this).contains(e.target))
                     onCancel && onCancel()
             },

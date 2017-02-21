@@ -108,7 +108,9 @@ module.exports = class extends React.Component {
                     <div>
                         <List>
                             {this.state.groups && this.state.groups.map(x => 
-                                <ListItem>
+                                <ListItem
+                                    key={x.id}
+                                >
                                     {x.name}
                                 </ListItem>
                             )}

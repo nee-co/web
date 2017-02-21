@@ -14,32 +14,9 @@ let classNames = require("neeco-client/ui/view/event/EventListPage/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            events: undefined
+            events    : [],
+            pageNumber: 1
         })
-    }
-
-    componentDidMount() {
-        let {
-            location,
-            onError,
-            store
-        } = this.props
-
-        ;(async () => {
-            try {
-                this.setState({
-                    events: await getEvents({
-                        apiHost: config["neeco_api_host"],
-                        token  : apply(store, "token"),
-                        query  : location.query["q"] || "",
-                        page   : 1,
-                        perPage: 10
-                    })
-                })
-            } catch (e) {
-                onError(e)
-            }
-        })()
     }
 
     componentWillReceiveProps({
@@ -51,13 +28,14 @@ module.exports = class extends React.Component {
             ;(async () => {
                 try {
                     this.setState({
-                        events: await getEvents({
+                        events    : await getEvents({
                             apiHost: config["neeco_api_host"],
                             token  : apply(store, "token"),
                             query  : location.query["q"] || "",
                             page   : 1,
                             perPage: 10
-                        })
+                        }),
+                        pageNumber: 1
                     })
                 } catch (e) {
                     onError(e)
@@ -70,6 +48,7 @@ module.exports = class extends React.Component {
         let {
             className,
             location,
+            onError,
             router,
             store,
             ...props
@@ -104,6 +83,31 @@ module.exports = class extends React.Component {
                 <EventCardList
                     events={this.state.events || []}
                 />
+                <div
+                    className={classNames.Spinner}
+                    onAnimationStart={async e => {
+                        try {
+                            let events = await getEvents({
+                                apiHost: config["neeco_api_host"],
+                                token  : apply(store, "token"),
+                                query  : location.query["q"] || "",
+                                page   : 1,
+                                perPage: 10
+                            })
+
+                            this.setState({
+                                events: Object.assign(
+                                    this.state.events.concat(events),
+                                    events
+                                )
+                            })
+                        } catch (e) {
+                            onError(e)
+                        }
+                    }}
+                >
+                    Loading ...
+                </div>
             </section>
         )
     }

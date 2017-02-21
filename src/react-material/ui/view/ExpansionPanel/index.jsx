@@ -31,6 +31,7 @@ module.exports = class extends React.Component {
             disabled,
             hintText,
             labelText,
+            location,
             selected,
             value,
             ...props

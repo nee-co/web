@@ -18,3 +18,17 @@
 .SearchButton {
     position: absolute;
 }
+
+@keyframes spinner {
+    0% {
+        background-color: #FFF;
+    }
+
+    100% {
+        background-color: #EEE;
+    }
+}
+
+.Spinner {
+    animation: spinner .3s ease-out;
+}

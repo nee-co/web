@@ -14,12 +14,12 @@ module.exports = props =>
 
 let Dialog = class extends React.Component {
     componentWillMount() {
-        let {
-            onCancel
-        } = this.props
-
         this.setState({
             onClick: e => {
+                let {
+                    onCancel
+                } = this.props
+
                 if (!ReactDOM.findDOMNode(this).contains(e.target))
                     onCancel && onCancel()
             },
