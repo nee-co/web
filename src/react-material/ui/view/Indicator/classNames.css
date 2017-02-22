@@ -1,0 +1,17 @@
+@keyframes circle {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+.Host {
+    color: #09F;
+}
+
+.Host.Loading.Circle {
+    animation: circle 1s ease-out infinite;
+}

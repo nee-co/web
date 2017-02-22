@@ -3,18 +3,6 @@ let Ripple = require("react-material/ui/effect/Ripple")
 
 let classNames = require("react-material/ui/view/Button/classNames")
 
-let types = {
-    fab: {
-        className: classNames.FAB
-    },
-    flat : {
-        className: classNames.Flat
-    },
-    raised: {
-        className: classNames.Raised
-    }
-}
-
 module.exports = ({
     className,
     dense,
@@ -31,7 +19,10 @@ module.exports = ({
               :            undefined,
                 dense ? classNames.Dense
               :         "",
-                types[type].className
+                type == "fab"    ? classNames.FAB
+              : type == "flat"   ? classNames.Flat
+              : type == "raised" ? classNames.Raised
+              :                    undefined
             ].join(" ")
         }
         component="span"

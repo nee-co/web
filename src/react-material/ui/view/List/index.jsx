@@ -33,7 +33,12 @@ module.exports = ({
     return (
         <LinearLayout
             children={listItems}
-            className={[className, classNames.Host].join(" ")}
+            className={
+                [
+                    className,
+                    classNames.Host
+                ].join(" ")
+            }
             component="ul"
             {...props}
         />

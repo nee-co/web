@@ -1,6 +1,7 @@
 .Host {
     display       : flex;
     flex-direction: inherit;
+    min-height    : 48px;
 }
 
 .Link {

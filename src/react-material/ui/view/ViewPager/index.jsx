@@ -19,7 +19,7 @@ module.exports = ({
                 {
                     style: {
                         left     : -100 * i + "%",
-                        transform: "translate(" + 100 * (i - selectedIndex) + "%, 0)",
+                        transform: "translate3d(" + 100 * (i - selectedIndex) + "%, 0, 0)" ,
                         ...x.props.style
                     }
                 }
