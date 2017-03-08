@@ -200,18 +200,9 @@ module.exports = class extends React.Component {
                     <Markdown
                         srcDoc={this.state.group && this.state.group.note}
                     />
-                    <List>
-                        {this.state.members && this.state.members.map(
-                            x =>
-                                <UserListItem
-                                    key={x.id}
-                                    user={x}
-                                />
-                        )}
-                    </List>
-                    {this.state.invitees && (
+                    <div>
                         <List>
-                            {this.state.invitees && this.state.invitees.map(
+                            {this.state.members && this.state.members.map(
                                 x =>
                                     <UserListItem
                                         key={x.id}
@@ -219,6 +210,19 @@ module.exports = class extends React.Component {
                                     />
                             )}
                         </List>
+                    </div>
+                    {this.state.invitees && (
+                        <div>
+                            <List>
+                                {this.state.invitees && this.state.invitees.map(
+                                    x =>
+                                        <UserListItem
+                                            key={x.id}
+                                            user={x}
+                                        />
+                                )}
+                            </List>
+                        </div>
                     )}
                     {this.state.invitees && (
                         <GroupSettingsPage

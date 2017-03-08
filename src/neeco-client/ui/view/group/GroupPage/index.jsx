@@ -179,24 +179,28 @@ module.exports = class extends React.Component {
                             })
                         }}
                     />
-                    <GroupList>
-                        {this.state.joinedGroups && this.state.joinedGroups.map(
-                            x =>
-                                <GroupListItem
-                                    key={x.id}
-                                    group={x}
-                                />
-                        )}
-                    </GroupList>
-                    <GroupList>
-                        {this.state.invitedGroups && this.state.invitedGroups.map(
-                            x =>
-                                <GroupListItem
-                                    key={x.id}
-                                    group={x}
-                                />
-                        )}
-                    </GroupList>
+                    <div>
+                        <GroupList>
+                            {this.state.joinedGroups && this.state.joinedGroups.map(
+                                x =>
+                                    <GroupListItem
+                                        key={x.id}
+                                        group={x}
+                                    />
+                            )}
+                        </GroupList>
+                    </div>
+                    <div>
+                        <GroupList>
+                            {this.state.invitedGroups && this.state.invitedGroups.map(
+                                x =>
+                                    <GroupListItem
+                                        key={x.id}
+                                        group={x}
+                                    />
+                            )}
+                        </GroupList>
+                    </div>
                 </ViewPager>
                 <NewGroupDialog
                     onCancel={e => {
