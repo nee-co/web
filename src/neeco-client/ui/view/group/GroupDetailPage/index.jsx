@@ -1,16 +1,21 @@
-let GetGroupByID      = require("neeco-client/api/request/GetGroupByID")
-let UpdateGroup       = require("neeco-client/api/request/UpdateGroup")
-let ListGroupInvitees = require("neeco-client/api/request/ListGroupInvitees")
-let ListGroupMembers  = require("neeco-client/api/request/ListGroupMembers")
-let GroupSettingsPage = require("neeco-client/ui/view/group/GroupSettingsPage")
-let UserListItem      = require("neeco-client/ui/view/user/UserListItem")
-let React             = require("react")
-let Image             = require("react-material/ui/view/Image")
-let LinearLayout      = require("react-material/ui/view/LinearLayout")
-let List              = require("react-material/ui/view/List")
-let Tab               = require("react-material/ui/view/Tab")
-let TabBar            = require("react-material/ui/view/TabBar")
-let ViewPager         = require("react-material/ui/view/ViewPager")
+let AddUserToGroup      = require("neeco-client/api/request/AddUserToGroup")
+let GetGroupByID        = require("neeco-client/api/request/GetGroupByID")
+let ListGroupInvitees   = require("neeco-client/api/request/ListGroupInvitees")
+let ListGroupMembers    = require("neeco-client/api/request/ListGroupMembers")
+let RemoveUserFromGroup = require("neeco-client/api/request/RemoveUserFromGroup")
+let UpdateGroup         = require("neeco-client/api/request/UpdateGroup")
+let Markdown            = require("neeco-client/ui/view/Markdown")
+let GroupSettingsPage   = require("neeco-client/ui/view/group/GroupSettingsPage")
+let UserListItem        = require("neeco-client/ui/view/user/UserListItem")
+let React               = require("react")
+let Image               = require("react-material/ui/view/Image")
+let LinearLayout        = require("react-material/ui/view/LinearLayout")
+let List                = require("react-material/ui/view/List")
+let ListItem            = require("react-material/ui/view/ListItem")
+let Tab                 = require("react-material/ui/view/Tab")
+let TabBar              = require("react-material/ui/view/TabBar")
+let ViewPager           = require("react-material/ui/view/ViewPager")
+let DropdownButton      = require("react-material/ui/view/form/DropdownButton")
 
 let classNames = require("neeco-client/ui/view/group/GroupDetailPage/classNames")
 
@@ -113,6 +118,43 @@ module.exports = class extends React.Component {
                             <h2>
                                 {this.state.group && this.state.group.name}
                             </h2>
+                            <DropdownButton
+                                value={
+                                    this.state.invitees == undefined ? "未参加"
+                                  :                                    "参加"
+                                }
+                            >
+                                <ListItem
+                                    onClick={async _ => {
+                                        let x = await client(AddUserToGroup({
+                                            group: {
+                                                id: params["group_id"]
+                                            }
+                                        }))
+
+                                        this.componentDidMount()
+                                    }}
+                                >
+                                    参加
+                                </ListItem>
+                                <ListItem
+                                    onClick={async _ => {
+                                        let x = await client(RemoveUserFromGroup({
+                                            group: {
+                                                id: params["group_id"]
+                                            }
+                                        }))
+
+                                        this.setState({
+                                            invitees: undefined
+                                        })
+
+                                        this.componentDidMount()
+                                    }}
+                                >
+                                    未参加
+                                </ListItem>
+                            </DropdownButton>
                         </div>
                     </LinearLayout>
                     <TabBar
@@ -155,9 +197,9 @@ module.exports = class extends React.Component {
                             .findIndex(x => x == location.pathname)
                     }
                 >
-                    <div>
-                        {}
-                    </div>
+                    <Markdown
+                        srcDoc={this.state.group && this.state.group.note}
+                    />
                     <List>
                         {this.state.members && this.state.members.map(
                             x =>
