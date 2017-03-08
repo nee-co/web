@@ -25,10 +25,10 @@ module.exports = ({
             let form = e.target
 
             onDone({
-                name       : form.elements["name"].value,
-                description: form.elements["description"].value,
-                image      : form.elements["image"].files,
-                isPrivate  : form.elements["is_private"].checked
+                name    : form.elements["name"].value,
+                note    : form.elements["note"].value,
+                image   : form.elements["image"].files,
+                isPublic: form.elements["is_public"].checked
             })
         }}
         {...props}
@@ -47,15 +47,14 @@ module.exports = ({
                 name="image"
             />
             <TextField
-                labelText={"備考"}
+                labelText={"ノート"}
                 multiLine
-                name="description"
+                name="note"
                 required
             />
             <Toggle
-                defaultChecked
-                labelText={"非公開"}
-                name="is_private"
+                labelText={"公開"}
+                name="is_public"
             />
         </DialogBody>
         <DialogFooter>

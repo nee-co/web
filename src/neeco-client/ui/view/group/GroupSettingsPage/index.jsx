@@ -68,6 +68,36 @@ module.exports = class extends React.Component {
                     }
                 >
                     <ExpansionPanel
+                        labelText="公開設定"
+                        value={
+                            group && group.isPublic ? "公開"
+                          :                           "非公開"
+                        }
+                    >
+                        <form
+                            onSubmit={e => {
+                                e.preventDefault()
+
+                                let form = e.target
+
+                                onGroupUpdate({
+                                    id      : group.id,
+                                    isPublic: form.elements["is_public"].checked
+                                })
+
+                                this.setState({
+                                    selectedIndex: undefined
+                                })
+                            }}
+                        >
+                            <TextField
+                                defaultValue={group && group.name}
+                                name="name"
+                            />
+                            <Buttons />
+                        </form>
+                    </ExpansionPanel>
+                    <ExpansionPanel
                         labelText="グループ名"
                         value={group && group.name}
                     >

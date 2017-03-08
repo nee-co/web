@@ -118,7 +118,7 @@ module.exports = class extends React.Component {
                         <Tab
                             to={"/events/" + params["event_id"]}
                         >
-                            概要
+                            内容
                         </Tab>
                         <Tab
                             to={"/events/" + params["event_id"] + "/entries"}

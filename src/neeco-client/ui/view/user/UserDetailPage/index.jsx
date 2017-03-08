@@ -1,4 +1,5 @@
 let GetUserByNumber = require("neeco-client/api/request/GetUserByNumber")
+let colorOfCollege  = require("neeco-client/graphics/colorOfCollege")
 let Image           = require("react-material/ui/view/Image")
 let React           = require("react")
 
@@ -47,6 +48,14 @@ module.exports = class extends React.Component {
                         height="64"
                     />
                     <h2>{this.state.user && this.state.user.name}</h2>
+                    <p
+                        className={classNames.Number}
+                        style={{
+                            color: this.state.user && colorOfCollege(this.state.user.college)
+                        }}
+                    >
+                        {this.state.user && this.state.user.college.name}
+                    </p>
                     <p>{this.state.user && this.state.user.number}</p>
                 </div>
             </section>

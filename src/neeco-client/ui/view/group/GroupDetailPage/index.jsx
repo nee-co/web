@@ -26,18 +26,19 @@ module.exports = class extends React.Component {
     componentDidMount() {
         let {
             client,
+            configuration,
             onError,
             params
         } = this.props
 
         let listInvitees = async offset => {
-            let users = await client(ListGroupInvitees({
+            let users = await ListGroupInvitees({
                 group: {
                     id    : params["group_id"],
                     limit : 10,
                     offset: offset
                 }
-            }))
+            })(configuration)
 
             return (
                 users.length < 10 ? users
@@ -77,7 +78,7 @@ module.exports = class extends React.Component {
                     invitees: await listInvitees(0)
                 })
             } catch (e) {
-                if (e instanceof Response && e.status.status == 403)
+                if (e instanceof Response && e.status == 403)
                     return
                 else
                     onError(e)

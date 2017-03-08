@@ -14,7 +14,7 @@ module.exports = self => Object.assign(
                     "name"      : self.group.name,
                     "image"     : self.group.image,
                     "note"      : self.group.note,
-                    "is_private": self.group.isPrivate
+                    "is_private": !self.group.isPublic
                 })
             }
         )

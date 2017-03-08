@@ -50,13 +50,23 @@ module.exports = class extends React.Component {
                     () => window.addEventListener("click", this.state.onClick, false),
                     1
                 )
-            else
+            else {
+                let rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
+
+                this.setState({
+                    size: [
+                        rect.width,
+                        rect.height
+                    ]
+                })
+
                 window.removeEventListener("click", this.state.onClick, false)
+            }
         }
     }
 
     componentWillUnmount() {
-        if (this.props.visible)
+        if (this.props.visible)z
             window.removeEventListener("click", this.state.onClick, false)
     }
 

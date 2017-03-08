@@ -72,15 +72,15 @@ module.exports = class extends React.Component {
                     }
                 >
                     <ExpansionPanel
-                        labelText="状態"
+                        labelText="公開設定"
                         value={
-                            event.isPublic ? "公開中"
+                            event.isPublic ? "公開"
                           :                  "非公開"
                         }
                     >
                         <form>
                             <DropdownButton
-                                name="public"
+                                name="is_public"
                                 onChange={async _ => {
                                     await client(UpdateEvent({
                                         event: {
