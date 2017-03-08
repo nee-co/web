@@ -65,11 +65,11 @@ module.exports = props =>
                 />
                 <Route
                     component={EventDetailPage}
-                    path="/events/:event_id/edit"
+                    path="/events/:event_id/entries"
                 />
                 <Route
                     component={EventDetailPage}
-                    path="/events/:event_id/entries"
+                    path="/events/:event_id/settings"
                 />
                 <Route
                     component={FolderPage}
@@ -86,6 +86,18 @@ module.exports = props =>
                 <Route
                     component={GroupDetailPage}
                     path="/groups/:group_id"
+                />
+                <Route
+                    component={GroupDetailPage}
+                    path="/groups/:group_id/invitees"
+                />
+                <Route
+                    component={GroupDetailPage}
+                    path="/groups/:group_id/members"
+                />
+                <Route
+                    component={GroupDetailPage}
+                    path="/groups/:group_id/settings"
                 />
                 <Route
                     component={SettingsPage}

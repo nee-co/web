@@ -3,5 +3,5 @@ module.exports = x => ({
     name    : x["name"] || x["title"],
     note    : x["note"],
     image   : x["image"],
-    isPublic: x["isPrivate"]
+    isPublic: !x["is_private"]
 })

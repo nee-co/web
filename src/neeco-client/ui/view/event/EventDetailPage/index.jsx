@@ -132,7 +132,7 @@ module.exports = class extends React.Component {
                         </Tab>
                         {isOwner &&
                             <Tab
-                                to={"/events/" + params["event_id"] + "/edit"}
+                                to={"/events/" + params["event_id"] + "/settings"}
                             >
                                 設定
                             </Tab>
@@ -145,7 +145,7 @@ module.exports = class extends React.Component {
                             "/events/" + params["event_id"],
                             "/events/" + params["event_id"] + "/entries",
                             "/events/" + params["event_id"] + "/comments",
-                            "/events/" + params["event_id"] + "/edit"
+                            "/events/" + params["event_id"] + "/settings"
                         ]
                             .findIndex(x => x == location.pathname)
                     }

@@ -9,9 +9,9 @@
 }
 
 .Host {
-    position        : absolute;
-    border-radius   : 2px;
-    transition      : all .3s ease-out;
+    position     : absolute;
+    border-radius: 2px;
+    transition   : all .3s ease-out;
 }
 
 .Host.Floating {
@@ -26,6 +26,5 @@
 }
 
 .Host.Visible {
-    overflow : visible;
     animation: visible ease-out .3s backwards;
 }

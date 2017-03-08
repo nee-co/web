@@ -90,7 +90,7 @@ module.exports = class extends React.Component {
         let {
             client,
             location,
-            router
+            params
         } = this.props
 
         return (
@@ -119,35 +119,25 @@ module.exports = class extends React.Component {
                         location={location}
                     >
                         <Tab
-                            to={{
-                                ...location,
-                                query: {
-                                    "tab_index": "0"
-                                }
-                            }}
+                            to={"/groups/" + params["group_id"]}
+                        >
+                            ノート
+                        </Tab>
+                        <Tab
+                            to={"/groups/" + params["group_id"] + "/members"}
                         >
                             メンバー ({this.state.members && this.state.members.length})
                         </Tab>
                         {this.state.invitees && (
                             <Tab
-                                to={{
-                                    ...location,
-                                    query: {
-                                        "tab_index": "1"
-                                    }
-                                }}
+                                to={"/groups/" + params["group_id"] + "/invitees"}
                             >
                                 招待中 ({this.state.invitees && this.state.invitees.length})
                             </Tab>
                         )}
                         {this.state.invitees && (
                             <Tab
-                                to={{
-                                    ...location,
-                                    query: {
-                                        "tab_index": "2"
-                                    }
-                                }}
+                                to={"/groups/" + params["group_id"] + "/settings"}
                             >
                                 設定
                             </Tab>
@@ -155,8 +145,19 @@ module.exports = class extends React.Component {
                     </TabBar>
                 </div>
                 <ViewPager
-                    selectedIndex={location.query["tab_index"] || 0}
+                    selectedIndex={
+                        [
+                            "/groups/" + params["group_id"],
+                            "/groups/" + params["group_id"] + "/members",
+                            "/groups/" + params["group_id"] + "/invitees",
+                            "/groups/" + params["group_id"] + "/settings"
+                        ]
+                            .findIndex(x => x == location.pathname)
+                    }
                 >
+                    <div>
+                        {}
+                    </div>
                     <List>
                         {this.state.members && this.state.members.map(
                             x =>

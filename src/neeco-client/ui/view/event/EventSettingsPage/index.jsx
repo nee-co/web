@@ -10,6 +10,7 @@ let FlexibleSpace      = require("react-material/ui/view/FlexibleSpace")
 let DropdownButton     = require("react-material/ui/view/form/DropdownButton")
 let ImageInput         = require("react-material/ui/view/form/ImageInput")
 let TextField          = require("react-material/ui/view/form/TextField")
+let Toggle             = require("react-material/ui/view/form/Toggle")
 
 let classNames = require("neeco-client/ui/view/event/EventSettingsPage/classNames")
 
@@ -72,40 +73,36 @@ module.exports = class extends React.Component {
                     }
                 >
                     <ExpansionPanel
+                        hintText="イベントの検索、参加可否を設定します。"
                         labelText="公開設定"
                         value={
                             event.isPublic ? "公開"
                           :                  "非公開"
                         }
                     >
-                        <form>
-                            <DropdownButton
-                                name="is_public"
-                                onChange={async _ => {
-                                    await client(UpdateEvent({
-                                        event: {
-                                            id      : event.id,
-                                            isPublic: !isPublic
-                                        }
-                                    }))
+                        <form
+                            onSubmit={async e => {
+                                e.preventDefault()
 
-                                    onChange({
-                                        ...event,
-                                        isPublic: !event.isPublic
-                                    })
-                                }}
-                                value={
-                                    event.isPublic ? "公開"
-                                  :                  "非公開"
-                                }
-                            >
-                                <ListItem>
-                                    公開
-                                </ListItem>
-                                <ListItem>
-                                    非公開
-                                </ListItem>
-                            </DropdownButton>
+                                let form = e.target
+
+                                onChange(await client(UpdateEvent({
+                                    event: {
+                                        id      : event.id,
+                                        isPublic: form.elements["is_public"].checked
+                                    }
+                                })))
+
+                                this.setState({
+                                    selectedIndex: undefined
+                                })
+                            }}
+                        >
+                            <Toggle
+                                defaultChecked={event && event.isPublic}
+                                labelText="公開する"
+                                name="is_public"
+                            />
                             <Buttons />
                         </form>
                     </ExpansionPanel>

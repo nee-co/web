@@ -7,6 +7,7 @@ let LinearLayout       = require("react-material/ui/view/LinearLayout")
 let FlexibleSpace      = require("react-material/ui/view/FlexibleSpace")
 let ImageInput         = require("react-material/ui/view/form/ImageInput")
 let TextField          = require("react-material/ui/view/form/TextField")
+let Toggle             = require("react-material/ui/view/form/Toggle")
 
 let classNames = require("neeco-client/ui/view/group/GroupSettingsPage/classNames")
 
@@ -68,6 +69,7 @@ module.exports = class extends React.Component {
                     }
                 >
                     <ExpansionPanel
+                        hintText="グループを非公開にすると招待制になります。"
                         labelText="公開設定"
                         value={
                             group && group.isPublic ? "公開"
@@ -90,9 +92,10 @@ module.exports = class extends React.Component {
                                 })
                             }}
                         >
-                            <TextField
-                                defaultValue={group && group.name}
-                                name="name"
+                            <Toggle
+                                defaultChecked={group && group.isPublic}
+                                labelText="公開する"
+                                name="is_public"
                             />
                             <Buttons />
                         </form>
