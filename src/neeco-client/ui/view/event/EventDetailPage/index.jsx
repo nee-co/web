@@ -1,5 +1,6 @@
 let AddUserToEvent       = require("neeco-client/api/request/AddUserToEvent")
 let CreateComment        = require("neeco-client/api/request/CreateComment")
+let DeleteEvent          = require("neeco-client/api/request/DeleteEvent")
 let GetEventByID         = require("neeco-client/api/request/GetEventByID")
 let RemoveUserFromEvent  = require("neeco-client/api/request/RemoveUserFromEvent")
 let Markdown             = require("neeco-client/ui/view/Markdown")
@@ -50,6 +51,7 @@ module.exports = class extends React.Component {
             client,
             location,
             params,
+            router,
             user
         } = this.props
 
@@ -246,6 +248,13 @@ module.exports = class extends React.Component {
                                         ...event
                                     }
                                 })
+                            }}
+                            onDelete={async _ => {
+                                await client(DeleteEvent({
+                                    event: this.state.event
+                                }))
+
+                                router.push("/events")
                             }}
                         />
                     }

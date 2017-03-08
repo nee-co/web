@@ -1,0 +1,5 @@
+.Host {
+    display      : inline-flex;
+    align-items  : center;
+    border-radius: 50%;
+}

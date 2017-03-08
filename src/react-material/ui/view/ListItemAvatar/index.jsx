@@ -1,16 +1,14 @@
-let React = require("react")
-let Image = require("react-material/ui/view/Image")
+let React  = require("react")
+let Avatar = require("react-material/ui/view/Avatar")
 
 let classNames = require("react-material/ui/view/ListItemAvatar/classNames")
 
 module.exports = ({
     className,
-    component = Image,
-    Component = component,
     selected,
     ...props
 }) =>
-    <Component
+    <Avatar
         className={[className, classNames.Host].join(" ")}
         {...props}
     />

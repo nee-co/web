@@ -4,10 +4,8 @@ let React              = require("react")
 let Button             = require("react-material/ui/view/Button")
 let ExpansionPanel     = require("react-material/ui/view/ExpansionPanel")
 let ExpansionPanelList = require("react-material/ui/view/ExpansionPanelList")
-let ListItem           = require("react-material/ui/view/LinearLayout")
-let LinearLayout       = require("react-material/ui/view/ListItem")
+let LinearLayout       = require("react-material/ui/view/LinearLayout")
 let FlexibleSpace      = require("react-material/ui/view/FlexibleSpace")
-let DropdownButton     = require("react-material/ui/view/form/DropdownButton")
 let ImageInput         = require("react-material/ui/view/form/ImageInput")
 let TextField          = require("react-material/ui/view/form/TextField")
 let Toggle             = require("react-material/ui/view/form/Toggle")
@@ -27,6 +25,7 @@ module.exports = class extends React.Component {
             client,
             event,
             onChange,
+            onDelete,
             ...props
         } = this.props
 
@@ -222,6 +221,20 @@ module.exports = class extends React.Component {
                             />
                             <Buttons />
                         </form>
+                    </ExpansionPanel>
+                    <ExpansionPanel
+                        labelText="イベント削除"
+                    >
+                        <LinearLayout
+                            orientation="horizontal"
+                        >
+                            <FlexibleSpace />
+                            <Button
+                                onClick={onDelete}
+                            >
+                                イベントを削除する
+                            </Button>
+                        </LinearLayout>
                     </ExpansionPanel>
                 </ExpansionPanelList>
             </div>

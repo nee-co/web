@@ -1,12 +1,9 @@
 .Host {
-    display      : inline-flex;
-    align-items  : center;
-    box-sizing   : border-box;
-    width        : 2.5em;
-    min-width    : 2.5em;
-    height       : 2.5em;
-    min-height   : 2.5em;
-    margin-right : 16px;
-    border-radius: 50%;
-    font-size    : 1em;
+    box-sizing  : border-box;
+    width       : 2.5em;
+    min-width   : 2.5em;
+    height      : 2.5em;
+    min-height  : 2.5em;
+    margin-right: 16px;
+    font-size   : 1em;
 }

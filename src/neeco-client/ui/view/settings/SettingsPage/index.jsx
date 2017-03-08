@@ -114,7 +114,7 @@ module.exports = class extends React.Component {
                         </form>
                     </ExpansionPanel>
                     <ExpansionPanel
-                        labelText="自己紹介"
+                        labelText="プロフィール"
                     >
                         <form
                             onSubmit={async e => {
