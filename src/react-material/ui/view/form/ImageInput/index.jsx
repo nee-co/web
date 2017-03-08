@@ -1,16 +1,13 @@
 let React = require("react")
+let Image = require("react-material/ui/view/Image")
 
 let classNames = require("react-material/ui/view/form/ImageInput/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
-        let {
-            defaultImageURL
-        } = this.props
-
         this.setState({
             focused : false,
-            imageURL: defaultImageURL,
+            imageURL: undefined,
             invalid : false
         })
     }
@@ -20,14 +17,17 @@ module.exports = class extends React.Component {
             className,
             defaultImageURL,
             disabled,
+            height = "128",
             hintText,
             labelText,
             name,
             id = name,
-            onBlur,
-            onChange,
-            onFocus,
+            onBlur = e => undefined,
+            onChange = e => undefined,
+            onFocus = e => undefined,
+            onLoad,
             placeholder = hintText,
+            width = "128",
             ...props
         } = this.props
 
@@ -56,32 +56,36 @@ module.exports = class extends React.Component {
                         className={classNames.LabelText}
                     >
                         {labelText}
-                    </span>
-                    <img
-                        className={classNames.Preview}
+                    </span><br />
+                    <Image
                         alt={placeholder}
-                        src={this.state.imageURL}
+                        className={classNames.Image}
+                        height={height}
+                        onLoad={onLoad}
+                        src={this.state.imageURL || defaultImageURL}
+                        width={width}
                     />
                 </label>
                 <input
                     accept="image/*"
                     className={classNames.Input}
+                    disabled={disabled}
                     id={id}
                     name={name}
                     onChange={e => {
-                        onChange && onChange(e)
-
-                        let file = e.target.files[0]
+                        onChange(e)
 
                         if (this.state.imageURL)
                             URL.revokeObjectURL(this.state.imageURL)
+
+                        let file = e.target.files[0]
 
                         this.setState({
                             imageURL: file && URL.createObjectURL(file)
                         })
                     }}
                     onBlur={e => {
-                        onBlur && onBlur(e)
+                        onBlur(e)
 
                         this.setState({
                             focused: false,
@@ -89,7 +93,7 @@ module.exports = class extends React.Component {
                         })
                     }}
                     onFocus={e => {
-                        onFocus && onFocus(e)
+                        onFocus(e)
 
                         this.setState({
                             focused: true

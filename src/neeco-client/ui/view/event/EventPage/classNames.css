@@ -12,7 +12,6 @@
 }
 
 .Header {
-    min-width: max-content;
 }
 
 .Header > :nth-child(1) {

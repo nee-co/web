@@ -1,0 +1,16 @@
+.Host {
+}
+
+.Host.Grid {
+    flex-direction: row;
+    flex-wrap     : wrap;
+}
+
+.Host.Grid > * {
+    margin-right : 16px;
+    margin-bottom: 16px;
+}
+
+.Host.Linear {
+    flex-direction: column;
+}

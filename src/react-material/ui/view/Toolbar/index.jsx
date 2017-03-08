@@ -9,5 +9,6 @@ module.exports = ({
 }) =>
     <Shadow
         className={[className, classNames.Host].join(" ")}
+        elevation="4"
         {...props}
     />

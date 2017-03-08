@@ -1,4 +1,3 @@
-let Editor       = require("neeco-client/ui/view/Editor")
 let React        = require("react")
 let Button       = require("react-material/ui/view/Button")
 let Dialog       = require("react-material/ui/view/Dialog")
@@ -25,18 +24,16 @@ module.exports = ({
             let form = e.target
 
             onDone({
-                event: {
-                    title      : form.elements["title"].value,
-                    startDate  : form.elements["startDate"].value,
-                    description: "test",
-                    image      : form.elements["image"].files
-                }
+                title      : form.elements["title"].value,
+                startDate  : form.elements["startDate"].value,
+                description: "test",
+                image      : form.elements["image"].files
             })
         }}
         {...props}
     >
         <DialogHeader>
-            イベント作成
+            新規イベント
         </DialogHeader>
         <DialogBody>
             <TextField
@@ -45,11 +42,11 @@ module.exports = ({
                 required
             />
             <TextField
+                defaultValue={new Date().toISOString().slice(0, 10)}
                 labelText={"日時"}
                 name="startDate"
                 required
                 type="date"
-                defaultValue={new Date().toISOString().slice(0, 10)}
             />
             <ImageInput
                 labelText={"イベント画像"}

@@ -15,7 +15,7 @@
 }
 
 .Host thead ~ tbody tr:nth-child(1),
-.Host tr:nth-child(n+2) {
+.Host tr:not(:nth-child(1)) {
     border-top: 1px solid #CCC;
 }
 
@@ -24,8 +24,8 @@
     padding: 8px 16px;
 }
 
-.Host th:nth-child(n+2),
-.Host td:nth-child(n+2) {
+.Host th:not(:nth-child(1)),
+.Host td:not(:nth-child(1)) {
     border-left: 1px solid #CCC;
 }
 

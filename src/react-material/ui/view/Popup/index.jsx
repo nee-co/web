@@ -7,12 +7,13 @@ let classNames = require("react-material/ui/view/Popup/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            onClick: e => {
+            onPress: e => {
                 let {
+                    visible,
                     onCancel
                 } = this.props
 
-                if (!ReactDOM.findDOMNode(this).contains(e.target))
+                if (this.props.visible && !ReactDOM.findDOMNode(this).contains(e.target))
                     onCancel && onCancel()
             },
             size: undefined
@@ -20,15 +21,8 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            visible
-        } = this.props
-
-        if (visible)
-            setTimeout(
-                () => window.addEventListener("click", this.state.onClick, false),
-                1
-            )
+        window.addEventListener("mousedown", this.state.onPress, false)
+        window.addEventListener("ontouchstart", this.state.onPress, false)
 
         let rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
 
@@ -40,29 +34,15 @@ module.exports = class extends React.Component {
         })
     }
 
-    componentWillReceiveProps({
-        children,
-        visible
-    }) {
-        if (visible != this.props.visible) {
-            if (visible)
-                setTimeout(
-                    () => window.addEventListener("click", this.state.onClick, false),
-                    1
-                )
-            else
-                window.removeEventListener("click", this.state.onClick, false)
-        }
-    }
-
     componentWillUnmount() {
-        if (this.props.visible)
-            window.removeEventListener("click", this.state.onClick, false)
+        window.removeEventListener("mousedown", this.state.onPress, false)
+        window.removeEventListener("ontouchstart", this.state.onPress, false)
     }
 
     render() {
         let {
             className,
+            elevation = "8",
             onCancel,
             style,
             visible,
@@ -75,12 +55,14 @@ module.exports = class extends React.Component {
                     [
                         className,
                         classNames.Host,
+                        parseInt(elevation) > 0 ? classNames.Floating
+                      :                           undefined,
                         visible         ? classNames.Visible
                       : this.state.size ? classNames.Hidden
                       :                   undefined
                     ].join(" ")
                 }
-                elevation="8"
+                elevation={elevation}
                 style={{
                     width : !this.state.size ? undefined
                           : visible          ? this.state.size[0] + "px"

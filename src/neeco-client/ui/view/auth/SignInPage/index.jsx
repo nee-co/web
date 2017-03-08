@@ -1,22 +1,14 @@
-let createToken = require("neeco-client/api/auth/createToken")
-let config      = require("neeco-client/config")
-let Error       = require("neeco-client/ui/view/Error")
+let CreateToken = require("neeco-client/api/request/CreateToken")
 let React       = require("react")
 let Button      = require("react-material/ui/view/Button")
-let Snackbar    = require("react-material/ui/view/Snackbar")
 let TextField   = require("react-material/ui/view/form/TextField")
 
 let classNames = require("neeco-client/ui/view/auth/SignInPage/classNames")
 
 module.exports = class extends React.Component {
-    componentWillMount() {
-        this.setState({
-            errors: []
-        })
-    }
-
     render() {
         let {
+            client,
             onSignIn
         } = this.props
 
@@ -34,25 +26,13 @@ module.exports = class extends React.Component {
 
                             let form = e.target
 
-                            try {
-                                let token = await createToken({
-                                    apiHost : config["neeco_api_host"],
+                            onSignIn({
+                                staySignedIn: form.elements["staySignedIn"].checked,
+                                token       : await client(CreateToken({
                                     userName: form.elements["id"].value,
                                     password: form.elements["password"].value
-                                })
-
-                                onSignIn({
-                                    token       : token,
-                                    staySignedIn: form.elements["staySignedIn"].checked
-                                })
-                            } catch (e) {
-                                this.setState({
-                                    errors: this.state.errors.concat({
-                                        error: e,
-                                        key  : Date.now()
-                                    })
-                                })
-                            }
+                                }))
+                            })
                         }}
                     >
                         <TextField
@@ -87,21 +67,6 @@ module.exports = class extends React.Component {
                         </Button>
                     </form>
                 </div>
-                {this.state.errors.map(x =>
-                    <Snackbar
-                        key={x.key}
-                        duration={3000}
-                        onHidden={() => {
-                            this.setState({
-                                errors: this.state.errors.filter(y => y != x)
-                            })
-                        }}
-                    >
-                        <Error
-                            error={x.error}
-                        />
-                    </Snackbar>
-                )}
             </section>
         )
     }

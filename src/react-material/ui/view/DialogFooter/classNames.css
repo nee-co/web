@@ -1,4 +1,6 @@
 .Host {
-    padding        : 8px;
     justify-content: flex-end;
+    box-sizing     : border-box;
+    min-height     : max-content;
+    padding        : 8px;
 }

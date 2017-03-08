@@ -1,6 +1,5 @@
-let updateUser         = require("neeco-client/api/user/updateUser")
-let apply              = require("neeco-client/apply")
-let config             = require("neeco-client/config")
+let UpdateUser         = require("neeco-client/api/request/UpdateUser")
+let Editor             = require("neeco-client/ui/view/Editor")
 let React              = require("react")
 let Button             = require("react-material/ui/view/Button")
 let ExpansionPanel     = require("react-material/ui/view/ExpansionPanel")
@@ -13,7 +12,7 @@ let {Link}             = require("react-router")
 
 let classNames = require("neeco-client/ui/view/settings/SettingsPage/classNames")
 
-let onInput = e => {
+let onPasswordInput = e => {
     let form = e.target.form
 
     let password = form.elements["password"].value
@@ -34,9 +33,9 @@ module.exports = class extends React.Component {
 
     render() {
         let {
-            onError,
-            onUpdateUser,
-            store
+            onUserUpdate,
+            client,
+            user
         } = this.props
 
         let Buttons = x =>
@@ -50,34 +49,40 @@ module.exports = class extends React.Component {
                         selectedIndex: undefined
                     })}
                 >
-                    キャンセル
+                    取消
                 </Button>
                 <Button
                     component="button"
                 >
-                    完了
+                    保存
                 </Button>
             </LinearLayout>
 
         return (
-            <section
+            <div
                 className={classNames.Host}
             >
                 <ExpansionPanelList
-                    onSelect={({index}) => this.setState({
+                    onSelected={({index}) => this.setState({
                         selectedIndex: index
                     })}
-                    selectedIndex={this.state.selectedIndex}
+                    onUnselected={({index}) => this.setState({
+                        selectedIndex: undefined
+                    })}
+                    selectedIndexes={
+                        this.state.selectedIndex ? [this.state.selectedIndex]
+                      :                            []
+                    }
                 >
                     <ExpansionPanel
                         disabled
                         labelText="学籍番号"
-                        value={apply(store, "user").number}
+                        value={user && user.number}
                     />
                     <ExpansionPanel
                         disabled
                         labelText="氏名"
-                        value={apply(store, "user").name}
+                        value={user && user.name}
                     />
                     <ExpansionPanel
                         labelText="画像"
@@ -88,35 +93,28 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                try {
-                                    onUpdateUser({
-                                        user: await updateUser({
-                                            apiHost: config["neeco_api_host"],
-                                            token  : apply(store, "token"),
-                                            user   : {
-                                                image: form.elements["image"].files
-                                            }
-                                        })
-                                    })
+                                onUserUpdate(await client(UpdateUser({
+                                    user: {
+                                        image: form.elements["image"].files
+                                    }
+                                })))
 
-                                    this.setState({
-                                        selectedIndex: undefined
-                                    })
-                                } catch (e) {
-                                    onError(e)
-                                }
+                                this.setState({
+                                    selectedIndex: undefined
+                                })
                             }}
                         >
                             <ImageInput
-                                defaultImageURL={apply(store, "user").image}
+                                defaultImageURL={user && user.image}
                                 name="image"
+                                width="128"
+                                height="128"
                             />
                             <Buttons />
                         </form>
                     </ExpansionPanel>
                     <ExpansionPanel
                         labelText="自己紹介"
-                        value={apply(store, "user").note}
                     >
                         <form
                             onSubmit={async e => {
@@ -124,30 +122,20 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                try {
-                                    onUpdateUser({
-                                        user: await updateUser({
-                                            apiHost: config["neeco_api_host"],
-                                            token  : apply(store, "token"),
-                                            user   : {
-                                                note: form.elements["note"].value
-                                            }
-                                        })
-                                    })
+                                onUserUpdate(await client(UpdateUser({
+                                    user: {
+                                        note: form.elements["note"].value
+                                    }
+                                })))
 
-                                    this.setState({
-                                        selectedIndex: undefined
-                                    })
-                                } catch (e) {
-                                    onError(e)
-                                }
+                                this.setState({
+                                    selectedIndex: undefined
+                                })
                             }}
                         >
-                            <textarea
-                                defaultValue={apply(store, "user").note}
+                            <Editor
+                                defaultValue={user &&  user.note}
                                 name="note"
-                                cols="30"
-                                rows="10"
                             />
                             <Buttons />
                         </form>
@@ -161,22 +149,14 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                try {
-                                    await updateUser({
-                                        apiHost: config["neeco_api_host"],
-                                        token  : apply(store, "token"),
-                                        user   : {
-                                            password       : form.elements["password"].value,
-                                            currentPassword: form.elements["current_password"].value
-                                        }
-                                    })
+                                onUserUpdate(await client(UpdateUser({
+                                    password       : form.elements["password"].value,
+                                    currentPassword: form.elements["current_password"].value
+                                })))
 
-                                    this.setState({
-                                        selectedIndex: undefined
-                                    })
-                                } catch(e) {
-                                    onError(e)
-                                }
+                                this.setState({
+                                    selectedIndex: undefined
+                                })
                             }}
                         >
                             <TextField
@@ -188,14 +168,14 @@ module.exports = class extends React.Component {
                             <TextField
                                 labelText={"新しいパスワード"}
                                 name="password"
-                                onInput={onInput}
+                                onInput={onPasswordInput}
                                 required
                                 type="password"
                             />
                             <TextField
                                 labelText={"パスワードの再入力"}
                                 name="confirm_password"
-                                onInput={onInput}
+                                onInput={onPasswordInput}
                                 required
                                 type="password"
                             />
@@ -203,7 +183,7 @@ module.exports = class extends React.Component {
                         </form>
                     </ExpansionPanel>
                 </ExpansionPanelList>
-            </section>
+            </div>
         )
     }
 }

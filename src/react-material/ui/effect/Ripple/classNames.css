@@ -1,4 +1,4 @@
-.Host {
+.Host:not(.Disabled) {
     overflow      : hidden;
     position      : relative;
     vertical-align: top;

@@ -4,7 +4,7 @@ module.exports = s => {
 
     for (let name of ["iframe", "script"])
     for (let e of document.querySelectorAll(name))
-        e.parentElement.replaceChild(
+        e.parentNode.replaceChild(
             document.createTextNode(e.outerHTML),
             e
         )

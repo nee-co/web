@@ -1,10 +1,9 @@
-let createFile       = require("neeco-client/api/file/createFile")
-let createFolder     = require("neeco-client/api/file/createFolder")
-let deleteFile       = require("neeco-client/api/file/deleteFile")
-let deleteFolder     = require("neeco-client/api/file/deleteFolder")
-let getFolderByID    = require("neeco-client/api/file/getFolderByID")
-let apply            = require("neeco-client/apply")
-let config           = require("neeco-client/config")
+let getConfiguration = require("neeco-client/api/getConfiguration")
+let CreateFile       = require("neeco-client/api/request/CreateFile")
+let CreateFolder     = require("neeco-client/api/request/CreateFolder")
+let DeleteFile       = require("neeco-client/api/request/DeleteFile")
+let DeleteFolder     = require("neeco-client/api/request/DeleteFolder")
+let GetFolderByID    = require("neeco-client/api/request/GetFolderByID")
 let FileList         = require("neeco-client/ui/view/file/FileList")
 let FileListItem     = require("neeco-client/ui/view/file/FileListItem")
 let NewFolderDialog  = require("neeco-client/ui/view/file/NewFolderDialog")
@@ -31,7 +30,7 @@ module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             compareFunction         : (x, y) => compare(x.name, y.name),
-            folder                  : null,
+            folder                  : undefined,
             newFileMenuIsVisible    : false,
             newFolderDialogIsVisible: false,
             selectedIDs             : [],
@@ -42,53 +41,38 @@ module.exports = class extends React.Component {
 
     componentDidMount() {
         let {
-            onError,
             params,
-            store
+            client
         } = this.props
 
         ;(async () => {
-            try {
-                this.setState({
-                    folder: await getFolderByID({
-                        apiHost: config["neeco_api_host"],
-                        token  : apply(store, "token"),
-                        id     : params["folder_id"]
-                    })
-                })
-            } catch (e) {
-                onError(e)
-            }
+            this.setState({
+                folder: await client(GetFolderByID({
+                    id: params["folder_id"]
+                }))
+            })
         })()
     }
 
     componentWillReceiveProps({
-        onError,
         params,
-        store
+        client
     }) {
         if (params["folder_id"] != this.props.params["folder_id"]) {
             ;(async () => {
-                try {
-                    this.setState({
-                        folder: await getFolderByID({
-                            apiHost: config["neeco_api_host"],
-                            token  : apply(store, "token"),
-                            id     : params["folder_id"]
-                        })
-                    })
-                } catch (e) {
-                    onError(e)
-                }
+                this.setState({
+                    folder: await client(GetFolderByID({
+                        id: params["folder_id"]
+                    }))
+                })
             })()
         }
     }
 
     render() {
         let {
-            onError,
             router,
-            store
+            client
         } = this.props
 
         return (
@@ -157,20 +141,16 @@ module.exports = class extends React.Component {
                                         let input = document.createElement("input")
                                         input.setAttribute("type", "file")
                                         input.onchange = async e => {
-                                            try {
-                                                this.state.folder.children.push(await createFile({
-                                                    token  : apply(store, "token"),
-                                                    apiHost: config["neeco_api_host"],
+                                            this.state.folder.children.push(
+                                                await client(CreateFile({
                                                     file   : e.target.files,
                                                     parent : this.state.folder.id
                                                 }))
+                                            )
 
-                                                this.setState({
-                                                    newFileMenuIsVisible: false
-                                                })
-                                            } catch (e) {
-                                                onError(e)
-                                            }
+                                            this.setState({
+                                                newFileMenuIsVisible: false
+                                            })
                                         }
                                         input.click()
                                     }}
@@ -192,32 +172,24 @@ module.exports = class extends React.Component {
                                 children={"delete"}
                                 component={MaterialIcon}
                                 onClick={async e => {
-                                    try {
-                                        for (let id of this.state.selectedIDs)
-                                        for (let x  of [this.state.folder.children.find(x => x.id == id)])
-                                        if  (x.kind == "file")
-                                            await deleteFile({
-                                                token  : apply(store, "token"),
-                                                apiHost: config["neeco_api_host"],
-                                                file   : x
-                                            })
-                                        else
-                                            await deleteFolder({
-                                                token  : apply(store, "token"),
-                                                apiHost: config["neeco_api_host"],
-                                                folder : x
-                                            })
+                                    for (let id of this.state.selectedIDs)
+                                    for (let x  of [this.state.folder.children.find(x => x.id == id)])
+                                    if  (x.kind == "file")
+                                        await client(DeleteFile({
+                                            file: x
+                                        }))
+                                    else
+                                        await client(DeleteFolder({
+                                            folder: x
+                                        }))
 
-                                        this.state.folder.children = this.state.folder.children.filter(
-                                            x => !this.state.selectedIDs.includes(x.id)
-                                        )
-
-                                        this.setState({
-                                            selectedIDs: []
-                                        })
-                                    } catch (e) {
-                                        onError(e)
-                                    }
+                                    this.state.folder.children = this.state.folder.children.filter(
+                                        x => !this.state.selectedIDs.includes(x.id)
+                                    )
+                                    
+                                    this.setState({
+                                        selectedIDs: []
+                                    })
                                 }}
                             />
                         )}
@@ -235,28 +207,24 @@ module.exports = class extends React.Component {
                                             if (x.kind == "folder") {
                                                 router.push("/folders/" + x.id)
                                             } else if (x.kind == "file") {
-                                                try {
-                                                    let response = await fetch(
-                                                        config["neeco_api_host"] + "/files/" + x.id,
-                                                        {
-                                                            method: "GET",
-                                                            headers: {
-                                                                "Authorization": "Bearer " + apply(store, "token")
-                                                            }
+                                                let response = await fetch(
+                                                    getConfiguration().api.url + "/files/" + x.id,
+                                                    {
+                                                        method: "GET",
+                                                        headers: {
+                                                            "Authorization": "Bearer " + client.token
                                                         }
-                                                    )
+                                                    }
+                                                )
 
-                                                    let data = await response.json()
+                                                let data = await response.json()
 
-                                                    let a = document.createElement("a")
-                                                    a.href = data["download_url"]
-                                                        .replace(/^(.+?\/{2}.+?)\/{2}/, "$1/")
-                                                    a.target = "_blank"
-                                                    a.download = x.name
-                                                    a.click()
-                                                } catch (e) {
-                                                    onError(e)
-                                                }
+                                                let a = document.createElement("a")
+                                                a.href = data["download_url"]
+                                                    .replace(/^(.+?\/{2}.+?)\/{2}/, "$1/")
+                                                a.target = "_blank"
+                                                a.download = x.name
+                                                a.click()
                                             }
                                         }
 
@@ -278,25 +246,19 @@ module.exports = class extends React.Component {
                         })
                     }}
                     onDone={async ({name}) => {
-                        try {
-                            let f = await createFolder({
-                                token  : apply(store, "token"),
-                                apiHost: config["neeco_api_host"],
-                                folder : {
-                                    name: name
-                                },
-                                parent : this.state.folder
-                            })
+                        let f = await client(CreateFolder({
+                            folder : {
+                                name: name
+                            },
+                            parent : this.state.folder
+                        }))
 
-                            this.state.folder.children.push(f)
-                            this.state.folder.children.sort(this.state.compareFunction)
+                        this.state.folder.children.push(f)
+                        this.state.folder.children.sort(this.state.compareFunction)
 
-                            this.setState({
-                                newFolderDialogIsVisible: false
-                            })
-                        } catch (e) {
-                            onError(e)
-                        }
+                        this.setState({
+                            newFolderDialogIsVisible: false
+                        })
                     }}
                     visible={this.state.newFolderDialogIsVisible}
                 />

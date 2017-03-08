@@ -1,5 +1,6 @@
-let React = require("react")
-let Root  = require("react-material/ui/control/Root")
+let React  = require("react")
+let Root   = require("react-material/ui/control/Root")
+let Shadow = require("react-material/ui/effect/Shadow")
 
 let classNames = require("react-material/ui/view/Snackbar/classNames")
 
@@ -25,10 +26,7 @@ let Snackbar = class extends React.Component {
 
     render() {
         let {
-            children,
             className,
-            component = "div",
-            Component = component,
             duration,
             onAnimationEnd,
             onHidden,
@@ -36,7 +34,7 @@ let Snackbar = class extends React.Component {
         } = this.props
 
         return (
-            <Component
+            <Shadow
                 className={
                     [
                         className,
@@ -45,6 +43,7 @@ let Snackbar = class extends React.Component {
                       :                      classNames.Hidden
                     ].join(" ")
                 }
+                elevation="6"
                 onAnimationEnd={e => {
                     onAnimationEnd && onAnimationEnd(e)
 
@@ -64,9 +63,7 @@ let Snackbar = class extends React.Component {
                         onHidden && onHidden()
                 }}
                 {...props}
-            >
-                {children}
-            </Component>
+            />
         )
     }
 }

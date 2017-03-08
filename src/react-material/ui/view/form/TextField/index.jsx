@@ -26,8 +26,8 @@ module.exports = class extends React.Component {
             Component = component,
             name,
             id = name,
-            onBlur,
-            onFocus,
+            onBlur = e => undefined,
+            onFocus = e => undefined,
             placeholder = hintText,
             required,
             value,
@@ -40,11 +40,11 @@ module.exports = class extends React.Component {
                 className={
                     [
                         classNames.Host,
-                        this.state.empty === true  ? classNames.Empty
-                      : this.state.empty === false ? undefined
-                      : value                      ? undefined
-                      : defaultValue               ? undefined
-                      :                              classNames.Empty,
+                        this.state.empty == true  ? classNames.Empty
+                      : this.state.empty == false ? undefined
+                      : value                     ? undefined
+                      : defaultValue              ? undefined
+                      :                             classNames.Empty,
                         this.state.focused ? classNames.Focused
                       :                      undefined,
                         this.state.invalid ? classNames.Invalid
@@ -54,7 +54,8 @@ module.exports = class extends React.Component {
                         required ? classNames.Required
                       :            undefined
                     ].join(" ")
-                }>
+                }
+            >
                 <label
                     className={classNames.Label}
                     htmlFor={id}
@@ -72,17 +73,11 @@ module.exports = class extends React.Component {
                 </label>
                 <Component
                     className={[className, classNames.InputText].join(" ")}
+                    disabled={disabled}
                     id={id}
                     name={name}
-                    disabled={disabled}
-                    placeholder={(
-                        this.state.focused ? placeholder
-                      : labelText          ? ""
-                      :                      placeholder
-                    )}
-                    required={required}
                     onBlur={e => {
-                        onBlur && onBlur(e)
+                        onBlur(e)
 
                         this.setState({
                             empty  : e.target.value.length == 0,
@@ -91,12 +86,18 @@ module.exports = class extends React.Component {
                         })
                     }}
                     onFocus={e => {
-                        onFocus && onFocus(e)
+                        onFocus(e)
 
                         this.setState({
                             focused: true
                         })
                     }}
+                    placeholder={(
+                        this.state.focused ? placeholder
+                      : labelText          ? ""
+                      :                      placeholder
+                    )}
+                    required={required}
                     value={value}
                     defaultValue={defaultValue}
                     {...props}

@@ -13,8 +13,9 @@ module.exports = ({
         className={[
             className,
             classNames.Host,
-            orientation == "vertical" ? classNames.Vertical
-          :                             classNames.Horizontal
+            orientation == "vertical"   ? classNames.Vertical
+          : orientation == "horizontal" ? classNames.Horizontal
+          :                               undefined
         ].join(" ")}
         {...props}
     />

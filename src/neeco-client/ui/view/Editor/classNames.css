@@ -1,58 +1,24 @@
-.Editor {
+.Host {
     display       : flex;
     flex-direction: column;
-    flex-grow     : 1;
-    min-height    : 200px;
-    border        : 1px solid #ccc;
+    min-height    : 320px;
+}
+
+.Host > input {
+    display: none;
 }
 
 .Toolbar {
-    padding         : 4px;
-    background-color: #EEE;
+    display         : flex;
+    min-width       : max-content;
+    align-items     : center;
+    background-color: rgba(0, 0, 0, .05);
+    font-size       : .6875em;
 }
 
 .Content {
-    flex-grow: 1;
-    padding  : 8px;
-}
-
-.BoldButton,
-.ItalicButton,
-.UnderlineButton,
-.TextColorButton {
-    display         : inline-flex;
-    align-items     : center;
-    min-width       : 1.8em;
-    min-height      : 1.8em;
-    border          : 1px solid transparent;
-    border-radius   : 2px;
-    background-color: inherit;
-    font-family     : initial;
-    text-align      : center;
-}
-
-.BoldButton:hover,
-.ItalicButton:hover,
-.UnderlineButton:hover,
-.TextColorButton:hover {
-    border-color: rgba(0, 0, 0, .2);
-}
-
-.BoldButton::after {
-    font-weight: bold;
-    content    : "B";
-}
-
-.ItalicButton::after {
-    font-style: italic;
-    content   : "I";
-}
-
-.UnderlineButton::after {
-    text-decoration: underline;
-    content        : "U";
-}
-
-.TextColorButton::after {
-    content: "A";
+    outline-width: 0;
+    flex-grow    : 1;
+    border       : 1px solid rgba(0, 0, 0, .12);
+    padding      : 8px;
 }

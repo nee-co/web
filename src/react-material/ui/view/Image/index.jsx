@@ -1,26 +1,42 @@
-let React = require("react")
+let React    = require("react")
+let ReactDOM = require("react-dom")
 
 let classNames = require("react-material/ui/view/Image/classNames")
 
 module.exports = ({
     className,
+    alt,
+    crossOrigin,
     height,
+    onLoad,
+    sizes,
     src,
+    srcSet,
+    style,
     width,
     ...props
-}) => 
+}) =>
     <div
         className={[className, classNames.Host].join(" ")}
         style={{
-            backgroundImage: "url(" + src + ")",
-            height         : height + "px",
-            width          : width + "px"
+            backgroundImage: src && "url(" + src + ")",
+            width          : width != undefined ? width + "px"
+                           :                      undefined,
+            height         : height != undefined ? height + "px"
+                           :                       undefined,
+            ...style
         }}
+        {...props}
     >
         <img
-            {...props}
+            alt={alt}
+            crossOrigin={crossOrigin}
             height={height}
+            onLoad={onLoad}
+            sizes={sizes}
             src={src}
+            srcSet={srcSet}
             width={width}
         />
     </div>
+

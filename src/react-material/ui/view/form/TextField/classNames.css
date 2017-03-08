@@ -13,7 +13,7 @@
     box-shadow      : none;
     background-color: transparent;
     color           : inherit;
-    font-size       : 16px;
+    font-size       : inherit;
     transition      : all .3s ease-out;
 }
 
@@ -27,7 +27,7 @@
     display      : inline-block;
     position     : absolute;
     margin-bottom: 8px;
-    font-size    : 16px;
+    font-size    : inherit;
     color        : rgba(0, 0, 0, .38);    
     transform    : translateY(calc(100%));
     transition   : all .3s ease-out;
@@ -37,13 +37,13 @@
     display      : inline-block;
     visibility   : hidden;
     margin-bottom: 8px;
-    font-size    : 12px;
+    font-size    : .75em;
 }
 
 .HelperText:not(:empty) {
     display      : inline-block;
     margin-bottom: 8px;
-    font-size    : 0.8em;
+    font-size    : .8em;
 }
 
 .Host.Empty .InputText:hover {

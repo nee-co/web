@@ -10,7 +10,7 @@
     padding         : 0 24px;
     background-color: #323232;
     color           : #FFF;
-    font-size       : 14px;
+    font-size       : .875em;
 }
 
 @keyframes show {

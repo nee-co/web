@@ -1,25 +1,25 @@
-let addUserToEvent      = require("neeco-client/api/event/addUserToEvent")
-let createComment       = require("neeco-client/api/event/createComment")
-let getEventByID        = require("neeco-client/api/event/getEventByID")
-let removeUserFromEvent = require("neeco-client/api/event/removeUserFromEvent")
-let updateEvent         = require("neeco-client/api/event/updateEvent")
-let apply               = require("neeco-client/apply")
-let config              = require("neeco-client/config")
-let Markdown            = require("neeco-client/ui/view/Markdown")
-let React               = require("react")
-let Shadow              = require("react-material/ui/effect/Shadow")
-let Button              = require("react-material/ui/view/Button")
-let DropDownButton      = require("react-material/ui/view/DropDownButton")
-let FlexibleSpace       = require("react-material/ui/view/FlexibleSpace")
-let Image               = require("react-material/ui/view/Image")
-let List                = require("react-material/ui/view/List")
-let ListItem            = require("react-material/ui/view/ListItem")
-let ListItemAvatar      = require("react-material/ui/view/ListItemAvatar")
-let ListItemTextArea    = require("react-material/ui/view/ListItemTextArea")
-let Tab                 = require("react-material/ui/view/Tab")
-let TabBar              = require("react-material/ui/view/TabBar")
-let ViewPager           = require("react-material/ui/view/ViewPager")
-let TextField           = require("react-material/ui/view/form/TextField")
+let AddUserToEvent       = require("neeco-client/api/request/AddUserToEvent")
+let CreateComment        = require("neeco-client/api/request/CreateComment")
+let GetEventByID         = require("neeco-client/api/request/GetEventByID")
+let RemoveUserFromEvent  = require("neeco-client/api/request/RemoveUserFromEvent")
+let Markdown             = require("neeco-client/ui/view/Markdown")
+let EventCommentListItem = require("neeco-client/ui/view/event/EventCommentListItem")
+let EventEditPage        = require("neeco-client/ui/view/event/EventEditPage")
+let UserListItem         = require("neeco-client/ui/view/user/UserListItem")
+let React                = require("react")
+let Shadow               = require("react-material/ui/effect/Shadow")
+let Button               = require("react-material/ui/view/Button")
+let FlexibleSpace        = require("react-material/ui/view/FlexibleSpace")
+let Image                = require("react-material/ui/view/Image")
+let List                 = require("react-material/ui/view/List")
+let ListItem             = require("react-material/ui/view/ListItem")
+let ListItemAvatar       = require("react-material/ui/view/ListItemAvatar")
+let ListItemTextArea     = require("react-material/ui/view/ListItemTextArea")
+let Tab                  = require("react-material/ui/view/Tab")
+let TabBar               = require("react-material/ui/view/TabBar")
+let ViewPager            = require("react-material/ui/view/ViewPager")
+let DropdownButton       = require("react-material/ui/view/form/DropdownButton")
+let TextField            = require("react-material/ui/view/form/TextField")
 
 let classNames = require("neeco-client/ui/view/event/EventDetailPage/classNames")
 
@@ -32,37 +32,34 @@ module.exports = class extends React.Component {
 
     componentDidMount() {
         let {
-            onError,
-            params,
-            store
+            client,
+            params
         } = this.props
 
         ;(async () => {
-            try {
-                this.setState({
-                    event: await getEventByID({
-                        apiHost: config["neeco_api_host"],
-                        token  : apply(store, "token"),
-                        id     : params["event_id"]
-                    })
-                })
-            } catch (e) {
-                onError(e)
-            }
+            this.setState({
+                event: await client(GetEventByID({
+                    id: params["event_id"]
+                }))
+            })
         })()
     }
 
     render() {
         let {
+            client,
             location,
-            onError,
             params,
-            store,
+            user
         } = this.props
 
-        let isEntried = this.state.event && this.state.event.entries.some(x => x.id == apply(store, "user").id)
-        let isOwner   = this.state.event && this.state.event.owner.id == apply(store, "user").id
-        let isPublic  = this.state.event && this.state.event.isPublic
+        let loaded = this.state.event && user
+
+        let isEntried = loaded && this.state.event.entries.some(x => x.id == user.id)
+
+        let isOwner = loaded && this.state.event.owner.id == user.id
+
+        let isPublic = this.state.event && this.state.event.isPublic
 
         return (
             <article
@@ -72,79 +69,47 @@ module.exports = class extends React.Component {
                     className={classNames.Header}
                 >
                     <div>
-                        {isOwner && (
-                            <DropDownButton
-                                onChange={async () => {
-                                    try {
-                                        let responce = await updateEvent({
-                                            apiHost : config["neeco_api_host"],
-                                            token   : apply(store, "token"),
-                                            event   : {
-                                                id      : this.state.event.id,
-                                                isPublic: !isPublic
-                                            }
-                                        })
-                                        this.state.event.isPublic = !isPublic
-
-                                        this.forceUpdate()
-                                    } catch (e) {
-                                        onError(e)
-                                    }
-                                }}
-                            >
-                                <ListItem
-                                    selected={isPublic}
-                                >
-                                    公開
-                                </ListItem>
-                                <ListItem
-                                    selected={!isPublic}
-                                >
-                                    非公開
-                                </ListItem>
-                            </DropDownButton>
-                        )}
+                        {isOwner && 
+                        <div>
+                            {
+                                isPublic ? "公開中"
+                              :            "非公開"　
+                            }
+                        </div>
+                        }
                         {!isOwner && (
-                            <DropDownButton
-                                onChange={async () => {
-                                    try {
-                                        if (isEntried) {
-                                            let responce = await removeUserFromEvent({
-                                                apiHost: config["neeco_api_host"],
-                                                token  : apply(store, "token"),
-                                                event  : this.state.event
-                                            })
+                            <DropdownButton
+                                onChange={async _ => {
+                                    if (isEntried) {
+                                        let responce = await client(RemoveUserFromEvent({
+                                            event: this.state.event
+                                        }))
 
-                                            this.state.event.entries = this.state.event.entries.filter(
-                                                x => x.id != apply(store, "user").id
-                                            )
-                                        } else {
-                                            let responce = await addUserToEvent({
-                                                apiHost: config["neeco_api_host"],
-                                                token  : apply(store, "token"),
-                                                event  : this.state.event
-                                            })
+                                        this.state.event.entries = this.state.event.entries.filter(
+                                            x => x.id != user.id
+                                        )
+                                    } else {
+                                        let responce = await client(AddUserToEvent({
+                                            event: this.state.event
+                                        }))
 
-                                            this.state.event.entries.push(apply(store, "user"))
-                                        }
-
-                                        this.forceUpdate()
-                                    } catch (e) {
-                                        onError(e)
+                                        this.state.event.entries.push(user)
                                     }
+
+                                    this.forceUpdate()
                                 }}
+                                value={
+                                    isEntried ? "参加"
+                                  :             "未参加"
+                                }
                             >
-                                <ListItem
-                                    selected={isEntried}
-                                >
+                                <ListItem>
                                     参加
                                 </ListItem>
-                                <ListItem
-                                    selected={!isEntried}
-                                >
+                                <ListItem>
                                     未参加
                                 </ListItem>
-                            </DropDownButton>
+                            </DropdownButton>
                         )}
                     </div>
                     <TabBar
@@ -165,6 +130,13 @@ module.exports = class extends React.Component {
                         >
                             コメント
                         </Tab>
+                        {isOwner &&
+                            <Tab
+                                to={"/events/" + params["event_id"] + "/edit"}
+                            >
+                                編集
+                            </Tab>
+                        }
                     </TabBar>
                 </div>
                 <ViewPager
@@ -172,7 +144,8 @@ module.exports = class extends React.Component {
                         [
                             "/events/" + params["event_id"],
                             "/events/" + params["event_id"] + "/entries",
-                            "/events/" + params["event_id"] + "/comments"
+                            "/events/" + params["event_id"] + "/comments",
+                            "/events/" + params["event_id"] + "/edit"
                         ]
                             .findIndex(x => x == location.pathname)
                     }
@@ -190,6 +163,23 @@ module.exports = class extends React.Component {
                                 alt={this.state.event && this.state.event.title}
                                 width="128"
                                 height="128"
+                                onNext={e => {
+                                    let img = e.target
+
+                                    let canvas = document.createElement("canvas")
+                                    canvas.width = img.width
+                                    canvas.height = img.height
+
+                                    let context = canvas.getContext("2d")
+                                    context.drawImage(img, 0, 0)
+
+                                    this.setState({
+                                        /*colorMap: createColorMap({
+                                            imageData: context.getImageData(0, 0, img.width, img.height),
+                                            
+                                        })*/
+                                    })
+                                }}
                             />
                         </div>
                         <Markdown
@@ -200,54 +190,21 @@ module.exports = class extends React.Component {
                     <div>
                         <List>
                             {this.state.event && this.state.event.entries.map(x =>
-                                <ListItem
+                                <UserListItem
                                     key={x.id}
-                                >
-                                    <ListItemAvatar
-                                        src={x.image}
-                                        alt={x.name}
-                                    />
-                                    <ListItemTextArea>
-                                        {x.name}
-                                    </ListItemTextArea>
-                                </ListItem>
+                                    user={x}
+                                />
                             )}
                         </List>
                     </div>
-                    <div
-                        className={classNames.CommentPage}
-                    >
+                    <div>
                         <List>
-                            {this.state.event && Array.from(this.state.event.comments.entries()).map(([i, x]) =>
-                                <ListItem
-                                    key={i}
-                                >
-                                    <ListItemAvatar
-                                        alt={x.postedBy.name}
-                                        src={x.postedBy.image}
+                            {this.state.event && Array.from(this.state.event.comments.entries()).map(
+                                ([i, x]) =>
+                                    <EventCommentListItem
+                                        comment={x}
+                                        key={i}
                                     />
-                                    <ListItemTextArea>
-                                        <p>
-                                            {x.postedBy.name}
-                                        </p>
-                                        <p>
-                                            {x.body}
-                                        </p>
-                                    </ListItemTextArea>
-                                    <div>
-                                        <p>
-                                            {((
-                                                date = new Date(x.postedAt),
-                                                d = (Date.now() - date.getTime()) / 1000
-                                            ) =>
-                                                d < 60    ? "now"
-                                              : d < 3600  ? Math.floor(d / 60) + " min"
-                                              : d < 86400 ? Math.floor(d / 3600) + " hour"
-                                              :             date.toLocaleString()
-                                            )()}
-                                        </p>
-                                    </div>
-                                </ListItem>
                             )}
                         </List>
                         <FlexibleSpace />
@@ -257,20 +214,14 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                try {
-                                    let responce = await createComment({
-                                        apiHost: config["neeco_api_host"],
-                                        token  : apply(store, "token"),
-                                        event  : this.state.event,
-                                        comment: {
-                                            body: form.elements["comment"].value
-                                        }
-                                    })
+                                let responce = await client(CreateComment({
+                                    event  : this.state.event,
+                                    comment: {
+                                        body: form.elements["comment"].value
+                                    }
+                                }))
 
-                                    this.componentDidMount()
-                                } catch (e) {
-                                    onError(e)
-                                }
+                                this.componentDidMount()
                             }}
                         >
                             <TextField
@@ -284,6 +235,20 @@ module.exports = class extends React.Component {
                             </Button>
                         </form>
                     </div>
+                    {isOwner && this.state.event &&
+                        <EventEditPage
+                            client={client}
+                            event={this.state.event}
+                            onChange={event => {
+                                this.setState({
+                                    event: {
+                                        ...this.state.event,
+                                        ...event
+                                    }
+                                })
+                            }}
+                        />
+                    }
                 </ViewPager>
             </article>
         )

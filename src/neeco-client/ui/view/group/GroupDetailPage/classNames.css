@@ -1,0 +1,12 @@
+.Host > :nth-child(1) > :nth-child(1) {
+    padding: 8px;
+}
+
+.Text {
+    margin-left: 8px;
+}
+
+.Text > * {
+    margin : 0;
+    padding: 0;
+}

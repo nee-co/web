@@ -1,4 +1,6 @@
 module.exports = a => {
+    Object.keys(a)
+
     let b = new FormData()
 
     for (let i in a)

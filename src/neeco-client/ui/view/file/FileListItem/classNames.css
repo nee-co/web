@@ -1,7 +1,6 @@
 .Host {
-    background-color: #FFF;
-    cursor          : pointer;
-    transition      : all .3s ease-out;
+    cursor    : pointer;
+    transition: all .3s ease-out;
 }
 
 .Host:hover {
@@ -9,8 +8,7 @@
 }
 
 .Host.Selected {
-    background-color: #09F;
-    color           : #FFF;
+    background-color: rgba(0, 0, 0, .1);
 }
 
 .Host td {
@@ -26,6 +24,5 @@
     margin-right    : 32px;
     border-radius   : 50%;
     background-color: #FFF;
-    color           : rgba(0, 0, 0, .87);    
     font-size       : 1.1em;
 }

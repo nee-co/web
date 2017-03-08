@@ -1,6 +1,4 @@
-let createEvent    = require("neeco-client/api/event/createEvent")
-let apply          = require("neeco-client/apply")
-let config         = require("neeco-client/config")
+let CreateEvent    = require("neeco-client/api/request/CreateEvent")
 let NewEventDialog = require("neeco-client/ui/view/event/NewEventDialog")
 let EntriedEvents  = require("neeco-client/ui/view/event/EntriedEventListPage")
 let NewEvents      = require("neeco-client/ui/view/event/EventListPage")
@@ -12,7 +10,6 @@ let Card           = require("react-material/ui/view/Card")
 let ViewPager      = require("react-material/ui/view/ViewPager")
 let Tab            = require("react-material/ui/view/Tab")
 let TabBar         = require("react-material/ui/view/TabBar")
-let {Link}         = require("react-router")
 
 let classNames = require("neeco-client/ui/view/event/EventPage/classNames")
 
@@ -26,9 +23,8 @@ module.exports = class extends React.Component {
     render() {
         let {
             location,
-            onError,
             router,
-            store
+            client
         } = this.props
 
         return (
@@ -41,13 +37,11 @@ module.exports = class extends React.Component {
                 >
                     <div>
                         <Button
-                            component={Link}
                             onClick={e => {
                                 this.setState({
                                     newEventDialogIsVisible: true
                                 })
                             }}
-                            type="flat"
                         >
                             イベント作成
                         </Button>
@@ -63,7 +57,7 @@ module.exports = class extends React.Component {
                                 }
                             }}
                         >
-                            新着
+                            検索
                         </Tab>
                         <Tab
                             to={{
@@ -92,17 +86,14 @@ module.exports = class extends React.Component {
                 >
                     <NewEvents
                         location={location}
-                        onError={onError}
                         router={router}
-                        store={store}
+                        client={client}
                     />
                     <EntriedEvents
-                        onError={onError}
-                        store={store}
+                        client={client}
                     />
                     <OwnedEvents
-                        onError={onError}
-                        store={store}
+                        client={client}
                     />
                 </ViewPager>
                 <NewEventDialog
@@ -111,20 +102,12 @@ module.exports = class extends React.Component {
                             newEventDialogIsVisible: false
                         })
                     }}
-                    onDone={async ({event}) => {
-                        try {
-                            await createEvent({
-                                apiHost: config["neeco_api_host"],
-                                token  : apply(store, "token"),
-                                event  : event
-                            })
-                        } catch (e) {
-                            onError(e)
-                        }
+                    onDone={async event => {
+                        let x = await client(CreateEvent({
+                            event: event
+                        }))
 
-                        this.setState({
-                            newEventDialogIsVisible: false
-                        })
+                        router.push("/events/" + x.id)
                     }}
                     visible={this.state.newEventDialogIsVisible}
                 />

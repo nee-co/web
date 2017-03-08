@@ -1,5 +1,7 @@
 .Host {
-    overflow        : auto;
+    display         : flex;
+    flex-direction  : column;
+    overflow        : hidden;
     position        : fixed;
     top             : 0;
     left            : 0;
@@ -8,5 +10,13 @@
     max-height      : calc(100vh - 16px);
     margin          : 0 auto;
     background-color: #FFF;
-    transition      : all .3s ease-out;
+}
+
+.Host.Visible {
+    transition: all .225s ease-out;    
+}
+
+.Host:not(.Visible) {
+    transform : translateY(100vh);
+    transition: all .195s ease-in;
 }

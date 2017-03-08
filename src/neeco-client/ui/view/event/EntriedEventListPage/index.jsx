@@ -1,6 +1,5 @@
-let getEvents     = require("neeco-client/api/event/getEvents")
-let apply         = require("neeco-client/apply")
-let config        = require("neeco-client/config")
+let ListEvents     = require("neeco-client/api/request/ListEvents")
+let EventList     = require("neeco-client/ui/view/event/EventList")
 let EventListItem = require("neeco-client/ui/view/event/EventListItem")
 let React         = require("react")
 let List          = require("react-material/ui/view/List")
@@ -23,9 +22,8 @@ module.exports = class extends React.Component {
         let {
             className,
             location,
-            onError,
             router,
-            store,
+            client,
             ...props
         } = this.props
 
@@ -34,45 +32,39 @@ module.exports = class extends React.Component {
                 className={[className, classNames.Host].join(" ")}
                 {...props}
             >
-                <List>
+                <EventList>
                     {this.state.events && this.state.events.map(x =>
                         <EventListItem
                             key={x.id}
                             event={x}
                         />
                     )}
-                </List>
+                </EventList>
                 <Indicator
                     loaded={this.state.loaded}
                     loading={this.state.loading}
-                    onLoad={async e => {
+                    onNext={async e => {
                         this.setState({
                             loading: true
                         })
 
-                        try {
-                            let events = await getEvents({
-                                apiHost: config["neeco_api_host"],
-                                token  : apply(store, "token"),
-                                query  : "",
-                                entried: true,
-                                limit  : 10,
-                                offset : this.state.offset
-                            })
+                        let events = await client(ListEvents({
+                            query  : "",
+                            entried: true,
+                            limit  : 10,
+                            offset : this.state.offset
+                        }))
 
-                            let eventLength = events.length
+                        let eventLength = events.length
 
-                            events.splice(0, 0, ...(this.state.events || []))
+                        events.splice(0, 0, ...(this.state.events || []))
 
-                            this.setState({
-                                events : events,
-                                loaded : eventLength == 0,
-                                loading: false,
-                                offset : this.state.offset + eventLength
-                            })
-                        } catch (e) {
-                            onError(e)
-                        }
+                        this.setState({
+                            events : events,
+                            loaded : eventLength == 0,
+                            loading: false,
+                            offset : this.state.offset + eventLength
+                        })
                     }}
                 />
             </div>

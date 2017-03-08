@@ -1,3 +1,6 @@
 .Host {
-    margin: 24px;
+    box-sizing: border-box;
+    margin    : 24px 0;
+    padding   : 0 24px;
+    font-size : 1.25em;
 }

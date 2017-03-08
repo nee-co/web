@@ -1,0 +1,53 @@
+.Host {
+    display   : inline-block;
+    position  : relative;
+    min-height: 22px;
+    cursor    : pointer;
+}
+
+.Host::before {
+    display      : inline-block;
+    width        : 36px;
+    height       : 14px;
+    margin-top   : 3px;
+    border-radius: 7px;
+    content      : "";
+}
+
+.Host.Checked::before {
+    background-color: rgba(33, 150, 243, .5);
+}
+
+.Host:not(.Checked)::before {
+    background-color: rgba(0, 0, 0, .38);
+}
+
+.Host.Disabled::before {
+    background-color: #BDBDBD;
+}
+
+.Host::after {
+    display      : inline-block;
+    position     : absolute;
+    top          : 0;
+    width        : 20px;
+    height       : 20px;
+    border-radius: 50%;
+    box-shadow   : rgba(0, 0, 0, 0.117647) 0 1px 6px, rgba(0, 0, 0, 0.117647) 0 1px 4px;
+    transition   : all .3s ease-out;
+    content      : "";
+}
+
+.Host.Checked::after {
+    background-color: #2196F3;
+    right           : 0;
+}
+
+.Host:not(.Checked)::after {
+    background-color: #FAFAFA;
+    left            : 0;
+}
+
+.Host.Disabled::after {
+    background-color: rgba(0, 0, 0, .12);
+}

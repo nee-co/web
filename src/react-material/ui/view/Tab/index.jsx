@@ -14,7 +14,7 @@ module.exports = ({
                 className,
                 classNames.Host,
                 selected ? classNames.Selected
-            :            undefined
+              :            undefined
             ].join(" ")
         }
         {...props}

@@ -1,5 +1,5 @@
-let config = require("neeco-client/config")
-let React  = require("react")
+let getConfiguration = require("neeco-client/api/getConfiguration")
+let React            = require("react")
 
 let unknownError = "不明なエラーが発生しました。"
 
@@ -17,12 +17,13 @@ module.exports = ({
           : error instanceof Response     ? (
                 error.status >= 500 ? "サーバーエラーが発生しました。"
               : error.status == 404 ? (
-                    error.url == config["neeco_api_host"] + "/token" ? "学籍番号またはパスワードが間違っています。"
-                  :                                                    unknownError
+                    error.url == getConfiguration().api.url + "/token" ? "学籍番号またはパスワードが間違っています。"
+                  :                                                      unknownError
                 )
               : error.status == 403 ? "リソースへのアクセス権がありません。"
               :                       unknownError
             )
+          : error instanceof TypeError    ? "ネットワークエラーが発生しました。"
           :                                 unknownError
         )}
     </Component>

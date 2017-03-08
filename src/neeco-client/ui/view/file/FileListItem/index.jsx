@@ -1,5 +1,5 @@
-let FontAwesomeIcon = require("neeco-client/ui/view/FontAwesomeIcon")
-let React           = require("react")
+let React        = require("react")
+let MaterialIcon = require("react-material/ui/view/MaterialIcon")
 
 let classNames = require("neeco-client/ui/view/file/FileListItem/classNames")
 
@@ -21,10 +21,11 @@ module.exports = ({
         }
     >
         <td>
-            <FontAwesomeIcon
+            <MaterialIcon
                 children={
-                    file.kind == "folder" ? "\uF114"
-                  :                         "\uF016"
+                    file.kind == "folder"    ? "folder"
+                  : /\.pdf$/.test(file.name) ? "picture_as_pdf"
+                  :                            "insert_drive_file"
                 }
                 className={classNames.Icon}
             />

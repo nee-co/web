@@ -1,12 +1,10 @@
-let getEvents     = require("neeco-client/api/event/getEvents")
-let apply         = require("neeco-client/apply")
-let config        = require("neeco-client/config")
-let EventCard     = require("neeco-client/ui/view/event/EventCard")
-let EventCardList = require("neeco-client/ui/view/event/EventCardList")
+let ListEvents    = require("neeco-client/api/request/ListEvents")
+let EventList     = require("neeco-client/ui/view/event/EventList")
+let EventListItem = require("neeco-client/ui/view/event/EventListItem")
 let React         = require("react")
 let Shadow        = require("react-material/ui/effect/Shadow")
-let Button        = require("react-material/ui/view/Button")
 let Indicator     = require("react-material/ui/view/Indicator")
+let Search        = require("react-material/ui/view/Search")
 let TextField     = require("react-material/ui/view/form/TextField")
 let {Link}        = require("react-router")
 
@@ -16,15 +14,14 @@ module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             events    : undefined,
-            pageNumber: 0,
-            loading   : false
+            loading   : false,
+            pageNumber: 0
         })
     }
 
     componentWillReceiveProps({
         location,
-        onError,
-        store
+        client
     }) {
         if (location.query["q"] != this.props.location.query["q"]) {
             this.setState({
@@ -38,9 +35,8 @@ module.exports = class extends React.Component {
         let {
             className,
             location,
-            onError,
             router,
-            store,
+            client,
             ...props
         } = this.props
 
@@ -65,49 +61,45 @@ module.exports = class extends React.Component {
                         })
                     }}
                 >
-                    <TextField
+                    <Search
                         name="query"
                         placeholder="検索"
                     />
                 </form>
-                <EventCardList>
+                <EventList
+                    type={"grid"}
+                >
                     {this.state.events && this.state.events.map(x =>
-                        <EventCard
+                        <EventListItem
                             event={x}
                             key={x.id}
                         />
                     )}
-                </EventCardList>
+                </EventList>
                 <Indicator
                     loaded={
                         this.state.events
-                     && this.state.events.length == this.state.events.totalCount
+                     && this.state.events.length >= this.state.events.totalCount
                     }
                     loading={this.state.loading}
-                    onLoad={async e => {
+                    onNext={async e => {
                         this.setState({
                             loading: true
                         })
 
-                        try {
-                            let events = await getEvents({
-                                apiHost: config["neeco_api_host"],
-                                token  : apply(store, "token"),
-                                query  : location.query["q"] || "",
-                                page   : this.state.pageNumber + 1,
-                                perPage: 10
-                            })
+                        let events = await client(ListEvents({
+                            query  : location.query["q"] || "",
+                            page   : this.state.pageNumber + 1,
+                            perPage: 10
+                        }))
 
-                            events.splice(0, 0, ...(this.state.events || []))
+                        events.splice(0, 0, ...(this.state.events || []))
 
-                            this.setState({
-                                events    : events,
-                                pageNumber: this.state.pageNumber + 1,
-                                loading   : false
-                            })
-                        } catch (e) {
-                            onError(e)
-                        }
+                        this.setState({
+                            events    : events,
+                            pageNumber: this.state.pageNumber + 1,
+                            loading   : false
+                        })
                     }}
                 />
             </div>

@@ -33,11 +33,11 @@ module.exports = class extends React.Component {
                 className={
                     [
                         classNames.TextField,
-                        this.state.empty === true  ? classNames.Empty
-                      : this.state.empty === false ? undefined
-                      : value                      ? undefined
-                      : defaultValue               ? undefined
-                      :                              classNames.Empty,
+                        this.state.empty == true  ? classNames.Empty
+                      : this.state.empty == false ? undefined
+                      : value                     ? undefined
+                      : defaultValue              ? undefined
+                      :                             classNames.Empty,
                         this.state.focused ? classNames.Focused
                       :                      undefined,
                         this.state.invalid ? classNames.Invalid
@@ -47,7 +47,9 @@ module.exports = class extends React.Component {
                         required ? classNames.Required
                       :            undefined
                     ].join(" ")
-                }>
+                }
+                disabled={disabled}
+            >
                 <label
                     className={classNames.Label}
                     htmlFor={id}

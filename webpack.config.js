@@ -45,6 +45,7 @@ module.exports = {
                     {
                         loader: "babel-loader",
                         options: {
+                            cacheDirectory: true,
                             plugins: [
                                 "transform-object-rest-spread"
                             ],
@@ -65,12 +66,9 @@ module.exports = {
     },
     plugins: [
         new DefinePlugin({
-            process: {
-                env: {
-                    NODE_ENV      : JSON.stringify(process.env.NODE_ENV),
-                    NEECO_API_HOST: JSON.stringify(process.env.NEECO_API_HOST)
-                }
-            }
+            "process.env.NEECO_API_URL": JSON.stringify(
+                process.env.NEECO_API_URL || "https://api.neec.ooo"
+            )
         })
     ],
     resolve: {

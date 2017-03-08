@@ -1,35 +1,22 @@
 .Host {
-    display       : flex;
-    flex-direction: column;
-    padding       : 16px 0 8px 0;
-}
-
-.Label {
-    display       : inline-flex;
-    flex-direction: column;
-    margin-bottom : 8px;
+    margin: 16px 0 8px 0;
 }
 
 .LabelText:not(:empty) {
     display      : inline-block;
     margin-bottom: 8px;
-    font-size    : 12px;
+    font-size    : .75em;
     color        : #777;
     transition   : all .3s ease-out;
 }
 
-.Preview {
-    width : 240px;
-    height: 240px;
+.Image {
+    border: 1px solid #DDD;
     cursor: pointer;
 }
 
 .Input {
-    max-width    : 0;
-    max-height   : 0;
-    border-width : 0;
-    outline-width: 0;
-    box-shadow   : none;
+    display: none;
 }
 
 .Host.Invalid .LabelText {

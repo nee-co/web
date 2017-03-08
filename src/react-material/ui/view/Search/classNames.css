@@ -1,0 +1,47 @@
+.Host {
+    display         : flex;
+    align-items     : center;
+    padding         : 1em;
+    background-color: #FFF;
+    cursor          : text;
+}
+
+.Host:not(.Expandable) {
+    margin: 8px;
+}
+
+.Host > :nth-child(1) {
+    position: relative;
+}
+
+.Host > :nth-child(1) > * {
+    opacity   : 1;
+    transition: all .3s ease-out;
+}
+
+.Host.Focus > :nth-child(1) > :nth-child(1) {
+    opacity: 0;
+}
+
+.Host > :nth-child(1) > :nth-child(2) {
+    position: absolute;
+    top     : 0;
+    left    : 0;
+}
+
+.Host.Focus > :nth-child(1) > :nth-child(2) {
+    cursor: pointer;
+}
+
+.Host:not(.Focus) > :nth-child(1) > :nth-child(2) {
+    opacity: 0;
+}
+
+.Host > input {
+    margin-left     : 1em;
+    padding         : 0;
+    border-width    : 0;
+    outline-width   : 0;
+    background-color: transparent;
+    font-size       : inherit;
+}

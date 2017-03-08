@@ -1,0 +1,72 @@
+.Host {
+    display   : inline-block;
+    position  : relative;
+    transition: all .3s ease-out;
+}
+
+.Host > :nth-child(1) {
+    min-width : 100%;
+    min-height: 100%;
+}
+
+.Host:not(.Disabled):hover > :nth-child(1) {
+    background-color: #FFF;
+}
+
+.Host > :nth-child(1) > :nth-child(1) {
+    display        : flex;
+    align-items    : center;
+    justify-content: space-between;
+    padding        : 0 .5em 0 0;
+    transition     : all ease-out .3s;
+}
+
+.Host:not(.Disabled) > :nth-child(1) > :nth-child(1) {
+    cursor: pointer;
+}
+
+.Host > :nth-child(1) > :nth-child(1) > * {
+    display: inline-block;
+}
+
+.Host > :nth-child(1) > :nth-child(2) > * > :nth-child(1) {
+    min-height : 2em;
+    padding    : 0 3.5em 0 1.5em;
+    white-space: nowrap;
+}
+
+.Host input {
+    box-sizing      : border-box;
+    margin          : 0 .5em 0 0;
+    padding         : 1em 0 1em 1.5em;
+    border-right    : 1px solid transparent;
+    border-width    : 0;
+    outline-width   : 0;
+    background-color: transparent;
+    color           : inherit;
+    font-family     : inherit;
+    font-size       : inherit;
+    transition      : all .3s ease-out;
+}
+
+.Host input {
+    flex-grow: 1;
+    width    : 1px;
+}
+
+.Host.Editable > :nth-child(1) > :nth-child(2) {
+    border-top: 1px solid rgba(0, 0, 0, .12);
+}
+
+.Host.Editable input:focus,
+.Host:not(.Disabled).Editable:hover input {
+    border-right: 1px solid rgba(0, 0, 0, .12);
+}
+
+.Host .Icon {
+    transition: all .3s ease-out;
+}
+
+.Host.Focus .Icon {
+    transform: rotateZ(180deg);
+}

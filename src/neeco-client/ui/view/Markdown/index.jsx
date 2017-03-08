@@ -12,9 +12,9 @@ module.exports = ({
     ...props
 }) =>
     <Component
-        {...props}
         className={[className, classNames.Host].join(" ")}
         dangerouslySetInnerHTML={{
             __html: srcDoc && sanitize(toHTML(srcDoc))
         }}
+        {...props}
     />

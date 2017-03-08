@@ -1,9 +1,8 @@
 .Host {
-    font-size: 15px;
+    font-size: .9375em;
 }
 
 .Host > * {
-    box-sizing: border-box;
-    min-width : max-content;
-    min-height: max-content;
+    min-height : max-content;
+    white-space: nowrap;
 }

@@ -11,8 +11,11 @@
 .Host {
     position        : absolute;
     border-radius   : 2px;
-    background-color: #FFF;
     transition      : all .3s ease-out;
+}
+
+.Host.Floating {
+    background-color: #FFF;
 }
 
 .Host.Hidden {

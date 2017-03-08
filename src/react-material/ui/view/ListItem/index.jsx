@@ -8,13 +8,14 @@ let classNames = require("react-material/ui/view/ListItem/classNames")
 module.exports = ({
     className,
     children,
+    disabled,
     location,
-    onListItemClick,
     to,
     selected = location && match({
         location          : location,
         locationDescriptor: to
     }),
+    value,
     ...props
 }) =>
     <li
@@ -22,6 +23,8 @@ module.exports = ({
             [
                 className,
                 classNames.Host,
+                disabled ? classNames.Disabled
+              :            undefined,
                 selected ? classNames.Selected
               :            undefined
             ].join(" ")
@@ -41,9 +44,8 @@ module.exports = ({
                     )
                 )
             }
-            className={classNames.Link}
             component={Link}
-            onClick={onListItemClick}
+            disabled={disabled}
             to={to}
         />
     </li>

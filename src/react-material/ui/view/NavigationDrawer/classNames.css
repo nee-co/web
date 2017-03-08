@@ -5,7 +5,7 @@
     background-color: #FFF;
     font-family     : "Roboto", sans-serif;
     font-weight     : bolder;
-    transition      : all .3s ease-out;
+    transition      : all .3s ease-in-out;
 }
 
 .Host.Floating {
@@ -20,12 +20,7 @@
 
 .Host li {
     min-width  : max-content;
-    font-size  : 14px;
+    font-size  : .875em;
     font-weight: bolder;
     color      : rgba(0, 0, 0, .8);
-}
-
-.Host li > :nth-child(1) > :nth-child(1) {
-    font-size  : 20px;
-    font-weight: normal;
 }

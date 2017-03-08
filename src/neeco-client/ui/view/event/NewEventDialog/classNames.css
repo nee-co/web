@@ -1,8 +1,0 @@
-.Host {
-    background-color: #FFF;
-}
-
-.Host form {
-    display       : flex;
-    flex-direction: column;
-}

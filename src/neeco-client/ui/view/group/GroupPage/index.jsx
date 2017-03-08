@@ -1,53 +1,91 @@
-let getGroups = require("neeco-client/api/group/getGroups")
-let apply     = require("neeco-client/apply")
-let config    = require("neeco-client/config")
-let React     = require("react")
-let Button    = require("react-material/ui/view/Button")
-let Card      = require("react-material/ui/view/Card")
-let List      = require("react-material/ui/view/List")
-let ListItem  = require("react-material/ui/view/ListItem")
-let ViewPager = require("react-material/ui/view/ViewPager")
-let Tab       = require("react-material/ui/view/Tab")
-let TabBar    = require("react-material/ui/view/TabBar")
-let {Link}    = require("react-router")
+let CreateGroup     = require("neeco-client/api/request/CreateGroup")
+let ListGroups      = require("neeco-client/api/request/ListGroups")
+let GroupList       = require("neeco-client/ui/view/group/GroupList")
+let GroupListItem   = require("neeco-client/ui/view/group/GroupListItem")
+let GroupSearchPage = require("neeco-client/ui/view/group/GroupSearchPage")
+let NewGroupDialog  = require("neeco-client/ui/view/group/NewGroupDialog")
+let React           = require("react")
+let Button          = require("react-material/ui/view/Button")
+let Card            = require("react-material/ui/view/Card")
+let List            = require("react-material/ui/view/List")
+let ListItem        = require("react-material/ui/view/ListItem")
+let MaterialIcon    = require("react-material/ui/view/MaterialIcon")
+let Tab             = require("react-material/ui/view/Tab")
+let TabBar          = require("react-material/ui/view/TabBar")
+let ViewPager       = require("react-material/ui/view/ViewPager")
 
 let classNames = require("neeco-client/ui/view/group/GroupPage/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            groups: [],
-            error : undefined
+            groups                 : undefined,
+            invitedGroups          : undefined,
+            joinedGroups           : undefined,
+            loading                : false,
+            pageNumber             : 0,
+            newGroupDialogIsVisible: false
         })
     }
 
     componentDidMount() {
         let {
-            onError,
-            store
+            client
         } = this.props
 
+        let listInvitedGroups = async offset => {
+            let x = await client(ListGroups({
+                query  : "",
+                invited: true,
+                limit  : 10,
+                offset : offset
+            }))
+
+            return (
+                x.length < 10 ? x
+              :                 x.concat(await listInvitedGroups(offset + 10))
+            )
+        }
+        
+        let listJoinedGroups = async offset => {
+            let x = await client(ListGroups({
+                query : "",
+                joined: true,
+                limit : 10,
+                offset: offset
+            }))
+
+            return (
+                x.length < 10 ? x
+              :                 x.concat(await listJoinedGroups(offset + 10))
+            )
+        }
+
         ;(async () => {
-            try {
-                this.setState({
-                    groups: await getGroups({
-                        apiHost: config["neeco_api_host"],
-                        token  : apply(store, "token"),
-                        query  : "",
-                        page   : 1,
-                        per    : 10
-                    })
-                })
-            } catch (e) {
-                onError(e)
-            }
+            this.setState({
+                invitedGroups: await listInvitedGroups(0),
+                joinedGroups : await listJoinedGroups(0)
+            })
         })()
+    }
+
+    componentWillReceiveProps({
+        location,
+        client
+    }) {
+        if (location.query["q"] != this.props.location.query["q"]) {
+            this.setState({
+                groups    : undefined,
+                pageNumber: 0
+            })
+        }
     }
 
     render() {
         let {
             location,
-            store
+            client,
+            router
         } = this.props
 
         return (
@@ -59,13 +97,15 @@ module.exports = class extends React.Component {
                 >
                     <div>
                         <Button
-                            component={Link}
                             onClick={e => {
                                 this.setState({
-                                    newEventDialogIsVisible: true
+                                    newGroupDialogIsVisible: true
                                 })
                             }}
                         >
+                            <MaterialIcon>
+                                group_add
+                            </MaterialIcon>
                             グループ作成
                         </Button>
                     </div>
@@ -74,49 +114,105 @@ module.exports = class extends React.Component {
                     >
                         <Tab
                             to={{
-                                pathname: "/groups",
+                                ...location,
                                 query   : {
                                     "tab_index": "0"
                                 }
                             }}
                         >
-                            新着
+                            検索
                         </Tab>
                         <Tab
                             to={{
-                                pathname: "/groups",
+                                ...location,
                                 query   : {
                                     "tab_index": "1"
                                 }
                             }}
                         >
-                            参加中
+                            参加中 ({this.state.joinedGroups && this.state.joinedGroups.length})
                         </Tab>
                         <Tab
                             to={{
-                                pathname: "/groups",
+                                ...location,
                                 query   : {
                                     "tab_index": "2"
                                 }
                             }}
                         >
-                            管理中
+                            招待 ({this.state.invitedGroups && this.state.invitedGroups.length})
                         </Tab>
                     </TabBar>
                 </div>
-                <ViewPager>
-                    <div>
-                        <List>
-                            {this.state.groups && this.state.groups.map(x => 
-                                <ListItem
+                <ViewPager
+                    selectedIndex={location.query["tab_index"] || 0}
+                >
+                    <GroupSearchPage
+                        groups={this.state.groups}
+                        loading={this.state.loading}
+                        onQuery={query => {
+                            router.push({
+                                ...location,
+                                query: {
+                                    ...location.query,
+                                    q: query
+                                }
+                            })
+                        }}
+                        onNext={async e => {
+                            this.setState({
+                                loading: true
+                            })
+
+                            let groups = await client(ListGroups({
+                                query  : location.query["q"] || "",
+                                page   : this.state.pageNumber + 1,
+                                perPage: 10
+                            }))
+
+                            groups.splice(0, 0, ...(this.state.groups || []))
+
+                            this.setState({
+                                groups    : groups,
+                                pageNumber: this.state.pageNumber + 1,
+                                loading   : false
+                            })
+                        }}
+                    />
+                    <GroupList>
+                        {this.state.joinedGroups && this.state.joinedGroups.map(
+                            x =>
+                                <GroupListItem
                                     key={x.id}
-                                >
-                                    {x.name}
-                                </ListItem>
-                            )}
-                        </List>
-                    </div>
+                                    group={x}
+                                />
+                        )}
+                    </GroupList>
+                    <GroupList>
+                        {this.state.invitedGroups && this.state.invitedGroups.map(
+                            x =>
+                                <GroupListItem
+                                    key={x.id}
+                                    group={x}
+                                />
+                        )}
+                    </GroupList>
                 </ViewPager>
+                <NewGroupDialog
+                    onCancel={e => {
+                        this.setState({
+                            newGroupDialogIsVisible: false
+                        })
+                    }}
+                    onDone={async group => {
+                        let x = await client(CreateGroup({
+                            group: group
+                        }))
+
+                        router.push("/groups/" + x.id)
+                    }}
+                    visible={this.state.newGroupDialogIsVisible}
+                />
             </section>
         )
     }

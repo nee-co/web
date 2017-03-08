@@ -17,11 +17,11 @@ let Dialog = class extends React.Component {
         this.setState({
             onClick: e => {
                 let {
-                    onCancel
+                    onCancel = () => undefined
                 } = this.props
 
                 if (!ReactDOM.findDOMNode(this).contains(e.target))
-                    onCancel && onCancel()
+                    onCancel()
             },
             size   : undefined
         })
@@ -107,7 +107,7 @@ let Dialog = class extends React.Component {
                           + (window.innerHeight / 2 - this.state.size[1] / 2)
                           + "px)"
                         )
-                      :                              "translateY(100vh)"
+                      :                              undefined
                     ),
                     ...style
                 }}
