@@ -21,7 +21,8 @@
     transition     : all ease-out .3s;
 }
 
-.Host:not(.Disabled) > :nth-child(1) > :nth-child(1) {
+.Host:not(.Disabled) :nth-child(1) > :nth-child(1),
+.Host:not(.Disabled) :nth-child(1) > :nth-child(1) > * {
     cursor: pointer;
 }
 

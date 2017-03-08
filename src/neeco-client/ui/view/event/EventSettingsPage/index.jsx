@@ -11,7 +11,7 @@ let DropdownButton     = require("react-material/ui/view/form/DropdownButton")
 let ImageInput         = require("react-material/ui/view/form/ImageInput")
 let TextField          = require("react-material/ui/view/form/TextField")
 
-let classNames = require("neeco-client/ui/view/event/EventEditPage/classNames")
+let classNames = require("neeco-client/ui/view/event/EventSettingsPage/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -67,8 +67,8 @@ module.exports = class extends React.Component {
                         selectedIndex: undefined
                     })}
                     selectedIndexes={
-                        this.state.selectedIndex ? [this.state.selectedIndex]
-                      :                            []
+                        this.state.selectedIndex == undefined ? []
+                      :                                         [this.state.selectedIndex]
                     }
                 >
                     <ExpansionPanel
@@ -169,6 +169,7 @@ module.exports = class extends React.Component {
                         </form>
                     </ExpansionPanel>
                     <ExpansionPanel
+                        hintText="画像の更新が適用されるまで数分程かかります。"
                         labelText="画像"
                     >
                         <form

@@ -44,7 +44,10 @@ module.exports = ({
                     )
                 )
             }
-            component={Link}
+            component={
+                to ? Link
+              :      undefined
+            }
             disabled={disabled}
             to={to}
         />

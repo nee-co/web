@@ -4,7 +4,7 @@ let GetEventByID         = require("neeco-client/api/request/GetEventByID")
 let RemoveUserFromEvent  = require("neeco-client/api/request/RemoveUserFromEvent")
 let Markdown             = require("neeco-client/ui/view/Markdown")
 let EventCommentListItem = require("neeco-client/ui/view/event/EventCommentListItem")
-let EventEditPage        = require("neeco-client/ui/view/event/EventEditPage")
+let EventSettingsPage    = require("neeco-client/ui/view/event/EventSettingsPage")
 let UserListItem         = require("neeco-client/ui/view/user/UserListItem")
 let React                = require("react")
 let Shadow               = require("react-material/ui/effect/Shadow")
@@ -134,7 +134,7 @@ module.exports = class extends React.Component {
                             <Tab
                                 to={"/events/" + params["event_id"] + "/edit"}
                             >
-                                編集
+                                設定
                             </Tab>
                         }
                     </TabBar>
@@ -236,7 +236,7 @@ module.exports = class extends React.Component {
                         </form>
                     </div>
                     {isOwner && this.state.event &&
-                        <EventEditPage
+                        <EventSettingsPage
                             client={client}
                             event={this.state.event}
                             onChange={event => {

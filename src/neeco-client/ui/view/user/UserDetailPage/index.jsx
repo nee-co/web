@@ -39,11 +39,16 @@ module.exports = class extends React.Component {
             <section
                 className={classNames.Host}
             >
-                <Image
-                    alt={this.state.user && this.state.user.name}
-                    src={this.state.user && this.state.user.image}
-                />
-                {this.state.user && this.state.user.name}
+                <div>
+                    <Image
+                        alt={this.state.user && this.state.user.name}
+                        src={this.state.user && this.state.user.image}
+                        width="64"
+                        height="64"
+                    />
+                    <h2>{this.state.user && this.state.user.name}</h2>
+                    <p>{this.state.user && this.state.user.number}</p>
+                </div>
             </section>
         )
     }

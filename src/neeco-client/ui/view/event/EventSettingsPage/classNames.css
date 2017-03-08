@@ -2,5 +2,5 @@
     box-sizing      : border-box;
     min-height      : 100%;
     padding         : 16px;
-    background-color: #EEE;
+    background-color: rgba(0, 0, 0, .1);
 }

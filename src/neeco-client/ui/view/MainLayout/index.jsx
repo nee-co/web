@@ -129,9 +129,18 @@ module.exports = class extends React.Component {
                                         }
                                     </ListItem>
                                     <ListItem
+                                        to="/settings"
+                                    >
+                                        <ListItemTextArea>
+                                            設定
+                                        </ListItemTextArea>
+                                    </ListItem>
+                                    <ListItem
                                         onClick={onSignOut}
                                     >
-                                        {"サインアウト"}
+                                        <ListItemTextArea>
+                                            サインアウト
+                                        </ListItemTextArea>
                                     </ListItem>
                                 </DropdownButton>
                             </ListItem>
@@ -188,18 +197,6 @@ module.exports = class extends React.Component {
                                 />
                                 <ListItemTextArea>
                                     ドライブ
-                                </ListItemTextArea>
-                            </ListItem>
-                            <Divider />
-                            <ListItem
-                                to="/settings"
-                            >
-                                <ListItemIcon
-                                    children={"settings"}
-                                    component={MaterialIcon}
-                                />
-                                <ListItemTextArea>
-                                    設定
                                 </ListItemTextArea>
                             </ListItem>
                         </List>

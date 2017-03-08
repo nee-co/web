@@ -180,8 +180,7 @@ module.exports = class extends React.Component {
                                         onClick(e)
 
                                         this.setState({
-                                            focus: false,
-                                            value: children
+                                            focus: false
                                         })
 
                                         onChange(value)

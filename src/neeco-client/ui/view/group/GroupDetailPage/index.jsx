@@ -1,6 +1,8 @@
 let GetGroupByID      = require("neeco-client/api/request/GetGroupByID")
+let UpdateGroup       = require("neeco-client/api/request/UpdateGroup")
 let ListGroupInvitees = require("neeco-client/api/request/ListGroupInvitees")
 let ListGroupMembers  = require("neeco-client/api/request/ListGroupMembers")
+let GroupSettingsPage = require("neeco-client/ui/view/group/GroupSettingsPage")
 let UserListItem      = require("neeco-client/ui/view/user/UserListItem")
 let React             = require("react")
 let Image             = require("react-material/ui/view/Image")
@@ -110,7 +112,6 @@ module.exports = class extends React.Component {
                             <h2>
                                 {this.state.group && this.state.group.name}
                             </h2>
-                            <p>{this.state.group && this.state.group.description}</p>
                         </div>
                     </LinearLayout>
                     <TabBar
@@ -126,16 +127,30 @@ module.exports = class extends React.Component {
                         >
                             メンバー ({this.state.members && this.state.members.length})
                         </Tab>
-                        {this.state.invitees && <Tab
-                            to={{
-                                ...location,
-                                query: {
-                                    "tab_index": "1"
-                                }
-                            }}
-                        >
-                            招待中 ({this.state.invitees && this.state.invitees.length})
-                        </Tab>}
+                        {this.state.invitees && (
+                            <Tab
+                                to={{
+                                    ...location,
+                                    query: {
+                                        "tab_index": "1"
+                                    }
+                                }}
+                            >
+                                招待中 ({this.state.invitees && this.state.invitees.length})
+                            </Tab>
+                        )}
+                        {this.state.invitees && (
+                            <Tab
+                                to={{
+                                    ...location,
+                                    query: {
+                                        "tab_index": "2"
+                                    }
+                                }}
+                            >
+                                設定
+                            </Tab>
+                        )}
                     </TabBar>
                 </div>
                 <ViewPager
@@ -150,15 +165,29 @@ module.exports = class extends React.Component {
                                 />
                         )}
                     </List>
-                    {this.state.invitees && <List>
-                        {this.state.invitees && this.state.invitees.map(
-                            x =>
-                                <UserListItem
-                                    key={x.id}
-                                    user={x}
-                                />
-                        )}
-                    </List>}
+                    {this.state.invitees && (
+                        <List>
+                            {this.state.invitees && this.state.invitees.map(
+                                x =>
+                                    <UserListItem
+                                        key={x.id}
+                                        user={x}
+                                    />
+                            )}
+                        </List>
+                    )}
+                    {this.state.invitees && (
+                        <GroupSettingsPage
+                            group={this.state.group}
+                            onGroupUpdate={async x => {
+                                this.setState({
+                                    group: await client(UpdateGroup({
+                                        group: x
+                                    }))
+                                })
+                            }}
+                        />
+                    )}
                 </ViewPager>
             </div>
         )

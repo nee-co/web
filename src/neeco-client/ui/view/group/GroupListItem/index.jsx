@@ -61,7 +61,7 @@ module.exports = class extends React.Component {
                         {group.name}
                     </p>
                     <p>
-                        {group.description}
+                        {group.note}
                     </p>
                 </ListItemTextArea>
             </Card>

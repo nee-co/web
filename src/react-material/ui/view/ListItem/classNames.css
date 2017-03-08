@@ -16,7 +16,7 @@
     transition     : all .3s ease-out;
 }
 
-.Host:not(.Disabled) > a:nth-child(1):hover {
+.Host:not(.Disabled) > :nth-child(1):hover {
     background-color: rgba(0, 0, 0, .05);
 }
 

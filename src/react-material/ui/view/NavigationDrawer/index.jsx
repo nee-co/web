@@ -35,8 +35,8 @@ module.exports = class extends React.Component {
 
         this.setState({
             size: [
-                Math.ceil(rect.width / 56) * 56,
-                Math.ceil(rect.height / 56) * 56
+                rect.width,
+                rect.height
             ]
         })
     }
@@ -88,8 +88,6 @@ module.exports = class extends React.Component {
                 style={{
                     marginLeft: visible         ? 0
                               : this.state.size ? -(this.state.size[0] + parseInt(elevation)) + "px"
-                              :                   undefined,
-                    width     : this.state.size ? this.state.size[0]
                               :                   undefined,
                     ...style
                 }}

@@ -4,16 +4,16 @@ let toFormData = require("neeco-client/encoding/toFormData")
 module.exports = self => Object.assign(
     async client => {
         let response = await fetch(
-            client.api.url + "/groups",
+            client.api.url + "/groups/" + self.group.id,
             {
-                method : "POST",
+                method : "PATCH",
                 headers: {
                     "Authorization": "Bearer " + client.api.token
                 },
-                body: toFormData({
+                body   : toFormData({
                     "name"      : self.group.name,
-                    "image"     : self.group.image,
                     "note"      : self.group.note,
+                    "image"     : self.group.image,
                     "is_private": self.group.isPrivate
                 })
             }

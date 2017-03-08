@@ -1,4 +1,3 @@
-let UpdateUser         = require("neeco-client/api/request/UpdateUser")
 let Editor             = require("neeco-client/ui/view/Editor")
 let React              = require("react")
 let Button             = require("react-material/ui/view/Button")
@@ -9,19 +8,7 @@ let FlexibleSpace      = require("react-material/ui/view/FlexibleSpace")
 let ImageInput         = require("react-material/ui/view/form/ImageInput")
 let TextField          = require("react-material/ui/view/form/TextField")
 
-let classNames = require("neeco-client/ui/view/settings/SettingsPage/classNames")
-
-let onPasswordInput = e => {
-    let form = e.target.form
-
-    let password = form.elements["password"].value
-    let confirmPasswordInput = form.elements["confirm_password"]
-
-    if (confirmPasswordInput.value == password)
-        confirmPasswordInput.setCustomValidity("")
-    else
-        confirmPasswordInput.setCustomValidity("再入力されたパスワードが一致しません。")
-}
+let classNames = require("neeco-client/ui/view/group/GroupSettingsPage/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -32,9 +19,10 @@ module.exports = class extends React.Component {
 
     render() {
         let {
-            onUserUpdate,
-            client,
-            user
+            className,
+            group,
+            onGroupUpdate,
+            ...props
         } = this.props
 
         let Buttons = x =>
@@ -56,10 +44,16 @@ module.exports = class extends React.Component {
                     保存
                 </Button>
             </LinearLayout>
-
+        
         return (
             <div
-                className={classNames.Host}
+                className={
+                    [
+                        className,
+                        classNames.Host
+                    ].join(" ")
+                }
+                {...props}
             >
                 <ExpansionPanelList
                     onSelected={({index}) => this.setState({
@@ -74,18 +68,35 @@ module.exports = class extends React.Component {
                     }
                 >
                     <ExpansionPanel
-                        disabled
-                        labelText="学籍番号"
-                        value={user && user.number}
-                    />
-                    <ExpansionPanel
-                        disabled
-                        labelText="氏名"
-                        value={user && user.name}
-                    />
+                        labelText="グループ名"
+                        value={group && group.name}
+                    >
+                        <form
+                            onSubmit={e => {
+                                e.preventDefault()
+
+                                let form = e.target
+
+                                onGroupUpdate({
+                                    id  : group.id,
+                                    name: form.elements["name"].value
+                                })
+
+                                this.setState({
+                                    selectedIndex: undefined
+                                })
+                            }}
+                        >
+                            <TextField
+                                defaultValue={group && group.name}
+                                name="name"
+                            />
+                            <Buttons />
+                        </form>
+                    </ExpansionPanel>
                     <ExpansionPanel
                         hintText="画像の更新が適用されるまで数分程かかります。"
-                        labelText="画像"
+                        labelText="グループ画像"
                     >
                         <form
                             onSubmit={async e => {
@@ -93,11 +104,10 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onUserUpdate(await client(UpdateUser({
-                                    user: {
-                                        image: form.elements["image"].files
-                                    }
-                                })))
+                                onGroupUpdate({
+                                    id   : group.id,
+                                    image: form.elements["image"].files
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined
@@ -105,7 +115,7 @@ module.exports = class extends React.Component {
                             }}
                         >
                             <ImageInput
-                                defaultImageURL={user && user.image}
+                                defaultImageURL={group && group.image}
                                 name="image"
                                 width="128"
                                 height="128"
@@ -114,7 +124,7 @@ module.exports = class extends React.Component {
                         </form>
                     </ExpansionPanel>
                     <ExpansionPanel
-                        labelText="自己紹介"
+                        labelText="ノート"
                     >
                         <form
                             onSubmit={async e => {
@@ -122,11 +132,10 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onUserUpdate(await client(UpdateUser({
-                                    user: {
-                                        note: form.elements["note"].value
-                                    }
-                                })))
+                                onGroupUpdate({
+                                    id  : group.id,
+                                    note: form.elements["note"].value
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined
@@ -134,50 +143,8 @@ module.exports = class extends React.Component {
                             }}
                         >
                             <Editor
-                                defaultValue={user &&  user.note}
+                                defaultValue={group && group.note}
                                 name="note"
-                            />
-                            <Buttons />
-                        </form>
-                    </ExpansionPanel>
-                    <ExpansionPanel
-                        labelText="パスワード"
-                    >
-                        <form
-                            onSubmit={async e => {
-                                e.preventDefault()
-
-                                let form = e.target
-
-                                onUserUpdate(await client(UpdateUser({
-                                    password       : form.elements["password"].value,
-                                    currentPassword: form.elements["current_password"].value
-                                })))
-
-                                this.setState({
-                                    selectedIndex: undefined
-                                })
-                            }}
-                        >
-                            <TextField
-                                labelText={"現在のパスワード"}
-                                name="current_password"
-                                required
-                                type="password"
-                            />
-                            <TextField
-                                labelText={"新しいパスワード"}
-                                name="password"
-                                onInput={onPasswordInput}
-                                required
-                                type="password"
-                            />
-                            <TextField
-                                labelText={"パスワードの再入力"}
-                                name="confirm_password"
-                                onInput={onPasswordInput}
-                                required
-                                type="password"
                             />
                             <Buttons />
                         </form>
