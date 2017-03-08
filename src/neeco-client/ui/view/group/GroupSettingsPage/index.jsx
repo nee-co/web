@@ -23,6 +23,7 @@ module.exports = class extends React.Component {
             className,
             group,
             onGroupUpdate,
+            onLeave,
             ...props
         } = this.props
 
@@ -181,6 +182,20 @@ module.exports = class extends React.Component {
                             />
                             <Buttons />
                         </form>
+                    </ExpansionPanel>
+                    <ExpansionPanel
+                        labelText="退会"
+                    >
+                        <LinearLayout
+                            orientation="horizontal"
+                        >
+                            <FlexibleSpace />
+                            <Button
+                                onClick={onLeave}
+                            >
+                                グループから退会する
+                            </Button>
+                        </LinearLayout>
                     </ExpansionPanel>
                 </ExpansionPanelList>
             </div>

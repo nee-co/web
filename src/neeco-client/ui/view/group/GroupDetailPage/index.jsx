@@ -1,21 +1,24 @@
-let AddUserToGroup      = require("neeco-client/api/request/AddUserToGroup")
-let GetGroupByID        = require("neeco-client/api/request/GetGroupByID")
-let ListGroupInvitees   = require("neeco-client/api/request/ListGroupInvitees")
-let ListGroupMembers    = require("neeco-client/api/request/ListGroupMembers")
-let RemoveUserFromGroup = require("neeco-client/api/request/RemoveUserFromGroup")
-let UpdateGroup         = require("neeco-client/api/request/UpdateGroup")
-let Markdown            = require("neeco-client/ui/view/Markdown")
-let GroupSettingsPage   = require("neeco-client/ui/view/group/GroupSettingsPage")
-let UserListItem        = require("neeco-client/ui/view/user/UserListItem")
-let React               = require("react")
-let Image               = require("react-material/ui/view/Image")
-let LinearLayout        = require("react-material/ui/view/LinearLayout")
-let List                = require("react-material/ui/view/List")
-let ListItem            = require("react-material/ui/view/ListItem")
-let Tab                 = require("react-material/ui/view/Tab")
-let TabBar              = require("react-material/ui/view/TabBar")
-let ViewPager           = require("react-material/ui/view/ViewPager")
-let DropdownButton      = require("react-material/ui/view/form/DropdownButton")
+let AddUserToGroup         = require("neeco-client/api/request/AddUserToGroup")
+let AddUserToGroupInvitees = require("neeco-client/api/request/AddUserToGroupInvitees")
+let GetGroupByID           = require("neeco-client/api/request/GetGroupByID")
+let ListGroupInvitees      = require("neeco-client/api/request/ListGroupInvitees")
+let ListGroupMembers       = require("neeco-client/api/request/ListGroupMembers")
+let RemoveUserFromGroup    = require("neeco-client/api/request/RemoveUserFromGroup")
+let UpdateGroup            = require("neeco-client/api/request/UpdateGroup")
+let Markdown               = require("neeco-client/ui/view/Markdown")
+let GroupSettingsPage      = require("neeco-client/ui/view/group/GroupSettingsPage")
+let InviteGroupDialog      = require("neeco-client/ui/view/group/InviteGroupDialog")
+let UserListItem           = require("neeco-client/ui/view/user/UserListItem")
+let React                  = require("react")
+let Button                 = require("react-material/ui/view/Button")
+let Image                  = require("react-material/ui/view/Image")
+let LinearLayout           = require("react-material/ui/view/LinearLayout")
+let List                   = require("react-material/ui/view/List")
+let ListItem               = require("react-material/ui/view/ListItem")
+let Tab                    = require("react-material/ui/view/Tab")
+let TabBar                 = require("react-material/ui/view/TabBar")
+let ViewPager              = require("react-material/ui/view/ViewPager")
+let DropdownButton         = require("react-material/ui/view/form/DropdownButton")
 
 let classNames = require("neeco-client/ui/view/group/GroupDetailPage/classNames")
 
@@ -83,7 +86,10 @@ module.exports = class extends React.Component {
                     invitees: await listInvitees(0)
                 })
             } catch (e) {
-                if (e instanceof Response && e.status == 403)
+                if (
+                    e instanceof Response
+                 && (e.status == 403 || e.status == 404)
+                )
                     return
                 else
                     onError(e)
@@ -118,14 +124,9 @@ module.exports = class extends React.Component {
                             <h2>
                                 {this.state.group && this.state.group.name}
                             </h2>
-                            <DropdownButton
-                                value={
-                                    this.state.invitees == undefined ? "未参加"
-                                  :                                    "参加"
-                                }
-                            >
-                                <ListItem
-                                    onClick={async _ => {
+                            {!this.state.invitees && (
+                                <Button
+                                    onClick={async e => {
                                         let x = await client(AddUserToGroup({
                                             group: {
                                                 id: params["group_id"]
@@ -136,25 +137,19 @@ module.exports = class extends React.Component {
                                     }}
                                 >
                                     参加
-                                </ListItem>
-                                <ListItem
-                                    onClick={async _ => {
-                                        let x = await client(RemoveUserFromGroup({
-                                            group: {
-                                                id: params["group_id"]
-                                            }
-                                        }))
-
+                                </Button>
+                            )}
+                            {this.state.invitees && (
+                                <Button
+                                    onClick={e => {
                                         this.setState({
-                                            invitees: undefined
+                                            inviteGroupDialogIsVisible: true
                                         })
-
-                                        this.componentDidMount()
                                     }}
                                 >
-                                    未参加
-                                </ListItem>
-                            </DropdownButton>
+                                    招待
+                                </Button>
+                            )}
                         </div>
                     </LinearLayout>
                     <TabBar
@@ -227,6 +222,19 @@ module.exports = class extends React.Component {
                     {this.state.invitees && (
                         <GroupSettingsPage
                             group={this.state.group}
+                            onLeave={async e => {
+                                let x = await client(RemoveUserFromGroup({
+                                    group: {
+                                        id: params["group_id"]
+                                    }
+                                }))
+
+                                this.setState({
+                                    invitees: undefined
+                                })
+
+                                this.componentDidMount()
+                            }}
                             onGroupUpdate={async x => {
                                 this.setState({
                                     group: await client(UpdateGroup({
@@ -237,6 +245,27 @@ module.exports = class extends React.Component {
                         />
                     )}
                 </ViewPager>
+                <InviteGroupDialog
+                    client={client}
+                    invitees={this.state.invitees}
+                    members={this.state.members}
+                    onCancel={e => {
+                        this.setState({
+                            inviteGroupDialogIsVisible: false
+                        })
+                    }}
+                    onDone={async user => {
+                        await client(AddUserToGroupInvitees({
+                            group: this.state.group,
+                            user : user
+                        }))
+
+                        this.setState({
+                            invitees: this.state.invitees.concat(user)
+                        })
+                    }}
+                    visible={this.state.inviteGroupDialogIsVisible}
+                />
             </div>
         )
     }

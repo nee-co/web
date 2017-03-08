@@ -1,0 +1,14 @@
+.Host {
+    position        : fixed;
+    overflow        : hidden;
+    width           : 40px;
+    height          : 40px;
+    border-radius   : 50%;
+    background-color: #09F;
+    color           : #FFF;
+    transition      : all .3s ease-out;
+}
+
+.Host.FullScreen {
+    border-radius: 0;
+}

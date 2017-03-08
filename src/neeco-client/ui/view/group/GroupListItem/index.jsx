@@ -1,3 +1,4 @@
+let toTextContent    = require("neeco-client/dom/toTextContent")
 let React            = require("react")
 let Card             = require("react-material/ui/view/Card")
 let Image            = require("react-material/ui/view/Image")
@@ -61,7 +62,7 @@ module.exports = class extends React.Component {
                         {group.name}
                     </p>
                     <p>
-                        {group.note}
+                        {toTextContent(group.note)}
                     </p>
                 </ListItemTextArea>
             </Card>

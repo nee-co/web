@@ -1,3 +1,4 @@
+let toTextContent    = require("neeco-client/dom/toTextContent")
 let colorOfCollege   = require("neeco-client/graphics/colorOfCollege")
 let React            = require("react")
 let Card             = require("react-material/ui/view/Card")
@@ -41,7 +42,7 @@ module.exports = ({
                 >
                     {user.college.name}
                 </span>
-                {user.note}
+                {toTextContent(user.note)}
             </p>
         </ListItemTextArea>
     </ListItem>

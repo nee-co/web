@@ -103,9 +103,6 @@ module.exports = class extends React.Component {
                                 })
                             }}
                         >
-                            <MaterialIcon>
-                                group_add
-                            </MaterialIcon>
                             グループ作成
                         </Button>
                     </div>

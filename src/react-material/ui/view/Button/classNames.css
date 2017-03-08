@@ -11,12 +11,8 @@
     user-select    : none;
 }
 
-.Host.FAB {
-    min-width       : 40px;
-    min-height      : 40px;
-    border-radius   : 50%;
-    background-color: #09F;
-    color           : #FFF;
+.Host.Disabled {
+    cursor: default;
 }
 
 .Host.Flat,

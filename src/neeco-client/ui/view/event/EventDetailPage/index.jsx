@@ -100,14 +100,14 @@ module.exports = class extends React.Component {
                                 }}
                                 value={
                                     isEntried ? "参加"
-                                  :             "未参加"
+                                  :             "不参加"
                                 }
                             >
                                 <ListItem>
                                     参加
                                 </ListItem>
                                 <ListItem>
-                                    未参加
+                                    不参加
                                 </ListItem>
                             </DropdownButton>
                         )}

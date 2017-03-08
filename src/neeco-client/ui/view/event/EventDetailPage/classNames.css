@@ -9,6 +9,7 @@
 
 .Host > :nth-child(2) {
     flex-grow: 1;
+    height   : 0;
 }
 
 .Header > :nth-child(1) {

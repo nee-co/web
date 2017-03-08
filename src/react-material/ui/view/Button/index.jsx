@@ -19,8 +19,7 @@ module.exports = ({
               :            undefined,
                 dense ? classNames.Dense
               :         "",
-                type == "fab"    ? classNames.FAB
-              : type == "flat"   ? classNames.Flat
+                type == "flat"   ? classNames.Flat
               : type == "raised" ? classNames.Raised
               :                    undefined
             ].join(" ")

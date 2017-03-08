@@ -119,13 +119,13 @@ module.exports = class extends React.Component {
                                     }}
                                     value={
                                         user ? user.number
-                                      :        "G000"
+                                      :        "G000A0000"
                                     }
                                 >
                                     <ListItem>
                                         {
                                             user ? user.number
-                                          :        "G000"
+                                          :        "G000A0000"
                                         }
                                     </ListItem>
                                     <ListItem

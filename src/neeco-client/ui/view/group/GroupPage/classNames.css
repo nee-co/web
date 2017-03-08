@@ -9,4 +9,5 @@
 
 .Host > :nth-child(2) {
     flex-grow: 1;
+    height   : 0;
 }
