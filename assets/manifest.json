@@ -1,0 +1,11 @@
+{
+   "lang":"ja",
+   "name":"NEE-CO",
+   "short_name":"NEE-CO",
+   "icons":[
+   ],
+   "background_color":"#FFFFFF",
+   "theme_color":"#1B388D",
+   "start_url":"/",
+   "display":"standalone"
+}

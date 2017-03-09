@@ -46,7 +46,6 @@ module.exports = class extends React.Component {
                 {...props}
             >
                 <form
-                    className={classNames.SearchForm}
                     onSubmit={async e => {
                         e.preventDefault()
 

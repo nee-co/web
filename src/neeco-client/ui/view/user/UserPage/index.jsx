@@ -57,7 +57,6 @@ module.exports = class extends React.Component {
                         }}
                     >
                         <Search
-                            expandable
                             hintText={"検索"}
                             name="query"
                         />

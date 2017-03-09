@@ -6,10 +6,6 @@
     cursor          : text;
 }
 
-.Host:not(.Expandable) {
-    margin: 8px;
-}
-
 .Host > :nth-child(1) {
     position: relative;
 }

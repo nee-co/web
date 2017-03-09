@@ -45,8 +45,9 @@ module.exports = ({
                 )
             }
             component={
-                to ? Link
-              :      undefined
+                disabled ? undefined
+              : to       ? Link
+              :            undefined
             }
             disabled={disabled}
             to={to}
