@@ -272,7 +272,7 @@ module.exports = class extends React.Component {
                     className={classNames.Content}
                     contentEditable
                     dangerouslySetInnerHTML={{
-                        __html: sanitize(toHTML(defaultValue))
+                        __html: defaultValue && sanitize(toHTML(defaultValue))
                     }}
                     onInput={e => {
                         let x = e.currentTarget
