@@ -1,4 +1,4 @@
-let ListEvents     = require("neeco-client/api/request/ListEvents")
+let ListEvents    = require("neeco-client/api/request/ListEvents")
 let EventList     = require("neeco-client/ui/view/event/EventList")
 let EventListItem = require("neeco-client/ui/view/event/EventListItem")
 let React         = require("react")

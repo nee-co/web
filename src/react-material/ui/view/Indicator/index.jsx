@@ -43,7 +43,7 @@ module.exports = class extends React.Component {
                 let {
                     loaded,
                     loading,
-                    onNext
+                    onNext = _ => undefined
                 } = this.props
 
                 let center = [
@@ -85,8 +85,13 @@ module.exports = class extends React.Component {
 
                 let rect = canvas.getBoundingClientRect()
 
-                if (!loaded && !loading && rect.top < window.innerHeight)
-                    onNext && onNext()
+                if (
+                    !loaded
+                 && !loading
+                 && rect.top < window.innerHeight
+                 && rect.left < window.innerWidth
+                )
+                    onNext()
 
                 cycle()
             })

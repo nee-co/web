@@ -1,23 +1,40 @@
-let CreateEvent    = require("neeco-client/api/request/CreateEvent")
-let NewEventDialog = require("neeco-client/ui/view/event/NewEventDialog")
-let EntriedEvents  = require("neeco-client/ui/view/event/EntriedEventListPage")
-let NewEvents      = require("neeco-client/ui/view/event/EventListPage")
-let OwnedEvents    = require("neeco-client/ui/view/event/OwnedEventListPage")
-let React          = require("react")
-let Shadow         = require("react-material/ui/effect/Shadow")
-let Button         = require("react-material/ui/view/Button")
-let Card           = require("react-material/ui/view/Card")
-let Tab            = require("react-material/ui/view/Tab")
-let TabBar         = require("react-material/ui/view/TabBar")
-let ViewPager      = require("react-material/ui/view/ViewPager")
+let CreateEvent     = require("neeco-client/api/request/CreateEvent")
+let ListEvents      = require("neeco-client/api/request/ListEvents")
+let EntriedEvents   = require("neeco-client/ui/view/event/EntriedEventListPage")
+let EventSearchPage = require("neeco-client/ui/view/event/EventSearchPage")
+let NewEventDialog  = require("neeco-client/ui/view/event/NewEventDialog")
+let OwnedEvents     = require("neeco-client/ui/view/event/OwnedEventListPage")
+let React           = require("react")
+let Shadow          = require("react-material/ui/effect/Shadow")
+let Button          = require("react-material/ui/view/Button")
+let Card            = require("react-material/ui/view/Card")
+let Tab             = require("react-material/ui/view/Tab")
+let TabBar          = require("react-material/ui/view/TabBar")
+let ViewPager       = require("react-material/ui/view/ViewPager")
 
 let classNames = require("neeco-client/ui/view/event/EventPage/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            newEventDialogIsVisible: false
+            newEventDialogIsVisible: false,
+            searchEvents: undefined,
+            searchEventsPageNumber: 0,
+            searchEventsLoading: false
         })
+    }
+
+    componentWillReceiveProps({
+        location,
+        client
+    }) {
+        if (location.query["q"] != this.props.location.query["q"]) {
+            this.setState({
+                searchEvents: undefined,
+                searchEventsPageNumber: 0,
+                searchEventsLoading: false
+            })
+        }
     }
 
     render() {
@@ -85,10 +102,37 @@ module.exports = class extends React.Component {
                     <ViewPager
                         selectedIndex={location.query["tab_index"] || 0}
                     >
-                        <NewEvents
-                            location={location}
-                            router={router}
-                            client={client}
+                        <EventSearchPage
+                            events={this.state.searchEvents}
+                            loading={this.state.searchEventsLoading}
+                            onNext={async e => {
+                                this.setState({
+                                    searchEventsLoading: true
+                                })
+
+                                let events = await client(ListEvents({
+                                    query  : location.query["q"] || "",
+                                    page   : this.state.searchEventsPageNumber + 1,
+                                    perPage: 10
+                                }))
+
+                                events.splice(0, 0, ...(this.state.searchEvents || []))
+
+                                this.setState({
+                                    searchEvents          : events,
+                                    searchEventsLoading   : false,
+                                    searchEventsPageNumber: this.state.searchEventsPageNumber + 1
+                                })
+                            }}
+                            onSearch={x => 
+                                router.push({
+                                    ...location,
+                                    query: {
+                                        ...location.query,
+                                        q: x
+                                    }
+                                })
+                            }
                         />
                         <EntriedEvents
                             client={client}

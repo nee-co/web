@@ -98,7 +98,7 @@ module.exports = class extends React.Component {
                             }}
                         >
                             <Toggle
-                                defaultChecked={event && event.isPublic}
+                                defaultChecked={event.isPublic}
                                 labelText="公開する"
                                 name="is_public"
                             />
@@ -223,7 +223,12 @@ module.exports = class extends React.Component {
                         </form>
                     </ExpansionPanel>
                     <ExpansionPanel
+                        disabled={event.entries.length > 0}
                         labelText="イベント削除"
+                        value={
+                            event.entries.length > 0 ? "参加者がいるため削除できません。"
+                          :                            undefined
+                        }
                     >
                         <LinearLayout
                             orientation="horizontal"

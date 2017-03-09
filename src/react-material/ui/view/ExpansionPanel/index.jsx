@@ -70,8 +70,9 @@ module.exports = class extends React.Component {
                     </div>
                     <div>
                         {
-                            selected ? hintText
-                          :            value
+                            value == undefined ? hintText
+                          : selected           ? hintText
+                          :                      value
                         }
                     </div>
                     <MaterialIcon
@@ -91,6 +92,7 @@ module.exports = class extends React.Component {
                     )}
                     style={{
                         height: !this.state.contentSize ? undefined
+                              : disabled                ? "0"
                               : selected                ? this.state.contentSize[1] + "px"
                               :                           "0"
                     }}
