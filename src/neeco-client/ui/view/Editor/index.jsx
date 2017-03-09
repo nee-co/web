@@ -161,7 +161,7 @@ module.exports = class extends React.Component {
                 <input
                     id={id}
                     name={name}
-                    defaultValue={toHTML(defaultValue)}
+                    defaultValue={defaultValue && sanitize(toHTML(defaultValue))}
                 />
                 <div
                     className={classNames.Toolbar}
@@ -272,7 +272,7 @@ module.exports = class extends React.Component {
                     className={classNames.Content}
                     contentEditable
                     dangerouslySetInnerHTML={{
-                        __html: toHTML(sanitize(defaultValue))
+                        __html: sanitize(toHTML(defaultValue))
                     }}
                     onInput={e => {
                         let x = e.currentTarget

@@ -165,7 +165,7 @@ module.exports = class extends React.Component {
                                 alt={this.state.event && this.state.event.title}
                                 width="128"
                                 height="128"
-                                onNext={e => {
+                                onLoad={e => {
                                     let img = e.target
 
                                     let canvas = document.createElement("canvas")

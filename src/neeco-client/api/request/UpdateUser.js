@@ -7,7 +7,7 @@ module.exports = self => Object.assign(
         let baseURl = self.user.id === undefined ? client.api.url + "/user"
                     :                              client.api.url + "/users/" + self.user.id
 
-        if (self.user.password !== undefined) {
+        if (self.user.password != undefined) {
             let response = await fetch(
                 baseURl + "/password",
                 {
@@ -27,7 +27,7 @@ module.exports = self => Object.assign(
                 throw response
         }
 
-        if (self.user.image !== undefined) {
+        if (self.user.image != undefined) {
             let response = await fetch(
                 baseURl + "/image",
                 {

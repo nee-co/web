@@ -134,7 +134,7 @@ module.exports = class extends React.Component {
                             }}
                         >
                             <Editor
-                                defaultValue={user &&  user.note}
+                                defaultValue={user && user.note}
                                 name="note"
                             />
                             <Buttons />
