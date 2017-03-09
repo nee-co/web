@@ -66,7 +66,7 @@ module.exports = class extends React.Component {
     }
 
     componentWillUnmount() {
-        if (this.props.visible)z
+        if (this.props.visible)
             window.removeEventListener("click", this.state.onClick, false)
     }
 

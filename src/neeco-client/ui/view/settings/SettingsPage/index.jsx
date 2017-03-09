@@ -109,6 +109,15 @@ module.exports = class extends React.Component {
                                 name="image"
                                 width="128"
                                 height="128"
+                                onBlur={e => {
+                                    if (
+                                        e.target.files.length
+                                     && !/\.[a-z]+$/.test(e.target.files[0].name)
+                                    )
+                                        e.target.setCustomValidity("画像の拡張子は小文字のみを受け付けます")
+                                    else
+                                        e.target.setCustomValidity("")
+                                }}
                             />
                             <Buttons />
                         </form>
