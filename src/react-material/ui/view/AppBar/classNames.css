@@ -1,0 +1,9 @@
+.Host {
+    min-height: 64px;
+}
+
+@media (max-width: 600px) {
+    .Host {
+        min-height: 56px;
+    }
+}

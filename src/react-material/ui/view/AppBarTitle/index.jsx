@@ -1,6 +1,6 @@
 let React = require("react")
 
-let classNames = require("react-material/ui/view/ToolbarTitle/classNames")
+let classNames = require("react-material/ui/view/AppBarTitle/classNames")
 
 module.exports = ({
     className,

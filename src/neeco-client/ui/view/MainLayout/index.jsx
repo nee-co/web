@@ -13,8 +13,8 @@ let ListItemTextArea = require("react-material/ui/view/ListItemTextArea")
 let MaterialIcon     = require("react-material/ui/view/MaterialIcon")
 let Menu             = require("react-material/ui/view/Menu")
 let NavigationDrawer = require("react-material/ui/view/NavigationDrawer")
-let Toolbar          = require("react-material/ui/view/Toolbar")
-let ToolbarTitle     = require("react-material/ui/view/ToolbarTitle")
+let AppBar           = require("react-material/ui/view/AppBar")
+let AppBarTitle      = require("react-material/ui/view/AppBarTitle")
 let DropdownButton   = require("react-material/ui/view/form/DropdownButton")
 
 let classNames = require("neeco-client/ui/view/MainLayout/classNames")
@@ -24,7 +24,18 @@ module.exports = class extends React.Component {
         this.setState({
             drawerIsVisible: true,
             notifications  : [],
-            mobile         : false
+            mobile         : false,
+            resize         : () => {
+                let mobile = window.innerWidth < 640
+                    
+                this.setState({
+                    drawerIsVisible:
+                        mobile == this.state.mobile ? this.state.drawerIsVisible
+                    :                               !this.state.drawerIsVisible
+                    ,
+                    mobile: mobile
+                })
+            }
         })
     }
 
@@ -36,21 +47,7 @@ module.exports = class extends React.Component {
             mobile         : mobile
         })
 
-        window.addEventListener(
-            "resize",
-            e => {
-                let mobile = window.innerWidth < 640
-                
-                this.setState({
-                    drawerIsVisible:
-                        mobile == this.state.mobile ? this.state.drawerIsVisible
-                      :                               !this.state.drawerIsVisible
-                    ,
-                    mobile: mobile
-                })
-            },
-            false
-        )
+        window.addEventListener("resize", this.state.resize, false)
     }
 
     componentWillReceiveProps({
@@ -66,6 +63,10 @@ module.exports = class extends React.Component {
             })
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.state.resize, false)
+    }
+
     render() {
         let {
             children,
@@ -79,7 +80,9 @@ module.exports = class extends React.Component {
             <div
                 className={classNames.Host}
             >
-                <Toolbar>
+                <AppBar
+                    id="app_bar"
+                >
                     <Ripple
                         children={"menu"}
                         className={classNames.Toggle}
@@ -91,7 +94,7 @@ module.exports = class extends React.Component {
                             })
                         }}
                     />
-                    <ToolbarTitle
+                    <AppBarTitle
                         className={classNames.Title}
                         component="h1"
                     >
@@ -111,9 +114,9 @@ module.exports = class extends React.Component {
                                 .find(x => new RegExp("^" + x[0]).test(location.pathname))
                                 [1]
                         }
-                    </ToolbarTitle>
+                    </AppBarTitle>
                     <FlexibleSpace />
-                </Toolbar>
+                </AppBar>
                 <LinearLayout
                     className={classNames.Contents}
                     orientation="horizontal"
@@ -123,6 +126,7 @@ module.exports = class extends React.Component {
                             this.state.mobile ? undefined
                           :                     0
                         }
+                        htmlFor="app_bar"
                         visible={this.state.drawerIsVisible}
                         onCancel={() => this.setState({
                             drawerIsVisible: !this.state.drawerIsVisible
@@ -139,7 +143,8 @@ module.exports = class extends React.Component {
                                 />
                                 <DropdownButton
                                     style={{
-                                        marginLeft: "-21px"
+                                        marginLeft: "-21px",
+                                        flexGrow  : 1
                                     }}
                                     value={
                                         user ? user.number

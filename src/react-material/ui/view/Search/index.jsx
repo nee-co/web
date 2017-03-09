@@ -16,6 +16,7 @@ module.exports = class extends React.Component {
         let {
             className,
             expandable,
+            expand,
             name,
             hintText,
             onChange,
@@ -48,6 +49,8 @@ module.exports = class extends React.Component {
                         classNames.Host,
                         expandable ? classNames.Expandable
                       :              undefined,
+                        expand ? classNames.Expand
+                      :          undefined,
                         this.state.focus ? classNames.Focus
                       :                    undefined
                     ].join(" ")
