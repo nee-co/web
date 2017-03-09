@@ -9,9 +9,10 @@
 }
 
 .Host.Floating {
-    position: fixed;
-    top     : 0;
-    height  : 100%;
+    position : fixed;
+    top      : 0;
+    height   : 100%;
+    transform: translate(0, 0);
 }
 
 .Host:not(.Floating) {

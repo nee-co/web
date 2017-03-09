@@ -23,8 +23,47 @@ module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             drawerIsVisible: true,
-            notifications  : []
+            notifications  : [],
+            mobile         : false
         })
+    }
+
+    componentDidMount() {
+        let mobile = window.innerWidth < 640
+
+        this.setState({
+            drawerIsVisible: !mobile,
+            mobile         : mobile
+        })
+
+        window.addEventListener(
+            "resize",
+            e => {
+                let mobile = window.innerWidth < 640
+                
+                this.setState({
+                    drawerIsVisible:
+                        mobile == this.state.mobile ? this.state.drawerIsVisible
+                      :                               !this.state.drawerIsVisible
+                    ,
+                    mobile: mobile
+                })
+            },
+            false
+        )
+    }
+
+    componentWillReceiveProps({
+        location
+    }) {
+        if (
+            this.state.mobile
+         && this.state.drawerIsVisible
+         && location.pathname != this.props.location.pathname
+        )
+            this.setState({
+                drawerIsVisible: false
+            })
     }
 
     render() {
@@ -81,28 +120,13 @@ module.exports = class extends React.Component {
                 >
                     <NavigationDrawer
                         elevation={
-                          (
-                              typeof(window) == "undefined" ? 0
-                            : window.innerWidth < 640       ? undefined
-                            :                                 0
-                          )
+                            this.state.mobile ? undefined
+                          :                     0
                         }
-                        visible={
-                          (
-                              typeof(window) == "undefined" ? this.state.drawerIsVisible
-                            : window.innerWidth < 640       ? !this.state.drawerIsVisible
-                            :                                 this.state.drawerIsVisible
-                          )
-                        }
+                        visible={this.state.drawerIsVisible}
                         onCancel={() => this.setState({
                             drawerIsVisible: !this.state.drawerIsVisible
                         })}
-                        onClick={e => {
-                            if (window.innerWidth < 640)
-                                this.setState({
-                                    drawerIsVisible: !this.state.drawerIsVisible
-                                })
-                        }}
                     >
                         <List
                             location={location}

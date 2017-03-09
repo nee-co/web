@@ -7,7 +7,7 @@ let classNames = require("react-material/ui/view/NavigationDrawer/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            onClick: e => {
+            onPress: e => {
                 let {
                     elevation = "16",
                     onCancel
@@ -25,11 +25,10 @@ module.exports = class extends React.Component {
             visible
         } = this.props
 
-        if (visible)
-            setTimeout(
-                () => window.addEventListener("click", this.state.onClick, false),
-                1
-            )
+        if (visible) {
+            window.addEventListener("mousedown", this.state.onPress, false)
+            window.addEventListener("touchstart", this.state.onPress, false)
+        }
 
         let rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
 
@@ -45,12 +44,10 @@ module.exports = class extends React.Component {
         visible
     }) {
         if (this.props.visible != visible) {
-            if (visible)
-                setTimeout(
-                    () => window.addEventListener("click", this.state.onClick, false),
-                    1
-                )
-            else {
+            if (visible) {
+                window.addEventListener("mousedown", this.state.onPress, false)
+                window.addEventListener("touchstart", this.state.onPress, false)
+            } else {
                 let rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
 
                 this.setState({
@@ -60,14 +57,17 @@ module.exports = class extends React.Component {
                     ]
                 })
 
-                window.removeEventListener("click", this.state.onClick, false)
+                window.removeEventListener("mousedown", this.state.onPress, false)
+                window.removeEventListener("touchstart", this.state.onPress, false)
             }
         }
     }
 
     componentWillUnmount() {
-        if (this.props.visible)
-            window.removeEventListener("click", this.state.onClick, false)
+        if (this.props.visible) {
+            window.removeEventListener("mousedown", this.state.onPress, false)
+            window.removeEventListener("touchstart", this.state.onPress, false)
+        }
     }
 
     render() {
@@ -80,6 +80,8 @@ module.exports = class extends React.Component {
             ...props
         } = this.props
 
+        let z = parseInt(elevation)
+
         return (
             <Shadow
                 className={
@@ -87,9 +89,9 @@ module.exports = class extends React.Component {
                         className,
                         classNames.Host,
                         visible ? classNames.Visible
-                      :           classNames.Hidden,
-                        parseInt(elevation) > 0 ? classNames.Floating
-                      :                           undefined
+                      :           undefined,
+                        z > 0 ? classNames.Floating
+                      :         undefined
                     ].join(" ")
                 }
                 component="nav"
@@ -97,8 +99,12 @@ module.exports = class extends React.Component {
                 position="right"
                 style={{
                     marginLeft: visible         ? 0
-                              : this.state.size ? -(this.state.size[0] + parseInt(elevation)) + "px"
+                              : z > 0           ? undefined
+                              : this.state.size ? -(this.state.size[0] + z) + "px"
                               :                   undefined,
+                    transform : visible ? undefined
+                              : z > 0   ? "translateX(-100%) translateX(-" + z + "px)"
+                              :           undefined,
                     ...style
                 }}
                 {...props}

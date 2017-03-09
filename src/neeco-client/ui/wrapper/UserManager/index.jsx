@@ -24,7 +24,10 @@ module.exports = class extends React.Component {
     componentWillReceiveProps({
         client
     }) {
-        if (client.configuration.api.token != this.props.client.configuration.api.token)
+        if (
+            client.configuration.api.token
+         && client.configuration.api.token != this.props.client.configuration.api.token
+        )
             (async () =>
                 this.setState({
                     user: await client(GetUserByToken())

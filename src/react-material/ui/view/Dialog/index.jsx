@@ -95,19 +95,19 @@ let Dialog = class extends React.Component {
                 }
                 elevation="24"
                 style={{
-                    left     : this.state.size ? "calc(50vw - " + this.state.size[0]  + "px / 2)"
-                             :                   undefined,
                     width    : this.state.size ? this.state.size[0] + "px"
                              :                   undefined,
                     height   : this.state.size ? this.state.size[1] + "px"
                              :                   undefined,
                     transform: (
-                        this.state.size && visible ? (
-                            "translateY("
-                          + (window.innerHeight / 2 - this.state.size[1] / 2)
-                          + "px)"
-                        )
-                      :                              undefined
+                        !visible         ? undefined
+                      : !this.state.size ? undefined
+                      :                    [
+                            "translateX(50vw)",
+                            "translateX(" + -this.state.size[0] / 2 + "px)",
+                            "translateY(50vh)",
+                            "translateY(" + -this.state.size[1] / 2 + "px)"
+                        ].join(" ")
                     ),
                     ...style
                 }}
