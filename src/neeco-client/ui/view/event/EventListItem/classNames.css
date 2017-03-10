@@ -3,12 +3,14 @@
 }
 
 .Host.Grid > * {
+    min-width     : 240px;
+    max-width     : 240px;
     flex-direction: column;    
     padding       : 0;
 }
 
 .Host.Grid > * > :nth-child(1) {
-    min-width      : 240px;
+    min-width      : 100%;
     min-height     : 135px;
     margin         : 0;
     background-size: cover;
@@ -28,4 +30,10 @@
     display  : inline-block;
     margin   : 0;
     font-size: .875em;
+}
+
+.Host.Grid .TextArea {
+    align-self: stretch;
+    margin    : 0;
+    padding   : 8px 16px;
 }

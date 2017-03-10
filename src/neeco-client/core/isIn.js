@@ -49,8 +49,6 @@ let isIn = (a, A) => {
 
             let positions = nodes.map(x => a.compareDocumentPosition(x))
 
-            console.log(a, nodes, positions)
-
             return (
                 nodes.some(x => isIn(a, x))
              || (

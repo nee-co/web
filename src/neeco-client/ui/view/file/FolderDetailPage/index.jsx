@@ -159,14 +159,8 @@ module.exports = class extends React.Component {
                                         ファイルをアップロード
                                     </ListItemTextArea>
                                 </ListItem>
-                                <ListItem>
-                                    <ListItemTextArea>
-                                        フォルダをアップロード
-                                    </ListItemTextArea>
-                                </ListItem>
                             </Menu>
                         </div>
-                        <FlexibleSpace />
                         {this.state.selectedIDs.length > 0 && (
                             <IconToggle
                                 children={"delete"}

@@ -11,3 +11,10 @@
     flex-grow: 1;
     height   : 0;
 }
+
+.Header {
+}
+
+.Header > :nth-child(1) {
+    padding: 8px;
+}
