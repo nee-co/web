@@ -14,6 +14,7 @@ let UserPage              = require("neeco-client/ui/view/user/UserPage")
 let AuthenticationManager = require("neeco-client/ui/wrapper/AuthenticationManager")
 let UserManager           = require("neeco-client/ui/wrapper/UserManager")
 let React                 = require("react")
+let {IndexRedirect}       = require("react-router")
 let {Redirect}            = require("react-router")
 let {Route}               = require("react-router")
 let {Router}              = require("react-router")
@@ -39,77 +40,79 @@ module.exports = props =>
     >
         <Route
             component={Root}
+            path="/"
         >
             <Route
                 component={SignInPage}
-                path="/sign_in"
+                path="sign_in"
             />
             <Route
                 component={MainLayout}
             >
-                <Route
+                {/*<Route
                     component={TopPage}
                     path="/"
-                />
+                />/*/}
+                <IndexRedirect to="/events" />
                 <Route
                     component={EventPage}
-                    path="/events"
+                    path="events"
                 />
                 <Route
                     component={EventDetailPage}
-                    path="/events/:event_id"
+                    path="events/:event_id"
                 />
                 <Route
                     component={EventDetailPage}
-                    path="/events/:event_id/comments"
+                    path="events/:event_id/comments"
                 />
                 <Route
                     component={EventDetailPage}
-                    path="/events/:event_id/entries"
+                    path="events/:event_id/entries"
                 />
                 <Route
                     component={EventDetailPage}
-                    path="/events/:event_id/settings"
+                    path="events/:event_id/settings"
                 />
                 <Route
                     component={FolderPage}
-                    path="/folders"
+                    path="folders"
                 />
                 <Route
                     component={FolderDetailPage}
-                    path="/folders/:folder_id"
+                    path="folders/:folder_id"
                 />
                 <Route
                     component={GroupPage}
-                    path="/groups"
+                    path="groups"
                 />
                 <Route
                     component={GroupDetailPage}
-                    path="/groups/:group_id"
+                    path="groups/:group_id"
                 />
                 <Route
                     component={GroupDetailPage}
-                    path="/groups/:group_id/invitees"
+                    path="groups/:group_id/invitees"
                 />
                 <Route
                     component={GroupDetailPage}
-                    path="/groups/:group_id/members"
+                    path="groups/:group_id/members"
                 />
                 <Route
                     component={GroupDetailPage}
-                    path="/groups/:group_id/settings"
+                    path="groups/:group_id/settings"
                 />
                 <Route
                     component={SettingsPage}
-                    path="/settings"
+                    path="settings"
                 />
                 <Route
                     component={UserPage}
-                    path="/users"
+                    path="users"
                 />
                 <Route
                     component={UserDetailPage}
-                    path="/users/:user_id"
+                    path="users/:user_id"
                 />
             </Route>
         </Route>

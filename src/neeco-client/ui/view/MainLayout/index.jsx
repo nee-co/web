@@ -173,7 +173,7 @@ module.exports = class extends React.Component {
                                     </ListItem>
                                 </DropdownButton>
                             </ListItem>
-                            <ListItem
+                            {/*<ListItem
                                 to="/"
                             >
                                 <ListItemIcon
@@ -183,7 +183,7 @@ module.exports = class extends React.Component {
                                 <ListItemTextArea>
                                     ホーム
                                 </ListItemTextArea>
-                            </ListItem>
+                            </ListItem>*/}
                             <ListItem
                                 to="/events"
                             >
