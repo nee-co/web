@@ -86,6 +86,7 @@ module.exports = class extends React.Component {
                                                 : x
                                         })
                                     }}
+                                    to={null}
                                     user={x}
                                 />
                         )}
