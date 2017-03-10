@@ -26,7 +26,7 @@ module.exports = ({
             onDone({
                 title      : form.elements["title"].value,
                 startDate  : form.elements["startDate"].value,
-                description: " ",
+                description: "&nbsp;",
                 image      : form.elements["image"].files
             })
         }}
