@@ -1,4 +1,4 @@
-let ListFolders   = require("neeco-client/api/request/ListFolders")
+let ListFolders  = require("neeco-client/api/request/ListFolders")
 let FileList     = require("neeco-client/ui/view/file/FileList")
 let FileListItem = require("neeco-client/ui/view/file/FileListItem")
 let React        = require("react")

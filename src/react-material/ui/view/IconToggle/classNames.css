@@ -5,5 +5,13 @@
     min-width      : 36px;
     min-height     : 36px;
     border-radius  : 50%;
-    cursor         : pointer;
+}
+
+.Host.Disabled {
+    color: rgba(0, 0, 0, .38);
+}
+
+.Host:not(.Disabled) {
+    color : rgba(0, 0, 0, .54);
+    cursor: pointer;
 }

@@ -5,6 +5,7 @@ let classNames = require("react-material/ui/view/IconToggle/classNames")
 
 module.exports = ({
     className,
+    disabled,
     ...props
 }) =>
     <Ripple
@@ -12,9 +13,12 @@ module.exports = ({
             [
                 className,
                 classNames.Host,
+                disabled ? classNames.Disabled
+              :            undefined
             ].join(" ")
         }
         component="span"
+        disabled={disabled}
         fixed
         {...props}
     />

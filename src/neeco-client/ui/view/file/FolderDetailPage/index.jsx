@@ -1,19 +1,22 @@
-let getConfiguration = require("neeco-client/api/getConfiguration")
 let CreateFile       = require("neeco-client/api/request/CreateFile")
 let CreateFolder     = require("neeco-client/api/request/CreateFolder")
-let GetFileById      = require("neeco-client/api/request/GetFileById")
-let GetFolderById    = require("neeco-client/api/request/GetFolderById")
 let DeleteFile       = require("neeco-client/api/request/DeleteFile")
 let DeleteFolder     = require("neeco-client/api/request/DeleteFolder")
+let GetFileById      = require("neeco-client/api/request/GetFileById")
+let GetFolderById    = require("neeco-client/api/request/GetFolderById")
+let UpdateFile       = require("neeco-client/api/request/UpdateFile")
+let UpdateFolder     = require("neeco-client/api/request/UpdateFolder")
 let FileList         = require("neeco-client/ui/view/file/FileList")
 let FileListItem     = require("neeco-client/ui/view/file/FileListItem")
 let NewFolderDialog  = require("neeco-client/ui/view/file/NewFolderDialog")
+let RenameDialog     = require("neeco-client/ui/view/file/RenameDialog")
 let React            = require("react")
 let Shadow           = require("react-material/ui/effect/Shadow")
 let BreadcrumbList   = require("react-material/ui/view/BreadcrumbList")
 let Button           = require("react-material/ui/view/Button")
 let FlexibleSpace    = require("react-material/ui/view/FlexibleSpace")
 let IconToggle       = require("react-material/ui/view/IconToggle")
+let LinearLayout     = require("react-material/ui/view/LinearLayout")
 let List             = require("react-material/ui/view/List")
 let ListItem         = require("react-material/ui/view/ListItem")
 let ListItemTextArea = require("react-material/ui/view/ListItemTextArea")
@@ -34,6 +37,7 @@ module.exports = class extends React.Component {
             folder                  : undefined,
             newFileMenuIsVisible    : false,
             newFolderDialogIsVisible: false,
+            renameDialogIsVisible   : false,
             selectedIDs             : [],
             sortColumnNumber        : 0,
             lastClickTime           : 0
@@ -102,8 +106,9 @@ module.exports = class extends React.Component {
                             </ListItem>
                         </BreadcrumbList>
                     </nav>
-                    <div
+                    <LinearLayout
                         className={classNames.Buttons}
+                        orientation="horizontal"
                     >
                         <div>
                             <Button
@@ -161,33 +166,49 @@ module.exports = class extends React.Component {
                                 </ListItem>
                             </Menu>
                         </div>
-                        {this.state.selectedIDs.length > 0 && (
-                            <IconToggle
-                                children={"delete"}
-                                component={MaterialIcon}
-                                onClick={async e => {
-                                    for (let id of this.state.selectedIDs)
-                                    for (let x  of [this.state.folder.children.find(x => x.id == id)])
-                                    if  (x.kind == "file")
-                                        await client(DeleteFile({
-                                            file: x
-                                        }))
-                                    else
-                                        await client(DeleteFolder({
-                                            folder: x
-                                        }))
+                        <FlexibleSpace />
+                        <IconToggle
+                            children={"edit"}
+                            component={MaterialIcon}
+                            disabled={this.state.selectedIDs.length != 1}
+                            onClick={async e => {
+                                if (this.state.selectedIDs.length != 1)
+                                    return
 
-                                    this.state.folder.children = this.state.folder.children.filter(
-                                        x => !this.state.selectedIDs.includes(x.id)
-                                    )
-                                    
-                                    this.setState({
-                                        selectedIDs: []
-                                    })
-                                }}
-                            />
-                        )}
-                    </div>
+                                this.setState({
+                                    renameDialogIsVisible: true
+                                })
+                            }}
+                        />
+                        <IconToggle
+                            children={"delete"}
+                            component={MaterialIcon}
+                            disabled={this.state.selectedIDs.length == 0}
+                            onClick={async e => {
+                                if (this.state.selectedIDs.length == 1)
+                                    return
+
+                                for (let id of this.state.selectedIDs)
+                                for (let x  of [this.state.folder.children.find(x => x.id == id)])
+                                if  (x.kind == "file")
+                                    await client(DeleteFile({
+                                        file: x
+                                    }))
+                                else
+                                    await client(DeleteFolder({
+                                        folder: x
+                                    }))
+                                
+                                this.state.folder.children = this.state.folder.children.filter(
+                                    x => !this.state.selectedIDs.includes(x.id)
+                                )
+                                
+                                this.setState({
+                                    selectedIDs: []
+                                })
+                            }}
+                        />
+                    </LinearLayout>
                 </Shadow>
                 <div>
                     {this.state.folder && (
@@ -246,6 +267,44 @@ module.exports = class extends React.Component {
                         })
                     }}
                     visible={this.state.newFolderDialogIsVisible}
+                />
+                <RenameDialog
+                    file={
+                        this.state.renameDialogIsVisible
+                     && this.state.folder.children.find(x => x.id == this.state.selectedIDs[0])
+                    }
+                    parent={this.state.folder}
+                    onCancel={() => {
+                        this.setState({
+                            renameDialogIsVisible: false
+                        })
+                    }}
+                    onDone={async ({name}) => {
+                        let x = this.state.folder.children.find(x => x.id == this.state.selectedIDs[0])
+
+                        if  (x.kind == "file")
+                            await client(UpdateFile({
+                                file: {
+                                    id  : x.id,
+                                    name: name
+                                }
+                            }))
+                        else
+                            await client(UpdateFolder({
+                                folder: {
+                                    id  : x.id,
+                                    name: name
+                                }
+                            }))
+
+                        x.name = x
+
+                        this.setState({
+                            renameDialogIsVisible: false,
+                            selectedIDs          : []
+                        })
+                    }}
+                    visible={this.state.renameDialogIsVisible}
                 />
             </section>
         )
