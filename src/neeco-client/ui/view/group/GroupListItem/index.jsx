@@ -11,7 +11,9 @@ let classNames = require("neeco-client/ui/view/group/GroupListItem/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            swatch: undefined
+            backgroundColor   : undefined,
+            primaryTextColor  : undefined,
+            secondaryTextColor: undefined
         })
     }
 
@@ -49,36 +51,32 @@ module.exports = class extends React.Component {
                     onLoad={type == "grid" && (e => {
                         let vibrant = new Vibrant(e.target)
 
-                        this.setState({
-                            swatch: vibrant.swatches()["Vibrant"]
-                        })
+                        let swatch = vibrant.swatches()["Vibrant"]
+
+                        if (swatch)
+                            this.setState({
+                                backgroundColor   : swatch.getHex(),
+                                primaryTextColor  : swatch.getTitleTextColor(),
+                                secondaryTextColor: swatch.getBodyTextColor()
+                            })
                     })}
                 />
                 <ListItemTextArea
                     className={classNames.TextArea}
                     style={{
-                        backgroundColor: (
-                            this.state.swatch ? this.state.swatch.getHex()
-                          :                     undefined
-                        )
+                        backgroundColor: this.state.backgroundColor
                     }}
                 >
                     <p
                         style={{
-                            color: (
-                                this.state.swatch ? this.state.swatch.getTitleTextColor()
-                              :                     undefined
-                            )
+                            color: this.state.primaryTextColor
                         }}
                     >
                         {group.name}
                     </p>
                     <p
                         style={{
-                            color: (
-                                this.state.swatch ? this.state.swatch.getBodyTextColor()
-                              :                     undefined
-                            )
+                            color: this.state.secondaryTextColor
                         }}
                     >
                         {toTextContent(group.note)}
