@@ -23,9 +23,10 @@ module.exports = ({
         <td>
             <MaterialIcon
                 children={
-                    file.kind == "folder"    ? "folder"
-                  : /\.pdf$/.test(file.name) ? "picture_as_pdf"
-                  :                            "insert_drive_file"
+                    file.kind == "folder"                          ? "folder"
+                  : /\.pdf$/.test(file.name)                       ? "picture_as_pdf"
+                  : /\.(?:bmp|gif|jpg|jpeg|png)$/m.test(file.name) ? "photo"
+                  :                                                  "insert_drive_file"
                 }
                 className={classNames.Icon}
             />

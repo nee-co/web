@@ -29,7 +29,8 @@ module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             client   : undefined,
-            listeners: []
+            listeners: [],
+            storage  : undefined
         })
     }
 
@@ -57,7 +58,8 @@ module.exports = class extends React.Component {
 
             this.setState({
                 client   : client,
-                listeners: []
+                listeners: [],
+                storage  : storage
             })
         } else {
             if (location.pathname != "/sign_in")
@@ -107,7 +109,8 @@ module.exports = class extends React.Component {
 
                     this.setState({
                         client   : client,
-                        listeners: []
+                        listeners: [],
+                        storage  : storage
                     })
 
                     router.push((location.state && location.state.nextLocation) || "/")
@@ -121,7 +124,8 @@ module.exports = class extends React.Component {
                     this.state.storage.removeItem("token")
 
                     this.setState({
-                         client: undefined
+                         client : undefined,
+                         storage: undefined
                     })
 
                     await this.state.client(DeleteToken())

@@ -5,6 +5,7 @@
     min-width      : 36px;
     min-height     : 36px;
     border-radius  : 50%;
+    transition     : all .3s ease-out;
 }
 
 .Host.Disabled {
@@ -14,4 +15,8 @@
 .Host:not(.Disabled) {
     color : rgba(0, 0, 0, .54);
     cursor: pointer;
+}
+
+.Host:not(.Disabled):hover {
+    background-color: rgba(0, 0, 0, .05);
 }
