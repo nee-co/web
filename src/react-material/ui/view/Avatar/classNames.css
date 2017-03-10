@@ -1,5 +1,6 @@
 .Host {
-    display      : inline-flex;
-    align-items  : center;
-    border-radius: 50%;
+    display        : inline-flex;
+    align-items    : center;
+    border-radius  : 50%;
+    background-size: cover;
 }
