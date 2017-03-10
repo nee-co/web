@@ -2,6 +2,7 @@ let GetUserByToken   = require("neeco-client/api/request/GetUserByToken")
 let Logo             = require("neeco-client/ui/view/Logo")
 let React            = require("react")
 let Ripple           = require("react-material/ui/effect/Ripple")
+let Avatar           = require("react-material/ui/view/Avatar")
 let Button           = require("react-material/ui/view/Button")
 let Divider          = require("react-material/ui/view/Divider")
 let FlexibleSpace    = require("react-material/ui/view/FlexibleSpace")
@@ -139,6 +140,7 @@ module.exports = class extends React.Component {
                                 disabled
                             >
                                 <ListItemIcon
+                                    component={Avatar}
                                     src={user && user.image}
                                 />
                                 <DropdownButton
