@@ -12,6 +12,7 @@ module.exports = ({
     className,
     onCancel,
     onDone,
+    parent,
     ...props
 }) =>
     <Dialog
@@ -38,6 +39,12 @@ module.exports = ({
             <TextField
                 labelText={"フォルダ名"}
                 name="name"
+                onInput={e => {
+                    if (parent.children.some(x => x.name == e.target.value))
+                        e.target.setCustomValidity("既に同名のファイルまたはフォルダが存在します。")
+                    else
+                        e.target.setCustomValidity("")
+                }}
                 required
             />
         </DialogBody>

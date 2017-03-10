@@ -7,7 +7,7 @@ module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             focused : false,
-            imageURL: undefined,
+            imageUrl: undefined,
             invalid : false
         })
     }
@@ -15,7 +15,7 @@ module.exports = class extends React.Component {
     render() {
         let {
             className,
-            defaultImageURL,
+            defaultImageUrl,
             disabled,
             height = "128",
             hintText,
@@ -37,7 +37,7 @@ module.exports = class extends React.Component {
                     [
                         className,
                         classNames.Host,
-                        this.state.imageURL ? undefined
+                        this.state.imageUrl ? undefined
                       :                       classNames.Empty,
                         disabled ? classNames.Disabled
                       :            undefined,
@@ -62,7 +62,7 @@ module.exports = class extends React.Component {
                         className={classNames.Image}
                         height={height}
                         onLoad={onLoad}
-                        src={this.state.imageURL || defaultImageURL}
+                        src={this.state.imageUrl || defaultImageUrl}
                         width={width}
                     />
                 </label>
@@ -75,13 +75,13 @@ module.exports = class extends React.Component {
                     onChange={e => {
                         onChange(e)
 
-                        if (this.state.imageURL)
-                            URL.revokeObjectURL(this.state.imageURL)
+                        if (this.state.imageUrl)
+                            URL.revokeObjectURL(this.state.imageUrl)
 
                         let file = e.target.files[0]
 
                         this.setState({
-                            imageURL: file && URL.createObjectURL(file)
+                            imageUrl: file && URL.createObjectURL(file)
                         })
                     }}
                     onBlur={e => {

@@ -1,9 +1,10 @@
 let getConfiguration = require("neeco-client/api/getConfiguration")
 let CreateFile       = require("neeco-client/api/request/CreateFile")
 let CreateFolder     = require("neeco-client/api/request/CreateFolder")
+let GetFileById      = require("neeco-client/api/request/GetFileById")
+let GetFolderById    = require("neeco-client/api/request/GetFolderById")
 let DeleteFile       = require("neeco-client/api/request/DeleteFile")
 let DeleteFolder     = require("neeco-client/api/request/DeleteFolder")
-let GetFolderByID    = require("neeco-client/api/request/GetFolderByID")
 let FileList         = require("neeco-client/ui/view/file/FileList")
 let FileListItem     = require("neeco-client/ui/view/file/FileListItem")
 let NewFolderDialog  = require("neeco-client/ui/view/file/NewFolderDialog")
@@ -47,7 +48,7 @@ module.exports = class extends React.Component {
 
         ;(async () => {
             this.setState({
-                folder: await client(GetFolderByID({
+                folder: await client(GetFolderById({
                     id: params["folder_id"]
                 }))
             })
@@ -61,7 +62,7 @@ module.exports = class extends React.Component {
         if (params["folder_id"] != this.props.params["folder_id"]) {
             ;(async () => {
                 this.setState({
-                    folder: await client(GetFolderByID({
+                    folder: await client(GetFolderById({
                         id: params["folder_id"]
                     }))
                 })
@@ -143,8 +144,8 @@ module.exports = class extends React.Component {
                                         input.onchange = async e => {
                                             this.state.folder.children.push(
                                                 await client(CreateFile({
-                                                    file   : e.target.files,
-                                                    parent : this.state.folder.id
+                                                    file  : e.target.files,
+                                                    parent: this.state.folder
                                                 }))
                                             )
 
@@ -201,22 +202,12 @@ module.exports = class extends React.Component {
                                             if (x.kind == "folder") {
                                                 router.push("/folders/" + x.id)
                                             } else if (x.kind == "file") {
-                                                let response = await fetch(
-                                                    getConfiguration().api.url + "/files/" + x.id,
-                                                    {
-                                                        method: "GET",
-                                                        headers: {
-                                                            "Authorization": "Bearer " + client.token
-                                                        }
-                                                    }
-                                                )
-
-                                                let data = await response.json()
+                                                let f = await client(GetFileById({
+                                                    file: x
+                                                }))
 
                                                 let a = document.createElement("a")
-                                                a.href = data["download_url"]
-                                                    .replace(/^(.+?\/{2}.+?)\/{2}/, "$1/")
-                                                a.target = "_blank"
+                                                a.href = f.downloadUrl
                                                 a.download = x.name
                                                 a.click()
                                             }
@@ -234,6 +225,7 @@ module.exports = class extends React.Component {
                     )}
                 </div>
                 <NewFolderDialog
+                    parent={this.state.folder}
                     onCancel={() => {
                         this.setState({
                             newFolderDialogIsVisible: false
@@ -241,10 +233,10 @@ module.exports = class extends React.Component {
                     }}
                     onDone={async ({name}) => {
                         let f = await client(CreateFolder({
-                            folder : {
+                            folder: {
                                 name: name
                             },
-                            parent : this.state.folder
+                            parent: this.state.folder
                         }))
 
                         this.state.folder.children.push(f)

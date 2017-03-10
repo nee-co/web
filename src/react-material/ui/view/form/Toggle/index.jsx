@@ -33,7 +33,7 @@ module.exports = class extends React.Component {
                     [
                         className,
                         classNames.Host,
-                        this.state.imageURL ? undefined
+                        this.state.imageUrl ? undefined
                       :                       classNames.Empty,
                         disabled ? classNames.Disabled
                       :            undefined,

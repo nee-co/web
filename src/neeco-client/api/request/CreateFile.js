@@ -20,7 +20,10 @@ module.exports = self => Object.assign(
         if (! response.ok)
             throw response
 
-        return toFile(object.assign({type: "file"}, await response.json()))
+        return toFile({
+            type: "file",
+            ...await response.json()
+        })
     },
     self
 )

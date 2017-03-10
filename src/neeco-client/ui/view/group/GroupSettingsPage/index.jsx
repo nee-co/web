@@ -149,7 +149,7 @@ module.exports = class extends React.Component {
                             }}
                         >
                             <ImageInput
-                                defaultImageURL={group && group.image}
+                                defaultImageUrl={group && group.image}
                                 name="image"
                                 width="128"
                                 height="128"

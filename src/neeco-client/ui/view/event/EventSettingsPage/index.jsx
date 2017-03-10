@@ -187,7 +187,7 @@ module.exports = class extends React.Component {
                             }}
                         >
                             <ImageInput
-                                defaultImageURL={event.image}
+                                defaultImageUrl={event.image}
                                 name="image"
                                 width="128"
                                 height="128"

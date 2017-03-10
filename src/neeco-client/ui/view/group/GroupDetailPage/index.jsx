@@ -1,6 +1,6 @@
 let AddUserToGroup         = require("neeco-client/api/request/AddUserToGroup")
 let AddUserToGroupInvitees = require("neeco-client/api/request/AddUserToGroupInvitees")
-let GetGroupByID           = require("neeco-client/api/request/GetGroupByID")
+let GetGroupById           = require("neeco-client/api/request/GetGroupById")
 let ListGroupInvitees      = require("neeco-client/api/request/ListGroupInvitees")
 let ListGroupMembers       = require("neeco-client/api/request/ListGroupMembers")
 let RemoveUserFromGroup    = require("neeco-client/api/request/RemoveUserFromGroup")
@@ -71,7 +71,7 @@ module.exports = class extends React.Component {
 
         ;(async () => {
             this.setState({
-                group  : await client(GetGroupByID({
+                group  : await client(GetGroupById({
                     group: {
                         id: params["group_id"]
                     }
