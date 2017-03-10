@@ -24,25 +24,19 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            client
-        } = this.props
+        let {withClient} = this.props
 
-        ;(async () => {
-            let files = await client(ListFolders({
-            }))
+        withClient(async client => {
+            let files = await client(ListFolders({}))
 
             this.setState({
                 files: files.sort(this.state.compareFunction)
             })
-        })()
+        })
     }
 
     render() {
-        let {
-            router,
-            client
-        } = this.props
+        let {router} = this.props
 
         return (
             <section

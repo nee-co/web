@@ -32,44 +32,42 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            client,
-            configuration,
-            onError,
-            params
-        } = this.props
+        let {withClient} = this.props
 
-        let listInvitees = async offset => {
-            let users = await ListGroupInvitees({
-                group: {
-                    id    : params["group_id"],
-                    limit : 10,
-                    offset: offset
-                }
-            })(configuration)
+        withClient(async client => {
+            let {onError} = this.props
+            let {params} = this.props
 
-            return (
-                users.length < 10 ? users
-              :                     users.concat(await listInvitees(offset + 10))
-            )
-        }
+            let listInvitees = async offset => {
+                let users = await ListGroupInvitees({
+                    group: {
+                        id    : params["group_id"],
+                        limit : 10,
+                        offset: offset
+                    }
+                })(client.configuration)
+
+                return (
+                    users.length < 10 ? users
+                  :                     users.concat(await listInvitees(offset + 10))
+                )
+            }
         
-        let listMembers = async offset => {
-            let users = await client(ListGroupMembers({
-                group: {
-                    id    : params["group_id"],
-                    limit : 10,
-                    offset: offset
-                }
-            }))
+            let listMembers = async offset => {
+                let users = await client(ListGroupMembers({
+                    group: {
+                        id    : params["group_id"],
+                        limit : 10,
+                        offset: offset
+                    }
+                }))
 
-            return (
-                users.length < 10 ? users
-              :                     users.concat(await listMembers(offset + 10))
-            )
-        }
+                return (
+                    users.length < 10 ? users
+                  :                     users.concat(await listMembers(offset + 10))
+                )
+            }
 
-        ;(async () => {
             this.setState({
                 group  : await client(GetGroupById({
                     group: {
@@ -78,9 +76,7 @@ module.exports = class extends React.Component {
                 })),
                 members: await listMembers(0)                
             })
-        })()
 
-        ;(async () => {
             try {
                 this.setState({
                     invitees: await listInvitees(0)
@@ -94,7 +90,7 @@ module.exports = class extends React.Component {
                 else
                     onError(e)
             }
-        })()
+        })
     }
 
     render() {

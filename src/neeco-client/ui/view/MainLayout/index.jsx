@@ -1,4 +1,3 @@
-let GetUserByToken   = require("neeco-client/api/request/GetUserByToken")
 let Logo             = require("neeco-client/ui/view/Logo")
 let React            = require("react")
 let Ripple           = require("react-material/ui/effect/Ripple")

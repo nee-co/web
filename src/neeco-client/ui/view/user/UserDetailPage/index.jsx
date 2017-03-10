@@ -15,20 +15,27 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            client,
-            params
-        } = this.props
+        let {withUser} = this.props
 
-        ;(async () => {
-            this.setState({
-                user: await client(GetUserByNumber({
-                    user: {
-                        number: params["user_id"]
-                    }
-                }))
-            })
-        })()
+        withUser(async user => {
+            let {
+                client,
+                params
+            } = this.props
+
+            if (user.number == params["user_id"])
+                this.setState({
+                    user: user
+                })
+            else
+                this.setState({
+                    user: await client(GetUserByNumber({
+                        user: {
+                            number: params["user_id"]
+                        }
+                    }))
+                })
+        })
     }
 
     render() {
@@ -80,4 +87,3 @@ module.exports = class extends React.Component {
         )
     }
 }
-

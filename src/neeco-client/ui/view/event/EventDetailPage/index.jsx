@@ -32,18 +32,17 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            client,
-            params
-        } = this.props
+        let {withClient} = this.props
 
-        ;(async () => {
+        withClient(async client => {
+            let {params} = this.props
+
             this.setState({
                 event: await client(GetEventById({
                     id: params["event_id"]
                 }))
             })
-        })()
+        })
     }
 
     render() {

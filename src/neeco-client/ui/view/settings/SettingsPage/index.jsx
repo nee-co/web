@@ -1,4 +1,3 @@
-let UpdateUser         = require("neeco-client/api/request/UpdateUser")
 let Editor             = require("neeco-client/ui/view/Editor")
 let React              = require("react")
 let Button             = require("react-material/ui/view/Button")
@@ -33,7 +32,6 @@ module.exports = class extends React.Component {
     render() {
         let {
             onUserUpdate,
-            client,
             user
         } = this.props
 
@@ -93,11 +91,9 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onUserUpdate(await client(UpdateUser({
-                                    user: {
-                                        image: form.elements["image"].files
-                                    }
-                                })))
+                                onUserUpdate({
+                                    image: form.elements["image"].files
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined
@@ -131,11 +127,9 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onUserUpdate(await client(UpdateUser({
-                                    user: {
-                                        note: form.elements["note"].value
-                                    }
-                                })))
+                                onUserUpdate({
+                                    note: form.elements["note"].value
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined
@@ -158,12 +152,10 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onUserUpdate(await client(UpdateUser({
-                                    user: {
-                                        password       : form.elements["password"].value,
-                                        currentPassword: form.elements["current_password"].value
-                                    }
-                                })))
+                                onUserUpdate({
+                                    password       : form.elements["password"].value,
+                                    currentPassword: form.elements["current_password"].value
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined

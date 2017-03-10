@@ -41,39 +41,38 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            params,
-            client
-        } = this.props
+        let {withClient} = this.props
 
-        ;(async () => {
+        withClient(async client => {
+            let {params} = this.props
+
             this.setState({
                 folder: await client(GetFolderById({
                     id: params["folder_id"]
                 }))
             })
-        })()
+        })
     }
 
     componentWillReceiveProps({
         params,
-        client
+        withClient
     }) {
         if (params["folder_id"] != this.props.params["folder_id"]) {
-            ;(async () => {
+            withClient(async client => {
                 this.setState({
                     folder: await client(GetFolderById({
                         id: params["folder_id"]
                     }))
                 })
-            })()
+            })
         }
     }
 
     render() {
         let {
-            router,
-            client
+            client,
+            router
         } = this.props
 
         return (

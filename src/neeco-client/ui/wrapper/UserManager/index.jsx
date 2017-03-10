@@ -4,35 +4,26 @@ let React          = require("react")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            user: undefined
+            listeners: [],
+            user     : undefined
         })
     }
 
     componentDidMount() {
         let {
-            client
+            withClient
         } = this.props
 
-        if (client.configuration.api.token)
-            (async () => 
-                this.setState({
-                    user: await client(GetUserByToken())
-                })
-            )()
-    }
+        withClient(async client => {
+            let user = await client(GetUserByToken())
 
-    componentWillReceiveProps({
-        client
-    }) {
-        if (
-            client.configuration.api.token
-         && client.configuration.api.token != this.props.client.configuration.api.token
-        )
-            (async () =>
-                this.setState({
-                    user: await client(GetUserByToken())
-                })
-            )()
+            for (let f of this.state.listeners)
+                f(user)
+
+            this.setState({
+                user: user
+            })
+        })
     }
 
     render() {
@@ -48,6 +39,12 @@ module.exports = class extends React.Component {
                     user: user
                 }),
                 user        : this.state.user,
+                withUser    : f => {
+                    if (this.state.user)
+                        f(this.state.user)
+                    else
+                        this.state.listeners.push(f)
+                },
                 ...props
             }
         )

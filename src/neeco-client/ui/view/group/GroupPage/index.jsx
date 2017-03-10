@@ -29,44 +29,42 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            client
-        } = this.props
+        let {withClient} = this.props
 
-        let listInvitedGroups = async offset => {
-            let x = await client(ListGroups({
-                query  : "",
-                invited: true,
-                limit  : 10,
-                offset : offset
-            }))
+        withClient(async client => {
+            let listInvitedGroups = async offset => {
+                let x = await client(ListGroups({
+                    query  : "",
+                    invited: true,
+                    limit  : 10,
+                    offset : offset
+                }))
 
-            return (
-                x.length < 10 ? x
-              :                 x.concat(await listInvitedGroups(offset + 10))
-            )
-        }
-        
-        let listJoinedGroups = async offset => {
-            let x = await client(ListGroups({
-                query : "",
-                joined: true,
-                limit : 10,
-                offset: offset
-            }))
+                return (
+                    x.length < 10 ? x
+                  :                 x.concat(await listInvitedGroups(offset + 10))
+                )
+            }
+            
+            let listJoinedGroups = async offset => {
+                let x = await client(ListGroups({
+                    query : "",
+                    joined: true,
+                    limit : 10,
+                    offset: offset
+                }))
 
-            return (
-                x.length < 10 ? x
-              :                 x.concat(await listJoinedGroups(offset + 10))
-            )
-        }
+                return (
+                    x.length < 10 ? x
+                  :                 x.concat(await listJoinedGroups(offset + 10))
+                )
+            }
 
-        ;(async () => {
             this.setState({
                 invitedGroups: await listInvitedGroups(0),
                 joinedGroups : await listJoinedGroups(0)
             })
-        })()
+        })
     }
 
     componentWillReceiveProps({
