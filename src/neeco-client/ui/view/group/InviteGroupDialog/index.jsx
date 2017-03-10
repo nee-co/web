@@ -76,7 +76,8 @@ module.exports = class extends React.Component {
                     <List>
                         {this.state.users.map(
                             x => 
-                                <ListItem
+                                <UserListItem
+                                    key={x.id}
                                     selected={this.state.user && x.id == this.state.user.id}
                                     onClick={e => {
                                         this.setState({
@@ -85,11 +86,8 @@ module.exports = class extends React.Component {
                                                 : x
                                         })
                                     }}
-                                >
-                                    <UserListItem
-                                        user={x}
-                                    />
-                                </ListItem>
+                                    user={x}
+                                />
                         )}
                     </List>
                 </DialogBody>
