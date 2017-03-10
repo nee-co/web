@@ -3,9 +3,11 @@ let AddUserToGroupInvitees = require("neeco-client/api/request/AddUserToGroupInv
 let GetGroupById           = require("neeco-client/api/request/GetGroupById")
 let ListGroupInvitees      = require("neeco-client/api/request/ListGroupInvitees")
 let ListGroupMembers       = require("neeco-client/api/request/ListGroupMembers")
+let RemoveInviteeFromGroup = require("neeco-client/api/request/RemoveInviteeFromGroup")
 let RemoveUserFromGroup    = require("neeco-client/api/request/RemoveUserFromGroup")
 let UpdateGroup            = require("neeco-client/api/request/UpdateGroup")
 let Markdown               = require("neeco-client/ui/view/Markdown")
+let GroupInviteeListItem   = require("neeco-client/ui/view/group/GroupInviteeListItem")
 let GroupSettingsPage      = require("neeco-client/ui/view/group/GroupSettingsPage")
 let InviteGroupDialog      = require("neeco-client/ui/view/group/InviteGroupDialog")
 let UserListItem           = require("neeco-client/ui/view/user/UserListItem")
@@ -207,8 +209,18 @@ module.exports = class extends React.Component {
                             <List>
                                 {this.state.invitees && this.state.invitees.map(
                                     x =>
-                                        <UserListItem
+                                        <GroupInviteeListItem
                                             key={x.id}
+                                            onRemove={async () => {
+                                                await client(RemoveInviteeFromGroup({
+                                                    group: this.state.group,
+                                                    user : x
+                                                }))
+
+                                                this.setState({
+                                                    invitees: this.state.invitees.filter(y => y.id != x.id)
+                                                })
+                                            }}
                                             user={x}
                                         />
                                 )}

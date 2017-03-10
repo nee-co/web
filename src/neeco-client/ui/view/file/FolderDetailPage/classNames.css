@@ -35,5 +35,9 @@
 .Buttons {
     display    : flex;
     align-items: center;
-    padding    : 0 1em; 
+    padding    : 0 8px; 
+}
+
+.Buttons > :not(:nth-child(1)) {
+    margin-right: 8px;
 }
