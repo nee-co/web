@@ -297,7 +297,7 @@ module.exports = class extends React.Component {
                                 }
                             }))
 
-                        x.name = x
+                        x.name = name
 
                         this.setState({
                             renameDialogIsVisible: false,

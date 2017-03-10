@@ -42,6 +42,7 @@ module.exports = ({
         </DialogHeader>
         <DialogBody>
             <TextField
+                defaultValue={file && file.name}
                 labelText={
                     isFile ? "ファイル名"
                   :          "フォルダ名"
