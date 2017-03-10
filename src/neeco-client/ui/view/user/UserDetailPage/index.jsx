@@ -46,12 +46,6 @@ module.exports = class extends React.Component {
                 <LinearLayout
                     orientation="horizontal"
                 >
-                    <Avatar
-                        alt={this.state.user && this.state.user.name}
-                        src={this.state.user && this.state.user.image}
-                        width="128"
-                        height="128"
-                    />
                     <dl>
                         <dt>
                             カレッジ
@@ -71,6 +65,12 @@ module.exports = class extends React.Component {
                             {this.state.user && this.state.user.number}
                         </dd>
                     </dl>
+                    <Avatar
+                        alt={this.state.user && this.state.user.name}
+                        src={this.state.user && this.state.user.image}
+                        width="128"
+                        height="128"
+                    />
                 </LinearLayout>
                 <h3>プロフィール</h3>
                 <Markdown
