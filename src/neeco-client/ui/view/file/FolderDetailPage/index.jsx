@@ -30,6 +30,17 @@ let compare = (x, y) =>
   : x > y ? 1
   :         0
 
+let download = async (client, x) => {
+    let f = await client(GetFileById({
+        file: x
+    }))
+
+    let a = document.createElement("a")
+    a.href = f.downloadUrl
+    a.download = x.name
+    a.click()
+}
+
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
@@ -168,6 +179,33 @@ module.exports = class extends React.Component {
                         </div>
                         <FlexibleSpace />
                         <IconToggle
+                            children={"file_download"}
+                            component={MaterialIcon}
+                            disabled={
+                                this.state.selectedIDs.length != 1
+                             || !this.state.folder
+                             || (
+                                    this.state.folder.children
+                                        .find(x => x.id == this.state.selectedIDs[0])
+                                 || {}
+                                )
+                                    .kind != "file"
+                            }
+                            onClick={async e => {
+                                if (this.state.selectedIDs.length != 1)
+                                    return
+                                
+                                let x = this.state.folder.children.find(x => x.id == this.state.selectedIDs[0])
+
+                                await download(client, x)
+
+                                this.setState({
+                                    selectedIDs: []
+                                })
+                            }}
+                            title="ダウンロード"
+                        />
+                        <IconToggle
                             children={"edit"}
                             component={MaterialIcon}
                             disabled={this.state.selectedIDs.length != 1}
@@ -179,6 +217,7 @@ module.exports = class extends React.Component {
                                     renameDialogIsVisible: true
                                 })
                             }}
+                            title="名前の変更"
                         />
                         <IconToggle
                             children={"delete"}
@@ -207,6 +246,7 @@ module.exports = class extends React.Component {
                                     selectedIDs: []
                                 })
                             }}
+                            title="削除"
                         />
                     </LinearLayout>
                 </Shadow>
@@ -219,18 +259,10 @@ module.exports = class extends React.Component {
                                     file={x}
                                     onClick={async e => {
                                         if (Date.now() - this.state.lastClickTime < 500) {
-                                            if (x.kind == "folder") {
+                                            if (x.kind == "folder")
                                                 router.push("/folders/" + x.id)
-                                            } else if (x.kind == "file") {
-                                                let f = await client(GetFileById({
-                                                    file: x
-                                                }))
-
-                                                let a = document.createElement("a")
-                                                a.href = f.downloadUrl
-                                                a.download = x.name
-                                                a.click()
-                                            }
+                                            else if (x.kind == "file")
+                                                await download(client, x)
                                         }
 
                                         this.setState({
