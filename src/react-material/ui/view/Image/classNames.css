@@ -2,8 +2,9 @@
     display            : inline-block;
     width              : 1em;
     height             : 1em;
-    background-repeat  : no-repeat;
+    background-clip    : padding-box;
     background-position: center;
+    background-repeat  : no-repeat;
     background-size    : contain;
     font-size          : 1.5em;
 }

@@ -5,3 +5,7 @@
     list-style: none;
     -webkit-padding-start: 0;
 }
+
+.Host + .Host {
+    border-top: 1px solid rgba(0, 0, 0, .12);
+}

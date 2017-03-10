@@ -2,13 +2,13 @@ let GetUserByToken   = require("neeco-client/api/request/GetUserByToken")
 let Logo             = require("neeco-client/ui/view/Logo")
 let React            = require("react")
 let Ripple           = require("react-material/ui/effect/Ripple")
-let Avatar           = require("react-material/ui/view/Avatar")
 let Button           = require("react-material/ui/view/Button")
 let Divider          = require("react-material/ui/view/Divider")
 let FlexibleSpace    = require("react-material/ui/view/FlexibleSpace")
 let LinearLayout     = require("react-material/ui/view/LinearLayout")
 let List             = require("react-material/ui/view/List")
 let ListItem         = require("react-material/ui/view/ListItem")
+let ListItemAvatar   = require("react-material/ui/view/ListItemAvatar")
 let ListItemIcon     = require("react-material/ui/view/ListItemIcon")
 let ListItemTextArea = require("react-material/ui/view/ListItemTextArea")
 let MaterialIcon     = require("react-material/ui/view/MaterialIcon")
@@ -133,20 +133,16 @@ module.exports = class extends React.Component {
                             drawerIsVisible: !this.state.drawerIsVisible
                         })}
                     >
-                        <List
-                            location={location}
-                        >
+                        <List>
                             <ListItem
                                 disabled
                             >
-                                <ListItemIcon
-                                    component={Avatar}
+                                <ListItemAvatar
                                     src={user && user.image}
                                 />
                                 <DropdownButton
                                     style={{
-                                        marginLeft: "-21px",
-                                        flexGrow  : 1
+                                        flexGrow: 1
                                     }}
                                     value={
                                         user ? user.number
@@ -175,6 +171,10 @@ module.exports = class extends React.Component {
                                     </ListItem>
                                 </DropdownButton>
                             </ListItem>
+                        </List>
+                        <List
+                            location={location}
+                        >
                             {/*<ListItem
                                 to="/"
                             >

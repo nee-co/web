@@ -13,9 +13,9 @@
 }
 
 .Host:nth-child(1) {
-    margin-right: 32px;
+    margin-right: 1.5em;
 }
 
 .Host:not(:nth-child(1)) {
-    margin-left: 16px;    
+    margin-left: 1em;  
 }

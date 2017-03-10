@@ -25,3 +25,7 @@
     font-weight: bolder;
     color      : rgba(0, 0, 0, .8);
 }
+
+.Host li > :nth-child(1) > :nth-child(1) {
+    padding: .4em;
+}

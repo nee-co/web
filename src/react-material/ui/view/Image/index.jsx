@@ -16,7 +16,7 @@ module.exports = ({
     width,
     ...props
 }) =>
-    <div
+    <span
         className={[className, classNames.Host].join(" ")}
         style={{
             backgroundImage: src && "url(" + src + ")",
@@ -38,5 +38,5 @@ module.exports = ({
             srcSet={srcSet}
             width={width}
         />
-    </div>
+    </span>
 
