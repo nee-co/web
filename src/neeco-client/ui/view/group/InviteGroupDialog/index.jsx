@@ -7,13 +7,12 @@ let DialogBody      = require("react-material/ui/view/DialogBody")
 let DialogHeader    = require("react-material/ui/view/DialogHeader")
 let DialogFooter    = require("react-material/ui/view/DialogFooter")
 let List            = require("react-material/ui/view/List")
-let ListItem        = require("react-material/ui/view/ListItem")
-let ListItemAvatar  = require("react-material/ui/view/ListItemAvatar")
+let UserListItem    = require("neeco-client/ui/view/user/UserListItem")
 let ImageInput      = require("react-material/ui/view/form/ImageInput")
 let TextField       = require("react-material/ui/view/form/TextField")
 let Toggle          = require("react-material/ui/view/form/Toggle")
 
-let classNames = require("neeco-client/ui/view/event/NewEventDialog/classNames")
+let classNames = require("neeco-client/ui/view/group/InviteGroupDialog/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {
@@ -87,8 +86,8 @@ module.exports = class extends React.Component {
                                         })
                                     }}
                                 >
-                                    <ListItemAvatar
-                                        src={x.image}
+                                    <UserListItem
+                                        user={x}
                                     />
                                 </ListItem>
                         )}
