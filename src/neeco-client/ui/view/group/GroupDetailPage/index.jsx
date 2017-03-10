@@ -269,7 +269,7 @@ module.exports = class extends React.Component {
                         }))
 
                         this.setState({
-                            invitees: this.state.invitees.concat(user)
+                            invitees: this.state.invitees.concat(user),
                             inviteGroupDialogIsVisible: false
                         })
                     }}
