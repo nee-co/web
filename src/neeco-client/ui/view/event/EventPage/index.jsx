@@ -98,50 +98,48 @@ module.exports = class extends React.Component {
                         </Tab>
                     </TabBar>
                 </div>
-                <div>
-                    <ViewPager
-                        selectedIndex={location.query["tab_index"] || 0}
-                    >
-                        <EventSearchPage
-                            events={this.state.searchEvents}
-                            loading={this.state.searchEventsLoading}
-                            onNext={async e => {
-                                this.setState({
-                                    searchEventsLoading: true
-                                })
+                <ViewPager
+                    selectedIndex={location.query["tab_index"] || 0}
+                >
+                    <EventSearchPage
+                        events={this.state.searchEvents}
+                        loading={this.state.searchEventsLoading}
+                        onNext={async e => {
+                            this.setState({
+                                searchEventsLoading: true
+                            })
 
-                                let events = await client(ListEvents({
-                                    query  : location.query["q"] || "",
-                                    page   : this.state.searchEventsPageNumber + 1,
-                                    perPage: 10
-                                }))
+                            let events = await client(ListEvents({
+                                query  : location.query["q"] || "",
+                                page   : this.state.searchEventsPageNumber + 1,
+                                perPage: 10
+                            }))
 
-                                events.splice(0, 0, ...(this.state.searchEvents || []))
+                            events.splice(0, 0, ...(this.state.searchEvents || []))
 
-                                this.setState({
-                                    searchEvents          : events,
-                                    searchEventsLoading   : false,
-                                    searchEventsPageNumber: this.state.searchEventsPageNumber + 1
-                                })
-                            }}
-                            onSearch={x => 
-                                router.push({
-                                    ...location,
-                                    query: {
-                                        ...location.query,
-                                        q: x
-                                    }
-                                })
-                            }
-                        />
-                        <EntriedEvents
-                            client={client}
-                        />
-                        <OwnedEvents
-                            client={client}
-                        />
-                    </ViewPager>
-                </div>
+                            this.setState({
+                                searchEvents          : events,
+                                searchEventsLoading   : false,
+                                searchEventsPageNumber: this.state.searchEventsPageNumber + 1
+                            })
+                        }}
+                        onSearch={x => 
+                            router.push({
+                                ...location,
+                                query: {
+                                    ...location.query,
+                                    q: x
+                                }
+                            })
+                        }
+                    />
+                    <EntriedEvents
+                        client={client}
+                    />
+                    <OwnedEvents
+                        client={client}
+                    />
+                </ViewPager>
                 <NewEventDialog
                     onCancel={e => {
                         this.setState({

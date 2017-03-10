@@ -2,8 +2,10 @@ let GetUserByToken   = require("neeco-client/api/request/GetUserByToken")
 let Logo             = require("neeco-client/ui/view/Logo")
 let React            = require("react")
 let Ripple           = require("react-material/ui/effect/Ripple")
+let AppBar           = require("react-material/ui/view/AppBar")
+let AppBarTitle      = require("react-material/ui/view/AppBarTitle")
 let Button           = require("react-material/ui/view/Button")
-let Divider          = require("react-material/ui/view/Divider")
+let Drawer           = require("react-material/ui/view/Drawer")
 let FlexibleSpace    = require("react-material/ui/view/FlexibleSpace")
 let LinearLayout     = require("react-material/ui/view/LinearLayout")
 let List             = require("react-material/ui/view/List")
@@ -13,9 +15,6 @@ let ListItemIcon     = require("react-material/ui/view/ListItemIcon")
 let ListItemTextArea = require("react-material/ui/view/ListItemTextArea")
 let MaterialIcon     = require("react-material/ui/view/MaterialIcon")
 let Menu             = require("react-material/ui/view/Menu")
-let NavigationDrawer = require("react-material/ui/view/NavigationDrawer")
-let AppBar           = require("react-material/ui/view/AppBar")
-let AppBarTitle      = require("react-material/ui/view/AppBarTitle")
 let DropdownButton   = require("react-material/ui/view/form/DropdownButton")
 
 let classNames = require("neeco-client/ui/view/MainLayout/classNames")
@@ -122,7 +121,7 @@ module.exports = class extends React.Component {
                     className={classNames.Contents}
                     orientation="horizontal"
                 >
-                    <NavigationDrawer
+                    <Drawer
                         elevation={
                             this.state.mobile ? undefined
                           :                     0
@@ -231,7 +230,7 @@ module.exports = class extends React.Component {
                                 </ListItemTextArea>
                             </ListItem>
                         </List>
-                    </NavigationDrawer>
+                    </Drawer>
                     <main
                         children={React.cloneElement(
                             children,

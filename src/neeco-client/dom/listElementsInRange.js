@@ -17,7 +17,7 @@ module.exports = x => {
       | Node.DOCUMENT_POSITION_CONTAINS
     ]
 
-    let indexes = Array.from(new Array(range.length).keys())
+    let indexes = Array.from({length: range.length}).map(Number.call, Number)
 
     let test = (x, y, mask) => 
         x == y || x.compareDocumentPosition(y) & mask

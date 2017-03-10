@@ -8,13 +8,6 @@
 }
 
 .Host > :nth-child(2) {
-    display       : flex;
-    flex-direction: column;
-    flex-grow     : 1;
-    height        : 0;
-}
-
-.Host > :nth-child(2) > :nth-child(2) {
     flex-grow: 1;
     height   : 0;
 }
@@ -24,8 +17,4 @@
 
 .Header > :nth-child(1) {
     padding: 8px;
-}
-
-.NewEventButton {
-    align-self: flex-end;
 }

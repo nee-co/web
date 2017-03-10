@@ -33,20 +33,22 @@ module.exports = ({
                 placeholder="検索"
             />
         </form>
-        <GroupList
-            type={"grid"}
-        >
-            {groups && groups.map(
-                x =>
-                    <GroupListItem
-                        group={x}
-                        key={x.id}
-                    />
-            )}
-        </GroupList>
-        <Indicator
-            loaded={groups && groups.length >= groups.totalCount}
-            loading={loading}
-            onNext={onNext}
-        />
+        <div>
+            <GroupList
+                type={"grid"}
+            >
+                {groups && groups.map(
+                    x =>
+                        <GroupListItem
+                            group={x}
+                            key={x.id}
+                        />
+                )}
+            </GroupList>
+            <Indicator
+                loaded={groups && groups.length >= groups.totalCount}
+                loading={loading}
+                onNext={onNext}
+            />
+        </div>
     </div>

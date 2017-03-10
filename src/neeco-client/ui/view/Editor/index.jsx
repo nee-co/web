@@ -88,7 +88,7 @@ module.exports = class extends React.Component {
                 this.setState({
                     onPress   : onPress,
                     ranges    :
-                        Array.from(new Array(selection.rangeCount).keys())
+                        Array.from({length: selection.rangeCount}).map(Number.call, Number)
                             .map(i => selection.getRangeAt(i).cloneRange()),
                     styles    : elements.map(getComputedStyle),
                     applyStyle: (name, value) => {

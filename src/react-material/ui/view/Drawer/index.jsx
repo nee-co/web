@@ -2,7 +2,7 @@ let React    = require("react")
 let ReactDOM = require("react-dom")
 let Shadow   = require("react-material/ui/effect/Shadow")
 
-let classNames = require("react-material/ui/view/NavigationDrawer/classNames")
+let classNames = require("react-material/ui/view/Drawer/classNames")
 
 module.exports = class extends React.Component {
     componentWillMount() {

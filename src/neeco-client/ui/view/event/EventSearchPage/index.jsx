@@ -9,7 +9,7 @@ let {Link}        = require("react-router")
 
 let classNames = require("neeco-client/ui/view/event/EventSearchPage/classNames")
 
-module.exports =  ({
+module.exports = ({
     className,
     events,
     loading,
@@ -35,19 +35,22 @@ module.exports =  ({
                 placeholder="検索"
             />
         </form>
-        <EventList
-            type={"grid"}
-        >
-            {events && events.map(x =>
-                <EventListItem
-                    event={x}
-                    key={x.id}
-                />
-            )}
-        </EventList>
-        <Indicator
-            loaded={events && events.length >= events.totalCount}
-            loading={loading}
-            onNext={onNext}
-        />
+        <div>
+            <EventList
+                type={"grid"}
+            >
+                {events && events.map(
+                    x =>
+                        <EventListItem
+                            event={x}
+                            key={x.id}
+                        />
+                )}
+            </EventList>
+            <Indicator
+                loaded={events && events.length >= events.totalCount}
+                loading={loading}
+                onNext={onNext}
+            />
+        </div>            
     </div>

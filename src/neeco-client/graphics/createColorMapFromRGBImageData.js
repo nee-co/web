@@ -8,9 +8,9 @@ module.exports = ({
         count   : 0
     }
 
-    let bits = Array.from(new Array(8).keys()).reverse()
+    let bits = Array.from({length: 8}).map(Number.call, Number).reverse()
 
-    Array.from(new Array(imageData.width * imageData.height).keys())
+    Array.from({length: imageData.width * imageData.height}).map(Number.call, Number)
         .map(i => i * 4)
         .map(i => [
             imageData.data[i],

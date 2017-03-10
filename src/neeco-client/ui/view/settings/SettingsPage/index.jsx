@@ -159,8 +159,10 @@ module.exports = class extends React.Component {
                                 let form = e.target
 
                                 onUserUpdate(await client(UpdateUser({
-                                    password       : form.elements["password"].value,
-                                    currentPassword: form.elements["current_password"].value
+                                    user: {
+                                        password       : form.elements["password"].value,
+                                        currentPassword: form.elements["current_password"].value
+                                    }
                                 })))
 
                                 this.setState({
