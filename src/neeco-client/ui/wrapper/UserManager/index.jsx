@@ -15,10 +15,8 @@ module.exports = class extends React.Component {
 
             let client = await getClient()
 
-            let user = await client(GetUserByToken())
-
             this.setState({
-                user: user
+                user: await client(GetUserByToken())
             })
         })()
     }

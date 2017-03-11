@@ -35,12 +35,6 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            location,
-            onError,
-            router
-        } = this.props
-
         let storage = (
             sessionStorage.getItem("token") ? sessionStorage
           : localStorage.getItem("token")   ? localStorage
@@ -48,14 +42,22 @@ module.exports = class extends React.Component {
         )
 
         if (storage) {
+            let {location} = this.props
+            let {router} = this.props
+
             if (location.pathname == "/sign_in")
                 router.push("/")
+
+            let {onError} = this.props
 
             this.setState({
                 client : createClient(storage.getItem("token"), onError),
                 storage: storage
             })
         } else {
+            let {location} = this.props
+            let {router} = this.props
+
             if (location.pathname != "/sign_in")
                 router.push({
                     pathname: "/sign_in",
@@ -83,11 +85,11 @@ module.exports = class extends React.Component {
         return React.cloneElement(
             children,
             {
-                client       : (
+                client    : (
                     location.pathname == "/sign_in" ? createClient(undefined, onError)
                   :                                   this.state.client
                 ),
-                getClient    : async () => new Promise(
+                getClient : async () => new Promise(
                     (resolve, reject) => {
                         let loop = () =>
                             this.state.unmounted ? reject("component is unmounted")
@@ -97,16 +99,11 @@ module.exports = class extends React.Component {
                         loop()
                     }
                 ),
-                onError      : onError,
-                onSignIn     : async ({
+                onError  : onError,
+                onSignIn : async ({
                     token,
                     staySignedIn
                 }) => {
-                    let {
-                        location,
-                        router
-                    } = this.props
-
                     let storage = staySignedIn ? localStorage
                                 :                sessionStorage
                     storage.setItem("token", token)
@@ -116,22 +113,21 @@ module.exports = class extends React.Component {
                         storage: storage
                     })
 
+                    let {router} = this.props
+
                     router.push((location.state && location.state.nextLocation) || "/")
                 },
-                onSignOut    : async () => {
-                    let {
-                        location,
-                        router
-                    } = this.props
-
+                onSignOut: async () => {
                     this.state.storage.removeItem("token")
 
                     this.setState({
-                         client : undefined,
-                         storage: undefined
+                        client : undefined,
+                        storage: undefined
                     })
 
                     await this.state.client(DeleteToken())
+
+                    let {router} = this.props
 
                     router.push({
                         pathname: "/sign_in",
