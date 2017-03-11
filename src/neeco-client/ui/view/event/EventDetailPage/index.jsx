@@ -3,6 +3,7 @@ let CreateComment        = require("neeco-client/api/request/CreateComment")
 let DeleteEvent          = require("neeco-client/api/request/DeleteEvent")
 let GetEventById         = require("neeco-client/api/request/GetEventById")
 let RemoveUserFromEvent  = require("neeco-client/api/request/RemoveUserFromEvent")
+let UpdateEvent          = require("neeco-client/api/request/UpdateEvent")
 let Markdown             = require("neeco-client/ui/view/Markdown")
 let EventCommentListItem = require("neeco-client/ui/view/event/EventCommentListItem")
 let EventSettingsPage    = require("neeco-client/ui/view/event/EventSettingsPage")
@@ -240,12 +241,11 @@ module.exports = class extends React.Component {
                         <EventSettingsPage
                             client={client}
                             event={this.state.event}
-                            onChange={event => {
+                            onUpdate={async event => {
                                 this.setState({
-                                    event: {
-                                        ...this.state.event,
-                                        ...event
-                                    }
+                                    event: await client(UpdateEvent({
+                                        event: event
+                                    }))
                                 })
                             }}
                             onDelete={async _ => {

@@ -37,30 +37,31 @@ module.exports = class extends React.Component {
         } = this.props
 
         return (
-            <section
+            <div
                 className={classNames.Host}
             >
+                <form
+                    onSubmit={e => {
+                        e.preventDefault()
+
+                        let form = e.currentTarget
+
+                        router.push({
+                            ...location,
+                            query: {
+                                ...location.query,
+                                q: form.elements["query"].value
+                            }
+                        })
+                    }}
+                >
+                    <Search
+                        getScrollable={x => x.parentElement.parentElement.children[1]}
+                        hintText={"検索"}
+                        name="query"
+                    />
+                </form>
                 <div>
-                    <form
-                        onSubmit={e => {
-                            e.preventDefault()
-
-                            let form = e.currentTarget
-
-                            router.push({
-                                ...location,
-                                query: {
-                                    ...location.query,
-                                    q: form.elements["query"].value
-                                }
-                            })
-                        }}
-                    >
-                        <Search
-                            hintText={"検索"}
-                            name="query"
-                        />
-                    </form>
                     <List
                         className={classNames.List}
                     >
@@ -93,7 +94,7 @@ module.exports = class extends React.Component {
                         }}
                     />
                 </div>
-            </section>
+            </div>
         )
     }
 }

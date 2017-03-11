@@ -24,8 +24,8 @@ module.exports = class extends React.Component {
             className,
             client,
             event,
-            onChange,
             onDelete,
+            onUpdate,
             ...props
         } = this.props
 
@@ -85,12 +85,10 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onChange(await client(UpdateEvent({
-                                    event: {
-                                        id      : event.id,
-                                        isPublic: form.elements["is_public"].checked
-                                    }
-                                })))
+                                onUpdate({
+                                    id      : event.id,
+                                    isPublic: form.elements["is_public"].checked
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined
@@ -115,12 +113,10 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onChange(await client(UpdateEvent({
-                                    event: {
-                                        id   : event.id,
-                                        title: form.elements["title"].value
-                                    }
-                                })))
+                                onUpdate({
+                                    id   : event.id,
+                                    title: form.elements["title"].value
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined
@@ -144,12 +140,10 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onChange(await client(UpdateEvent({
-                                    event: {
-                                        id       : event.id,
-                                        startDate: form.elements["start_date"].value
-                                    }
-                                })))
+                                onUpdate({
+                                    id       : event.id,
+                                    startDate: form.elements["start_date"].value
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined
@@ -174,12 +168,10 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onChange(await client(UpdateEvent({
-                                    event: {
-                                        id   : event.id,
-                                        image: form.elements["image"].files
-                                    }
-                                })))
+                                onUpdate({
+                                    id   : event.id,
+                                    image: form.elements["image"].files
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined
@@ -204,11 +196,10 @@ module.exports = class extends React.Component {
 
                                 let form = e.target
 
-                                onChange(await client(UpdateEvent({
-                                    event: {
-                                        description: form.elements["description"].value
-                                    }
-                                })))
+                                onUpdate({
+                                    id         : event.id,
+                                    description: form.elements["description"].value
+                                })
 
                                 this.setState({
                                     selectedIndex: undefined

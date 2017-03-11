@@ -30,6 +30,7 @@
     align-items : center;
     margin-right: 8px;
     content     : ">";
+    cursor      : default;
 }
 
 .Buttons {

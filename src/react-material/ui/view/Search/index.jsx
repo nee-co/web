@@ -8,8 +8,36 @@ let classNames = require("react-material/ui/view/Search/classNames")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            focus: false
+            focus   : false,
+            onScroll: e => {
+                this.setState({
+                    scrolled: e.currentTarget.scrollTop > 0
+                })
+            },
+            scrolled: false
         })
+    }
+
+    componentDidMount() {
+        let {
+            getScrollable = x => undefined
+        } = this.props
+
+        let x = getScrollable(ReactDOM.findDOMNode(this))
+
+        if (x)
+            x.addEventListener("scroll", this.state.onScroll, false)
+    }
+
+    componentWillUnmount() {
+        let {
+            getScrollable = x => undefined
+        } = this.props
+
+        let x = getScrollable(ReactDOM.findDOMNode(this))
+
+        if (x)
+            x.removeEventListener("scroll", this.state.onScroll, false)
     }
 
     render() {
@@ -17,8 +45,9 @@ module.exports = class extends React.Component {
             className,
             expandable,
             expand,
-            name,
+            getScrollable,
             hintText,
+            name,
             onChange,
             onMouseDown = e => undefined,
             onTouchStart = e => undefined,
@@ -56,8 +85,9 @@ module.exports = class extends React.Component {
                     ].join(" ")
                 }
                 elevation={
-                    this.state.focus ? 3
-                  :                    2
+                    this.state.scrolled ? 3
+                  : this.state.focus    ? 3
+                  :                       2
                 }
                 onMouseDown={e => {
                     onMouseDown(e)

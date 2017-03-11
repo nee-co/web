@@ -1,7 +1,11 @@
 .Host {
+    display         : flex;
+    flex-direction  : column;
     background-color: rgba(0, 0, 0, .1);
 }
 
-.Host .List {
-    background-color: #FFF;
+.Host > :nth-child(2) {
+    overflow : auto;
+    flex-grow: 1;
+    height   : 0;
 }

@@ -31,6 +31,7 @@ module.exports = ({
             }}
         >
             <Search
+                getScrollable={x => x.parentElement.parentElement.children[1]}
                 name="query"
                 placeholder="検索"
             />
