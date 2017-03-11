@@ -224,7 +224,7 @@ module.exports = class extends React.Component {
                             component={MaterialIcon}
                             disabled={this.state.selectedIDs.length == 0}
                             onClick={async e => {
-                                if (this.state.selectedIDs.length == 1)
+                                if (this.state.selectedIDs.length == 0)
                                     return
 
                                 for (let id of this.state.selectedIDs)

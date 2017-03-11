@@ -1,3 +1,4 @@
+let Empty = require("neeco-client/ui/view/Empty")
 let React = require("react")
 let List  = require("react-material/ui/view/List")
 

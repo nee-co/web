@@ -10,9 +10,7 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {
-            withClient
-        } = this.props
+        let {withClient} = this.props
 
         withClient(async client => {
             let user = await client(GetUserByToken())
