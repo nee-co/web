@@ -4,23 +4,29 @@ let React          = require("react")
 module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
-            listeners: [],
+            unmounted: false,
             user     : undefined
         })
     }
 
     componentDidMount() {
-        let {withClient} = this.props
+        (async () => {
+            let {getClient} = this.props
 
-        withClient(async client => {
+            let client = await getClient()
+
             let user = await client(GetUserByToken())
-
-            for (let f of this.state.listeners)
-                f(user)
 
             this.setState({
                 user: user
             })
+        })()
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            unmounted: true,
+            user     : undefined
         })
     }
 
@@ -33,16 +39,20 @@ module.exports = class extends React.Component {
         return React.cloneElement(
             children,
             {
+                getUser     : async () => new Promise(
+                    (resolve, reject) => {
+                        let loop = () =>
+                            this.state.unmounted ? reject("component is unmounted")
+                          : this.state.user      ? resolve(this.state.user)
+                          :                        setTimeout(loop, 100)
+
+                        loop()
+                    }
+                ),
                 onUserUpdate: user => this.setState({
                     user: user
                 }),
                 user        : this.state.user,
-                withUser    : f => {
-                    if (this.state.user)
-                        f(this.state.user)
-                    else
-                        this.state.listeners.push(f)
-                },
                 ...props
             }
         )

@@ -24,15 +24,17 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {withClient} = this.props
+        (async () => {
+            let {getClient} = this.props
 
-        withClient(async client => {
+            let client = await getClient()
+    
             let files = await client(ListFolders({}))
 
             this.setState({
                 files: files.sort(this.state.compareFunction)
             })
-        })
+        })()
     }
 
     render() {

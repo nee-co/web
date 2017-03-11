@@ -34,9 +34,11 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {withClient} = this.props
+        (async () => {
+            let {getClient} = this.props
+    
+            let client = await getClient()
 
-        withClient(async client => {
             let {onError} = this.props
             let {params} = this.props
 
@@ -92,7 +94,7 @@ module.exports = class extends React.Component {
                 else
                     onError(e)
             }
-        })
+        })()
     }
 
     render() {

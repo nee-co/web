@@ -15,13 +15,16 @@ module.exports = class extends React.Component {
     }
 
     componentDidMount() {
-        let {withUser} = this.props
+        (async () => {
+            let {getClient} = this.props
 
-        withUser(async user => {
-            let {
-                client,
-                params
-            } = this.props
+            let client = await getClient()
+
+            let {getUser} = this.props
+
+            let user = await getUser()
+
+            let {params} = this.props
 
             if (user.number == params["user_id"])
                 this.setState({
@@ -35,7 +38,7 @@ module.exports = class extends React.Component {
                         }
                     }))
                 })
-        })
+        })()
     }
 
     render() {

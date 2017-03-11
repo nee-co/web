@@ -29,8 +29,8 @@ module.exports = class extends React.Component {
     componentWillMount() {
         this.setState({
             client   : undefined,
-            listeners: [],
-            storage  : undefined
+            storage  : undefined,
+            unmounted: false
         })
     }
 
@@ -51,15 +51,9 @@ module.exports = class extends React.Component {
             if (location.pathname == "/sign_in")
                 router.push("/")
 
-            let client = createClient(storage.getItem("token"), onError)
-
-            for (let f of this.state.listeners)
-                f(client)
-
             this.setState({
-                client   : client,
-                listeners: [],
-                storage  : storage
+                client : createClient(storage.getItem("token"), onError),
+                storage: storage
             })
         } else {
             if (location.pathname != "/sign_in")
@@ -70,6 +64,12 @@ module.exports = class extends React.Component {
                     }
                 })
         }
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            unmounted: true
+        })
     }
 
     render() {
@@ -87,7 +87,16 @@ module.exports = class extends React.Component {
                     location.pathname == "/sign_in" ? createClient(undefined, onError)
                   :                                   this.state.client
                 ),
-                configuration: this.state.client && this.state.client.configuration,
+                getClient    : async () => new Promise(
+                    (resolve, reject) => {
+                        let loop = () =>
+                            this.state.unmounted ? reject("component is unmounted")
+                          : this.state.client    ? resolve(this.state.client)
+                          :                        setTimeout(loop, 100)
+
+                        loop()
+                    }
+                ),
                 onError      : onError,
                 onSignIn     : async ({
                     token,
@@ -102,15 +111,9 @@ module.exports = class extends React.Component {
                                 :                sessionStorage
                     storage.setItem("token", token)
 
-                    let client = createClient(token, onError)
-
-                    for (let f of this.state.listeners)
-                        f(client)
-
                     this.setState({
-                        client   : client,
-                        listeners: [],
-                        storage  : storage
+                        client : createClient(token, onError),
+                        storage: storage
                     })
 
                     router.push((location.state && location.state.nextLocation) || "/")
@@ -136,12 +139,6 @@ module.exports = class extends React.Component {
                             nextLocation: location
                         }
                     })
-                },
-                withClient: f => {
-                    if (this.state.client)
-                        f(this.state.client)
-                    else
-                        this.state.listeners.push(f)
                 },
                 ...props
             }

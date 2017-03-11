@@ -28,10 +28,12 @@ module.exports = class extends React.Component {
         })
     }
 
-    componentDidMount() {
-        let {withClient} = this.props
+    componentDidMount() {        
+        (async () => {
+            let {getClient} = this.props
 
-        withClient(async client => {
+            let client = await getClient()
+
             let listInvitedGroups = async offset => {
                 let x = await client(ListGroups({
                     query  : "",
@@ -64,7 +66,7 @@ module.exports = class extends React.Component {
                 invitedGroups: await listInvitedGroups(0),
                 joinedGroups : await listJoinedGroups(0)
             })
-        })
+        })()
     }
 
     componentWillReceiveProps({
