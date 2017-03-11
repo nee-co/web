@@ -31,36 +31,32 @@ module.exports = class extends React.Component {
             ...props
         } = this.props
 
+        let onQueryUpdate = async x => {
+            if (/^G/.test(x))
+                this.setState({
+                    users: await client(ListUsers({
+                        query : x,
+                        limit : 3,
+                        offset: 0
+                    }))
+                })
+            else
+                this.setState({
+                    users: await client(ListUsers({
+                        query : x,
+                        limit : 3,
+                        offset: 0
+                    }))
+                })
+        }
+
         return (
             <Dialog
                 className={classNames.Host}
                 component="form"
                 onCancel={onCancel}
-                onSubmit={async e => {
+                onSubmit={e => {
                     e.preventDefault()
-
-                    let form = e.target
-
-                    let query = form.elements["query"].value
-
-                    if (/^G/.test(query)) {
-                        this.setState({
-                            users: await client(ListUsers({
-                                query : query,
-                                limit : 5,
-                                offset: 0
-                            }))
-                        })
-                    } else {
-                        this.setState({
-                            users: await client(ListUsers({
-                                query : query,
-                                limit : 5,
-                                offset: 0
-                            }))
-                        })
-                    }
-
                 }}
                 {...props}
             >
@@ -71,6 +67,7 @@ module.exports = class extends React.Component {
                     <TextField
                         labelText={"学籍番号または氏名"}
                         name="query"
+                        onInput={e => onQueryUpdate(e.target.value)}
                         required
                     />
                     <List>
