@@ -62,9 +62,7 @@ module.exports = class extends React.Component {
                     />
                 </form>
                 <div>
-                    <List
-                        className={classNames.List}
-                    >
+                    <List>
                         {this.state.users && this.state.users.map(x => 
                             <UserListItem
                                 key={x.id}
