@@ -82,6 +82,12 @@ module.exports = class extends React.Component {
             ...props
         } = this.props
 
+        if (
+            location.pathname != "/sign_in"
+         && !this.state.client
+        )
+            return null
+
         return React.cloneElement(
             children,
             {
